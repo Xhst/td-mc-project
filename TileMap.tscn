@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://TileMap.cs" type="Script" id=1]
+[ext_resource path="res://src/Utils/TileMap.cs" type="Script" id=1]
 [ext_resource path="res://TileSet.tres" type="TileSet" id=2]
 
 [node name="TileMap" type="TileMap"]
@@ -8,6 +8,5 @@ mode = 1
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 128, 64 )
 format = 1
-tile_data = PoolIntArray( -393206, 229, 0, -65520, 229, 0 )
 script = ExtResource( 1 )
 _offset = Vector2( -192, -288 )

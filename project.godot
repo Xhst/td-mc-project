@@ -18,6 +18,17 @@ _global_script_class_icons={
 config/name="Tower Defense MC"
 config/icon="res://icon.png"
 
+[autoload]
+
+LevelDataReader="*res://src/Levels/LevelDataReader.cs"
+
+[display]
+
+window/size/width=2048
+window/size/height=1200
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"
