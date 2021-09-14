@@ -13,14 +13,14 @@ namespace TowerDefenseMC.Levels
 
     public struct LevelData
     {
-        public bool isSnowy;
-        public Dictionary<string, List<TilePosition>> tiles;
+        public bool IsSnowy;
+        public Dictionary<string, List<TilePosition>> Tiles;
     }
     public struct TilePosition
     {
-        public int x;
-        public int y;
-        public Rotation rot;
+        public int X;
+        public int Y;
+        public Rotation Rot;
     }
     
     public class LevelDataReader : Node
@@ -29,7 +29,7 @@ namespace TowerDefenseMC.Levels
         {
             LevelData levelData;
             
-            levelData.tiles =  new Dictionary<string, List<TilePosition>>();
+            levelData.Tiles =  new Dictionary<string, List<TilePosition>>();
             
             string path = ProjectSettings.GlobalizePath($"res://assets/levels/level{level}.json");
             string jsonFileText = System.IO.File.ReadAllText(path);
@@ -37,11 +37,11 @@ namespace TowerDefenseMC.Levels
             JObject json = JObject.Parse(jsonFileText);
 
             bool isSnowy = json["snowy"]?.ToString() == bool.TrueString;
-            levelData.isSnowy = isSnowy;
+            levelData.IsSnowy = isSnowy;
             
             if (json["tiles"] == null) return levelData;
 
-            levelData.tiles = GetTilesData(isSnowy, json["tiles"]);
+            levelData.Tiles = GetTilesData(isSnowy, json["tiles"]);
             
 
             return levelData;
@@ -67,9 +67,9 @@ namespace TowerDefenseMC.Levels
                     {
                         TilePosition pos;
                         
-                        pos.x = int.Parse(position["x"]?.ToString() ?? "0");
-                        pos.y = int.Parse(position["y"]?.ToString() ?? "0");
-                        pos.rot = RotationUtils.StringToDirection(position["rot"]?.ToString());
+                        pos.X = int.Parse(position["x"]?.ToString() ?? "0");
+                        pos.Y = int.Parse(position["y"]?.ToString() ?? "0");
+                        pos.Rot = RotationUtils.StringToDirection(position["rot"]?.ToString());
                         
                         tilePositions.Add(pos);
                     }

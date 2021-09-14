@@ -23,17 +23,17 @@ namespace TowerDefenseMC.Levels
             LevelDataReader ldr = GetNode<LevelDataReader>("/root/LevelDataReader");
             LevelData levelData = ldr.GetLevelData(1);
 
-            int fillTileId = _tileMap.TileSet.FindTileByName(levelData.isSnowy ? "snow_tile" : "tile");
+            int fillTileId = _tileMap.TileSet.FindTileByName(levelData.IsSnowy ? "snow_tile" : "tile");
             
             FillViewPortWithTile(fillTileId);
 
-            foreach (var tile in levelData.tiles)
+            foreach (KeyValuePair<string, List<TilePosition>> tile in levelData.Tiles)
             {
-                foreach (var tilePosition in tile.Value)
+                foreach (TilePosition tilePosition in tile.Value)
                 {
-                    int tileId = FindTileByNameTryingRotation(tile.Key, tilePosition.rot);
+                    int tileId = FindTileByNameTryingRotation(tile.Key, tilePosition.Rot);
                     
-                    _tileMap.SetCell(tilePosition.x, tilePosition.y, tileId);
+                    _tileMap.SetCell(tilePosition.X, tilePosition.Y, tileId);
                 }
             }
         }
