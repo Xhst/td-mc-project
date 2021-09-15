@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using Godot;
 
@@ -15,6 +14,8 @@ namespace TowerDefenseMC.Levels
     {
         public bool IsSnowy;
         public Dictionary<string, List<TilePosition>> Tiles;
+        public List<List<Vector2>> EnemyPathsPoints;
+        public List<List<Vector2>> RiversPoints;
     }
     public struct TilePosition
     {
@@ -30,6 +31,8 @@ namespace TowerDefenseMC.Levels
             LevelData levelData;
             
             levelData.Tiles =  new Dictionary<string, List<TilePosition>>();
+            levelData.EnemyPathsPoints = new List<List<Vector2>>();
+            levelData.RiversPoints = new List<List<Vector2>>();
             
             string path = ProjectSettings.GlobalizePath($"res://assets/levels/level{level}.json");
             string jsonFileText = System.IO.File.ReadAllText(path);
@@ -41,13 +44,17 @@ namespace TowerDefenseMC.Levels
             
             if (json["tiles"] == null) return levelData;
 
-            levelData.Tiles = GetTilesData(isSnowy, json["tiles"]);
+            levelData.Tiles = GetTilesData(json["tiles"]);
+            
+            levelData.EnemyPathsPoints = GetPointsListData(json["enemy_paths"]);
+            
+            levelData.RiversPoints = GetPointsListData(json["rivers"]);
             
 
             return levelData;
         }
 
-        private Dictionary<string, List<TilePosition>> GetTilesData(bool isSnowy, JToken jsonTiles)
+        private Dictionary<string, List<TilePosition>> GetTilesData(JToken jsonTiles)
         {
             Dictionary<string, List<TilePosition>> tileData = new Dictionary<string, List<TilePosition>>();
             
@@ -57,7 +64,7 @@ namespace TowerDefenseMC.Levels
             {
                 foreach (JProperty prop in content.Properties())
                 {
-                    string tileName = isSnowy ? "snow_" + prop.Name : prop.Name;
+                    string tileName = prop.Name;
                     
                     JArray positions = JArray.Parse(prop.Value.ToString());
                     
@@ -79,6 +86,29 @@ namespace TowerDefenseMC.Levels
             }
 
             return tileData;
+        }
+
+        private List<List<Vector2>> GetPointsListData(JToken pointsListData)
+        {
+            List<List<Vector2>> pointsList = new List<List<Vector2>>();
+
+            foreach (JToken list in pointsListData)
+            {
+                List<Vector2> points = new List<Vector2>();
+                
+                foreach (JToken point in list)
+                {
+
+                    int x = int.Parse(point["x"]?.ToString() ?? "0");
+                    int y = int.Parse(point["y"]?.ToString() ?? "0");
+
+                    points.Add(new Vector2(x,y));
+                }
+                
+                pointsList.Add(points);
+            }
+            
+            return pointsList;
         }
     }
 }

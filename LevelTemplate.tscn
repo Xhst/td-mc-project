@@ -7,3 +7,8 @@
 script = ExtResource( 2 )
 
 [node name="TileMap" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0, 2 )
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+visible = false
+color = Color( 0.729412, 0.721569, 0.768627, 1 )
