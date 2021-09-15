@@ -34,8 +34,6 @@ namespace TowerDefenseMC.Levels
             _terrainBuilder.FillViewPortWithTile(GetViewSize());
             _terrainBuilder.DrawCustomTiles(levelData.Tiles);
             _terrainBuilder.DrawPathsAndRivers(_paths, _rivers);
-            
-            //AddEnemyPaths(levelData.EnemyPathsPoints);
         }
 
         private Vector2 GetViewSize()

@@ -62,9 +62,9 @@ namespace TowerDefenseMC.Utils
 
                 foreach (Vector2 adj in adjTiles)
                 {
-                    int gScoreTentatives = CalculateGScore(adj, current);
-                    
                     if (_closedTiles.Contains(adj)) continue;
+                    
+                    int gScoreTentatives = CalculateGScore(adj, current);
 
                     _gScores.TryGetValue(adj, out int gScoreValue);
 
@@ -124,6 +124,7 @@ namespace TowerDefenseMC.Utils
         private static int CalculateHeuristicScore(Vector2 current, Vector2 goal) {
             int dx = Math.Abs((int) (current.x - goal.x));
             int dy = Math.Abs((int) (current.y - goal.y));
+            
             int diagonal, orthogonal;
             
             if(dx > dy) 

@@ -140,6 +140,8 @@ namespace TowerDefenseMC.Levels
                         {
                             97 => 50,
                             96 => 51,
+                            220 => 50,
+                            119 => 51,
                             _ => tileId
                         };
                     }
