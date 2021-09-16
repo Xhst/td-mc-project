@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://TileMap.tscn" type="PackedScene" id=1]
-[ext_resource path="res://src/Levels/LevelBuilder.cs" type="Script" id=2]
+[ext_resource path="res://src/Levels/LevelTemplate.cs" type="Script" id=2]
 [ext_resource path="res://assets/img/towers/towerSquare_sampleF_N.png" type="Texture" id=3]
 [ext_resource path="res://UI/PNG/grey_button11.png" type="Texture" id=5]
 [ext_resource path="res://UI/PNG/yellow_button06.png" type="Texture" id=6]
@@ -30,17 +30,17 @@ script = ExtResource( 2 )
 
 [node name="TowerContainer" type="YSort" parent="."]
 
-[node name="Build_Tool" type="Node2D" parent="."]
+[node name="BuildToolInterface" type="Node2D" parent="."]
 visible = false
 
-[node name="BuildInterface" type="Sprite" parent="Build_Tool"]
+[node name="TowerPlaceholder" type="Sprite" parent="BuildToolInterface"]
 material = SubResource( 2 )
 position = Vector2( 0, -50 )
 texture = ExtResource( 3 )
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="Red_Tower_Button" type="TextureButton" parent="UI"]
+[node name="RedTowerButton" type="TextureButton" parent="UI"]
 margin_left = 9.4585
 margin_top = 1033.02
 margin_right = 149.458
@@ -54,7 +54,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="UI/Red_Tower_Button"]
+[node name="TextureRect" type="TextureRect" parent="UI/RedTowerButton"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -69,7 +69,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Purple_Tower_Button" type="TextureButton" parent="UI"]
+[node name="PurpleTowerButton" type="TextureButton" parent="UI"]
 margin_left = 1896.87
 margin_top = 1035.27
 margin_right = 2036.87
@@ -79,8 +79,11 @@ texture_normal = ExtResource( 7 )
 texture_pressed = ExtResource( 5 )
 texture_hover = ExtResource( 6 )
 expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="TextureRect" type="TextureRect" parent="UI/Purple_Tower_Button"]
+[node name="TextureRect" type="TextureRect" parent="UI/PurpleTowerButton"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -94,9 +97,9 @@ expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="button_down" from="UI/Red_Tower_Button" to="." method="_on_Select_Tower_button_down" binds= [ "Red_Tower" ]]
-[connection signal="mouse_entered" from="UI/Red_Tower_Button" to="." method="_on_Tower_Button_mouse_entered"]
-[connection signal="mouse_exited" from="UI/Red_Tower_Button" to="." method="_on_Tower_Button_mouse_exited"]
-[connection signal="button_down" from="UI/Purple_Tower_Button" to="." method="_on_Select_Tower_button_down" binds= [ "Purple_Tower" ]]
-[connection signal="mouse_entered" from="UI/Purple_Tower_Button" to="." method="_on_Tower_Button_mouse_entered"]
-[connection signal="mouse_exited" from="UI/Purple_Tower_Button" to="." method="_on_Tower_Button_mouse_exited"]
+[connection signal="button_down" from="UI/RedTowerButton" to="." method="OnSelectTowerButtonDown" binds= [ "RedTower" ]]
+[connection signal="mouse_entered" from="UI/RedTowerButton" to="." method="OnTowerButtonMouseEntered"]
+[connection signal="mouse_exited" from="UI/RedTowerButton" to="." method="OnTowerButtonMouseExited"]
+[connection signal="button_down" from="UI/PurpleTowerButton" to="." method="OnSelectTowerButtonDown" binds= [ "PurpleTower" ]]
+[connection signal="mouse_entered" from="UI/PurpleTowerButton" to="." method="OnTowerButtonMouseEntered"]
+[connection signal="mouse_exited" from="UI/PurpleTowerButton" to="." method="OnTowerButtonMouseExited"]
