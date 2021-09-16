@@ -6,4 +6,3 @@
 position = Vector2( 0, -50 )
 
 [node name="Tower" type="Sprite" parent="Node2D"]
-scale = Vector2( 0.8, 1 )

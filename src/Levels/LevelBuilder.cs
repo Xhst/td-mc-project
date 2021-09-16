@@ -11,27 +11,25 @@ namespace TowerDefenseMC.Levels
 {
     public class LevelBuilder : Node2D
     {
-        private bool build_mode = false;
-        private bool can_build = false;
-        private bool in_menu = false;
+        private bool _buildMode = false;
+        private bool _canBuild = false;
+        private bool _inMenu = false;
 
-        private Color current_color;
-        private Color yellow = new Color(0.755123f, 0.800781f, 0.150146f, 0.564706f);
-        private Color red = new Color(0.8f, 0.14902f, 0.14902f, 0.564706f);
+        private Color _currentColor;
+        private readonly Color _yellow = new Color(0.755123f, 0.800781f, 0.150146f, 0.564706f);
+        private readonly Color _red = new Color(0.8f, 0.14902f, 0.14902f, 0.564706f);
 
-        private Vector2 current_tile = new Vector2();
+        private HashSet<Vector2> _tilesWithBuildings;
+        private Vector2 _currentTile = new Vector2();
 
-        private Towers towers = new Towers();
-        private PackedScene current_tower;
-
-        private const int TileLength = 128;
-        private const int TileHeight = 64;
+        private readonly Towers _towers = new Towers();
+        private PackedScene _currentTower;
 
         private TileMap _tileMap;
+        
         private Node2D _buildTool;
         private Sprite _buildInterface;
-
-        private TileMap _tileMap;
+        
 
         private TerrainBuilder _terrainBuilder;
 
@@ -44,6 +42,8 @@ namespace TowerDefenseMC.Levels
 
             _buildTool = GetNode<Node2D>("Build_Tool");
             _buildInterface = GetNode<Sprite>("Build_Tool/BuildInterface");
+            
+            _tilesWithBuildings = new HashSet<Vector2>();
             
             _paths = new List<List<Vector2>>();
 
@@ -61,7 +61,7 @@ namespace TowerDefenseMC.Levels
 
         public override void _PhysicsProcess(float delta)
         {
-            if(build_mode)
+            if(_buildMode)
             {
                 UpdateBuildTool();
                 if(Input.IsActionJustPressed("left_mouse_button"))
@@ -70,7 +70,7 @@ namespace TowerDefenseMC.Levels
                 }
                 if(Input.IsActionJustPressed("right_mouse_button"))
                 {
-                    build_mode = false;
+                    _buildMode = false;
                     _buildTool.Hide();
                 }
             }
@@ -81,55 +81,81 @@ namespace TowerDefenseMC.Levels
             Transform2D canvasTransform = GetCanvasTransform();
             return GetViewportRect().Size / canvasTransform.Scale;
         }
+        
+        private List<List<Vector2>> CalculateTilesInPointsLists(List<List<Vector2>> pointsLists)
+        {
+            List<List<Vector2>> listsOfTiles = new List<List<Vector2>>();
+            
+            AStar aStar = new AStar(false);
+
+            foreach (List<Vector2> list in pointsLists)
+            {
+                List<Vector2> tiles = new List<Vector2>();
+
+                for (int i = 1; i < list.Count; i++)
+                {
+                    tiles.AddRange(aStar.FindPath(list[i - 1], list[i]));
+                    aStar.Clear();
+                }
+
+                listsOfTiles.Add(tiles);
+            }
+
+            return listsOfTiles;
+        }
+
 
         private void UpdateBuildTool()
         {
-            Vector2 mouse_pos = GetGlobalMousePosition();
-            current_tile = _tileMap.WorldToMap(mouse_pos);
-            _buildTool.Position = _tileMap.MapToWorld(current_tile);
+            Vector2 mousePos = GetGlobalMousePosition();
+            _currentTile = _tileMap.WorldToMap(mousePos);
+            _buildTool.Position = _tileMap.MapToWorld(_currentTile);
 
-            if(_tileMap.GetCellv(current_tile) == _tileMap.TileSet.FindTileByName("tile") && current_color != yellow)
+            if((_tileMap.GetCellv(_currentTile) == _tileMap.TileSet.FindTileByName("tile") ||
+               _tileMap.GetCellv(_currentTile) == _tileMap.TileSet.FindTileByName("snow_tile")) && _currentColor != _yellow)
             {
-                current_color = yellow;
-                can_build = true;
-                (_buildInterface.Material as ShaderMaterial).SetShaderParam("current_color", current_color);
+                _currentColor = _yellow;
+                _canBuild = true;
+                (_buildInterface.Material as ShaderMaterial)?.SetShaderParam("current_color", _currentColor);
             }
 
-            if(_tileMap.GetCellv(current_tile) != _tileMap.TileSet.FindTileByName("tile") && current_color != red)
+            if(_tilesWithBuildings.Contains(_currentTile) || 
+               _tileMap.GetCellv(_currentTile) != _tileMap.TileSet.FindTileByName("tile") &&
+               _tileMap.GetCellv(_currentTile) != _tileMap.TileSet.FindTileByName("snow_tile") && _currentColor != _red)
             {
-                current_color = red;
-                can_build = false;
-                (_buildInterface.Material as ShaderMaterial).SetShaderParam("current_color", current_color);
+                _currentColor = _red;
+                _canBuild = false;
+                (_buildInterface.Material as ShaderMaterial)?.SetShaderParam("current_color", _currentColor);
             }
         }
 
         private void BuildTower()
         {
-            if(can_build && !in_menu)
-            {
-                _tileMap.SetCellv(current_tile, 29);
-                Node new_tower = current_tower.Instance();
-                (new_tower as Node2D).GlobalPosition = _tileMap.MapToWorld(current_tile);
-                GetNode<YSort>("TowerContainer").AddChild(new_tower);
-            }
+            if (!_canBuild || _inMenu) return;
+
+            _tilesWithBuildings.Add(_currentTile);
+            
+            Node newTower = _currentTower.Instance();
+            ((Node2D) newTower).GlobalPosition = _tileMap.MapToWorld(_currentTile);
+            GetNode<YSort>("TowerContainer").AddChild(newTower);
         }
 
-        public void _on_Select_Tower_button_down(string tower_name)
+        public void _on_Select_Tower_button_down(string towerName)
         {
-            current_tower = towers.GetTower2PackedScene()[tower_name];
-            _buildInterface.Texture = towers.GetTower2Texture()[tower_name];
-            build_mode = true;
+            _currentTower = _towers.GetTower2PackedScene()[towerName];
+            _buildInterface.Texture = _towers.GetTower2Texture()[towerName];
+            _buildMode = true;
             _buildTool.Show();
         }
 
         public void _on_Tower_Button_mouse_entered()
         {
-            in_menu = true;
+            _inMenu = true;
         }
 
         public void _on_Tower_Button_mouse_exited()
         {
-            in_menu = false;
+            _inMenu = false;
         }
     
     }

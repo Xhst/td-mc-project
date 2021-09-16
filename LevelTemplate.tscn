@@ -36,7 +36,6 @@ visible = false
 [node name="BuildInterface" type="Sprite" parent="Build_Tool"]
 material = SubResource( 2 )
 position = Vector2( 0, -50 )
-scale = Vector2( 0.8, 1 )
 texture = ExtResource( 3 )
 
 [node name="UI" type="CanvasLayer" parent="."]
@@ -95,7 +94,6 @@ expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
 [connection signal="button_down" from="UI/Red_Tower_Button" to="." method="_on_Select_Tower_button_down" binds= [ "Red_Tower" ]]
 [connection signal="mouse_entered" from="UI/Red_Tower_Button" to="." method="_on_Tower_Button_mouse_entered"]
 [connection signal="mouse_exited" from="UI/Red_Tower_Button" to="." method="_on_Tower_Button_mouse_exited"]
