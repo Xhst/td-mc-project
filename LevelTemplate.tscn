@@ -1,13 +1,104 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://TileMap.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Levels/LevelBuilder.cs" type="Script" id=2]
+[ext_resource path="res://assets/img/towers/towerSquare_sampleF_N.png" type="Texture" id=3]
+[ext_resource path="res://UI/PNG/grey_button11.png" type="Texture" id=5]
+[ext_resource path="res://UI/PNG/yellow_button06.png" type="Texture" id=6]
+[ext_resource path="res://UI/PNG/grey_button07.png" type="Texture" id=7]
+[ext_resource path="res://assets/img/towers/Side/towerRound_sampleC.png" type="Texture" id=8]
+[ext_resource path="res://assets/img/towers/Side/towerSquare_sampleE.png" type="Texture" id=9]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform vec4 current_color : hint_color;
+
+void fragment() {
+	vec4 final = mix(texture(TEXTURE, UV), current_color, texture(TEXTURE, UV).a);
+	COLOR = final;
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/current_color = Color( 0.8, 0.713726, 0.14902, 0.564706 )
 
 [node name="LevelTemplate" type="Node2D"]
 script = ExtResource( 2 )
 
 [node name="TileMap" parent="." instance=ExtResource( 1 )]
-position = Vector2( 0, 2 )
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color( 0.670588, 0.662745, 0.709804, 1 )
+[node name="TowerContainer" type="YSort" parent="."]
+
+[node name="Build_Tool" type="Node2D" parent="."]
+visible = false
+
+[node name="BuildInterface" type="Sprite" parent="Build_Tool"]
+material = SubResource( 2 )
+position = Vector2( 0, -50 )
+scale = Vector2( 0.8, 1 )
+texture = ExtResource( 3 )
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Red_Tower_Button" type="TextureButton" parent="UI"]
+margin_left = 9.4585
+margin_top = 1033.02
+margin_right = 149.458
+margin_bottom = 1191.02
+rect_min_size = Vector2( 140, 80 )
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 5 )
+texture_hover = ExtResource( 6 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="UI/Red_Tower_Button"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -42.0
+margin_top = -56.0
+margin_right = 40.0
+margin_bottom = 43.0
+texture = ExtResource( 8 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Purple_Tower_Button" type="TextureButton" parent="UI"]
+margin_left = 1896.87
+margin_top = 1035.27
+margin_right = 2036.87
+margin_bottom = 1193.27
+rect_min_size = Vector2( 140, 0 )
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 5 )
+texture_hover = ExtResource( 6 )
+expand = true
+
+[node name="TextureRect" type="TextureRect" parent="UI/Purple_Tower_Button"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -42.0
+margin_top = -56.0
+margin_right = 40.0
+margin_bottom = 43.0
+texture = ExtResource( 9 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="button_down" from="UI/Red_Tower_Button" to="." method="_on_Select_Tower_button_down" binds= [ "Red_Tower" ]]
+[connection signal="mouse_entered" from="UI/Red_Tower_Button" to="." method="_on_Tower_Button_mouse_entered"]
+[connection signal="mouse_exited" from="UI/Red_Tower_Button" to="." method="_on_Tower_Button_mouse_exited"]
+[connection signal="button_down" from="UI/Purple_Tower_Button" to="." method="_on_Select_Tower_button_down" binds= [ "Purple_Tower" ]]
+[connection signal="mouse_entered" from="UI/Purple_Tower_Button" to="." method="_on_Tower_Button_mouse_entered"]
+[connection signal="mouse_exited" from="UI/Purple_Tower_Button" to="." method="_on_Tower_Button_mouse_exited"]
