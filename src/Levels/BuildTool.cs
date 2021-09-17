@@ -22,9 +22,12 @@ namespace TowerDefenseMC.Levels
 
         private readonly Towers.Towers _towers = new Towers.Towers();
         private PackedScene _currentTower;
+
+        private readonly Towers.TowerTemplate _towerTemplate = new Towers.TowerTemplate();
         
         private readonly Node2D _buildToolInterface;
         private readonly Sprite _towerPlaceholder;
+        private readonly Polygon2D _attackRange;
         
         public BuildTool(LevelTemplate levelTemplate)
         {
@@ -33,6 +36,9 @@ namespace TowerDefenseMC.Levels
             
             _buildToolInterface = _levelTemplate.GetNode<Node2D>("BuildToolInterface");
             _towerPlaceholder = _levelTemplate.GetNode<Sprite>("BuildToolInterface/TowerPlaceholder");
+            _attackRange = _levelTemplate.GetNode<Polygon2D>("BuildToolInterface/AttackRange");
+
+            _attackRange.Color = _yellow;
         }
 
         public void Process()
@@ -64,6 +70,7 @@ namespace TowerDefenseMC.Levels
                 _currentColor = _yellow;
                 _canBuild = true;
                 (_towerPlaceholder.Material as ShaderMaterial)?.SetShaderParam("current_color", _currentColor);
+                _attackRange.Show();
             }
 
             if(_tilesWithBuildings.Contains(_currentTile) || 
@@ -73,6 +80,7 @@ namespace TowerDefenseMC.Levels
                 _currentColor = _red;
                 _canBuild = false;
                 (_towerPlaceholder.Material as ShaderMaterial)?.SetShaderParam("current_color", _currentColor);
+                _attackRange.Hide();
             }
         }
 
@@ -91,6 +99,7 @@ namespace TowerDefenseMC.Levels
         {
             _currentTower = _towers.GetTower2PackedScene()[towerName];
             _towerPlaceholder.Texture = _towers.GetTower2Texture()[towerName];
+            _attackRange.Polygon = _towerTemplate.GetAttackRangeShape(_towers.GetTower2AttackRange()[towerName]);
             _buildMode = true;
             _buildToolInterface.Show();
         }
