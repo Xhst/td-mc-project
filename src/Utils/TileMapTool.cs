@@ -4,7 +4,7 @@ using Godot;
 namespace TowerDefenseMC.Utils
 {
     [Tool]
-    public class TileMap : Godot.TileMap
+    public class TileMapTool : TileMap
     {
 
         [Export] private Vector2 _offset;
