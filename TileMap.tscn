@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://src/Utils/TileMap.cs" type="Script" id=1]
+[ext_resource path="res://src/Utils/TileMapTool.cs" type="Script" id=1]
 [ext_resource path="res://TileSet.tres" type="TileSet" id=2]
 
 [node name="TileMap" type="TileMap"]
