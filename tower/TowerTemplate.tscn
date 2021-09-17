@@ -3,6 +3,7 @@
 [node name="TowerTemplate" type="Node2D"]
 
 [node name="Node2D" type="Node2D" parent="."]
-position = Vector2( 0, -50 )
+position = Vector2( 0, -35 )
+scale = Vector2( 0.8, 0.8 )
 
 [node name="Tower" type="Sprite" parent="Node2D"]
