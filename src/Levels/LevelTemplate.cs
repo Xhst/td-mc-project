@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 using Godot;
 
+using TowerDefenseMC.Utils;
+
 using AStar = TowerDefenseMC.Utils.AStar;
 using TileMap = Godot.TileMap;
 
@@ -35,8 +37,9 @@ namespace TowerDefenseMC.Levels
 
             _buildTool = new BuildTool(this);
 
+            new EnemySpawner(this, _paths).SpawnEnemies();
         }
-        
+
         private Vector2 GetViewSize()
         {
             Transform2D canvasTransform = GetCanvasTransform();
