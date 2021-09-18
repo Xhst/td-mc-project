@@ -1,9 +1,10 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/img/towers/towerSquare_bottomA.png" type="Texture" id=1]
-[ext_resource path="res://tower/TowerTemplate.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/towers/TowerTemplate.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/img/towers/towerSquare_middleA.png" type="Texture" id=3]
 [ext_resource path="res://assets/img/towers/towerSquare_roofA.png" type="Texture" id=4]
+
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, -160, 320, 0, 0, 160, -320, 0 )

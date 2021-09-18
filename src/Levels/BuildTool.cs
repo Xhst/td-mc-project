@@ -2,6 +2,8 @@
 
 using Godot;
 
+using TowerDefenseMC.Towers;
+
 
 namespace TowerDefenseMC.Levels
 {
@@ -20,10 +22,10 @@ namespace TowerDefenseMC.Levels
         private readonly HashSet<Vector2> _tilesWithBuildings;
         private Vector2 _currentTile = new Vector2();
 
-        private readonly Towers.Towers _towers = new Towers.Towers();
+        private readonly TowersData _towersData = new TowersData();
         private PackedScene _currentTower;
 
-        private readonly Towers.TowerTemplate _towerTemplate = new Towers.TowerTemplate();
+        private readonly TowerTemplate _towerTemplate = new TowerTemplate();
         
         private readonly Node2D _buildToolInterface;
         private readonly Sprite _towerPlaceholder;
@@ -97,9 +99,9 @@ namespace TowerDefenseMC.Levels
 
         public void OnSelectTowerButtonDown(string towerName)
         {
-            _currentTower = _towers.GetTower2PackedScene()[towerName];
-            _towerPlaceholder.Texture = _towers.GetTower2Texture()[towerName];
-            _attackRange.Polygon = _towerTemplate.GetAttackRangeShape(_towers.GetTower2AttackRange()[towerName]);
+            _currentTower = _towersData.GetTower2PackedScene()[towerName];
+            _towerPlaceholder.Texture = _towersData.GetTower2Texture()[towerName];
+            _attackRange.Polygon = _towerTemplate.GetAttackRangeShape(_towersData.GetTower2AttackRange()[towerName]);
             _buildMode = true;
             _buildToolInterface.Show();
         }

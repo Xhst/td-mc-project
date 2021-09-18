@@ -1,4 +1,4 @@
-<Project Sdk="Godot.NET.Sdk/3.3.0">
+<Project Sdk="Godot.NET.Sdk/3.2.3">
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <RootNamespace>TowerDefenseMC</RootNamespace>
@@ -6,5 +6,19 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="scenes\enemies\EnemyTemplate.tscn" />
+    <Content Include="scenes\levels\LevelTemplate.tscn" />
+    <Content Include="scenes\TileMap.tscn" />
+    <Content Include="scenes\TileSet.tscn" />
+    <Content Include="scenes\towers\PurpleTowerA.tscn" />
+    <Content Include="scenes\towers\PurpleTowerB.tscn" />
+    <Content Include="scenes\towers\PurpleTowerC.tscn" />
+    <Content Include="scenes\towers\RedTowerA.tscn" />
+    <Content Include="scenes\towers\RedTowerB.tscn" />
+    <Content Include="scenes\towers\RedTowerC.tscn" />
+    <Content Include="scenes\towers\RedTowerCrystal.tscn" />
+    <Content Include="scenes\towers\TowerTemplate.tscn" />
   </ItemGroup>
 </Project>

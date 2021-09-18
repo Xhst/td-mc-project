@@ -20,7 +20,7 @@ namespace TowerDefenseMC.Levels
         
         public async void SpawnEnemies()
         {
-            PackedScene enemyScene = ResourceLoader.Load<PackedScene>("res://EnemyTemplate.tscn");
+            PackedScene enemyScene = ResourceLoader.Load<PackedScene>("res://scenes/enemies/EnemyTemplate.tscn");
         
             Node2D pathsContainer = _levelTemplate.GetNode<Node2D>("Paths");
             YSort enemyContainer = _levelTemplate.GetNode<YSort>("EnemyContainer");
