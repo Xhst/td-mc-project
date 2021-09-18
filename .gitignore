@@ -12,3 +12,7 @@ data_*/
 
 #IDE
 /.idea
+/.vscode
+
+*.old
+*.old.*
