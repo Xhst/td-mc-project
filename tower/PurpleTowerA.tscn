@@ -1,11 +1,15 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/img/towers/towerSquare_bottomA.png" type="Texture" id=1]
 [ext_resource path="res://tower/TowerTemplate.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/img/towers/towerSquare_middleA.png" type="Texture" id=3]
 [ext_resource path="res://assets/img/towers/towerSquare_roofA.png" type="Texture" id=4]
 
+[sub_resource type="ConvexPolygonShape2D" id=1]
+points = PoolVector2Array( 0, -160, 320, 0, 0, 160, -320, 0 )
+
 [node name="PurpleTower" instance=ExtResource( 2 )]
+AttackRange = 2
 
 [node name="towerSquare_bottomA" type="Sprite" parent="Node2D" index="1"]
 texture = ExtResource( 1 )
@@ -17,3 +21,6 @@ texture = ExtResource( 3 )
 [node name="towerSquare_roofA" type="Sprite" parent="Node2D" index="3"]
 position = Vector2( 0, -77 )
 texture = ExtResource( 4 )
+
+[node name="AttackRangeCollision" parent="AttackRange" index="0"]
+shape = SubResource( 1 )
