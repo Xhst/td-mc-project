@@ -102,6 +102,7 @@ namespace TowerDefenseMC.Levels
             _attackRange.Polygon = _towerTemplate.GetAttackRangeShape(_towers.GetTower2AttackRange()[towerName]);
             _buildMode = true;
             _buildToolInterface.Show();
+            _attackRange.Show();
         }
 
         public void OnTowerButtonMouseEntered()
