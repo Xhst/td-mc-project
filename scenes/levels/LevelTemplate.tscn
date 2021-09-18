@@ -32,6 +32,8 @@ script = ExtResource( 2 )
 
 [node name="TowerContainer" type="YSort" parent="."]
 
+[node name="ProjectileContainer" type="YSort" parent="."]
+
 [node name="BuildToolInterface" type="Node2D" parent="."]
 visible = false
 

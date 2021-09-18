@@ -16,6 +16,7 @@ namespace TowerDefenseMC.Levels
         public TileMap TileMap { get; private set; }
         
         private BuildTool _buildTool;
+        private Towers.ProjectileSpawner _projectileSpawner;
 
         private List<List<Vector2>> _paths;
         private List<List<Vector2>> _rivers;
@@ -36,8 +37,11 @@ namespace TowerDefenseMC.Levels
             terrainBuilder.DrawPathsAndRivers(_paths, _rivers);
 
             _buildTool = new BuildTool(this);
+            _projectileSpawner = new Towers.ProjectileSpawner(this);
 
             new EnemySpawner(this, _paths).SpawnEnemies();
+
+            Singletons.Globals._mainGameNode = this;
         }
 
         private Vector2 GetViewSize()
@@ -72,7 +76,12 @@ namespace TowerDefenseMC.Levels
 
             return listsOfTiles;
         }
-        
+
+        public void SpawnProjectile(PackedScene _projectile, Vector2 _pos, PhysicsBody2D _target)
+        {
+            _projectileSpawner.SpawnProjectile(_projectile, _pos, _target);
+        }
+
         public void OnSelectTowerButtonDown(string towerName)
         {
             _buildTool.OnSelectTowerButtonDown(towerName);

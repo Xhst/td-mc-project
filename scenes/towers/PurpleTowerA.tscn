@@ -23,5 +23,8 @@ texture = ExtResource( 3 )
 position = Vector2( 0, -77 )
 texture = ExtResource( 4 )
 
+[node name="ProjectileSpawn" parent="Node2D" index="4"]
+position = Vector2( 0, -50 )
+
 [node name="AttackRangeCollision" parent="AttackRange" index="0"]
 shape = SubResource( 1 )
