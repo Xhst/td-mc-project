@@ -3,7 +3,7 @@ using Godot;
 using TowerDefenseMC.Levels;
 
 
-namespace TowerDefenseMC.Towers
+namespace TowerDefenseMC.Towers.Projectiles
 {
     public class ProjectileTemplate : Area2D
     {
@@ -19,9 +19,11 @@ namespace TowerDefenseMC.Towers
         public virtual void Start(Vector2 pos, EnemyTemplate target)
         {
             Position = pos;
+
+            Vector2 targetPosition = (target.GlobalPosition - pos + target.TargetOffset).Normalized();
             
-            Rotation = new Vector2(1,0).AngleTo((target.GlobalPosition - pos + target.TargetOffset).Normalized());
-            float rotOffset = Mathf.Abs(new Vector2(1,0).Dot((target.GlobalPosition - pos + target.TargetOffset).Normalized()));
+            Rotation = new Vector2(1,0).AngleTo(targetPosition);
+            float rotOffset = Mathf.Abs(new Vector2(1,0).Dot(targetPosition));
 
             Scale = new Vector2(0.5f + 0.5f * rotOffset, Scale.y);
             
@@ -34,11 +36,6 @@ namespace TowerDefenseMC.Towers
             
             //Projectile goes to the direction it's pointing
             Position += velocity.Rotated(Rotation); 
-        }
-
-        public void OnTweenTweenAllCompleted()
-        {
-            QueueFree();
         }
 
         public void OnTimerTimeout()

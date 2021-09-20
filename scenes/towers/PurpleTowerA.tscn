@@ -4,7 +4,7 @@
 [ext_resource path="res://scenes/towers/TowerTemplate.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/img/towers/towerSquare_middleA.png" type="Texture" id=3]
 [ext_resource path="res://assets/img/towers/towerSquare_roofA.png" type="Texture" id=4]
-[ext_resource path="res://scenes/towers/projectiles/ProjectileTemplate.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/towers/projectiles/TweenProjectile.tscn" type="PackedScene" id=5]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, -160, 320, 0, 0, 160, -320, 0 )

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://src/Towers/Projectiles/BasicTweenProjectile.cs" type="Script" id=1]
+[ext_resource path="res://src/Towers/Projectiles/ProjectileTemplate.cs" type="Script" id=1]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.523179, 1 )
@@ -19,10 +19,7 @@ texture = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
-[node name="Tween" type="Tween" parent="."]
-
 [node name="Timer" type="Timer" parent="."]
 wait_time = 4.0
 one_shot = true
-[connection signal="tween_all_completed" from="Tween" to="." method="OnTweenTweenAllCompleted"]
 [connection signal="timeout" from="Timer" to="." method="OnTimerTimeout"]

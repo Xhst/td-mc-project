@@ -3,7 +3,7 @@ using Godot;
 using TowerDefenseMC.Levels;
 
 
-namespace TowerDefenseMC.Towers
+namespace TowerDefenseMC.Towers.Projectiles
 {
     public class ProjectileSpawner
     {
@@ -18,11 +18,7 @@ namespace TowerDefenseMC.Towers
         {
             if (!(targetBody is EnemyTemplate target)) return;
             
-            ProjectileTemplate projectile = (ProjectileTemplate) projectileScene.Instance(); 
-            projectile.Position = pos;
-        
-            //Rotate the projectile depending on where it needs to be shoot
-            projectile.Rotation = new Vector2(1,0).AngleTo((target.Position - pos).Normalized());
+            ProjectileTemplate projectile = (ProjectileTemplate) projectileScene.Instance();
             projectile.Start(pos, target);
         
             //Adds the projectile to the scene
