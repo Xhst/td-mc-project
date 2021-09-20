@@ -42,7 +42,7 @@ namespace TowerDefenseMC.Levels
             bool isSnowy = json["snowy"]?.ToString() == bool.TrueString;
             levelData.IsSnowy = isSnowy;
             
-            if (json["tiles"] == null) return levelData;
+            if (json["tiles"] is null) return levelData;
 
             levelData.Tiles = GetTilesData(json["tiles"]);
             
