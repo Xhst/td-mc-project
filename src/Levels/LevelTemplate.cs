@@ -6,7 +6,6 @@ using Godot;
 using TowerDefenseMC.Towers;
 
 using AStar = TowerDefenseMC.Utils.AStar;
-using TileMap = Godot.TileMap;
 
 
 namespace TowerDefenseMC.Levels
