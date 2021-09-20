@@ -2,6 +2,9 @@ using System.Collections.Generic;
 
 using Godot;
 
+using TowerDefenseMC.Levels;
+
+
 namespace TowerDefenseMC.Towers
 {
     [Tool]
@@ -12,24 +15,26 @@ namespace TowerDefenseMC.Towers
         private int _attackRange = 1;
 
         [Signal]
-        public delegate void shoot();
+        private delegate void ShootEvent();
 
         [Export] 
         private int AttackRange 
         {
             get => _attackRange;
-            set {_attackRange = value; SetAttackRange(_attackRange);}
+            set { _attackRange = value; SetAttackRange(_attackRange); }
         }
 
         [Export]
-        private PackedScene Projectile;
+        private PackedScene _projectile;
+        
         private List<PhysicsBody2D> _targetList;
 
         public override void _Ready()
         {
             _targetList = new List<PhysicsBody2D>();
             
-            Connect("shoot", Singletons.Globals._mainGameNode, "SpawnProjectile"); //Connects the signal "shoot" with the function "SpawnProjectile" passed by the Object "_mainGameNode"
+            //Connects the signal "shoot" with the function "SpawnProjectile" passed by the Object "_mainGameNode"
+            Connect(nameof(ShootEvent), Singletons.Globals.MainGameNode, nameof(LevelTemplate.SpawnProjectile)); 
         }
 
         public override void _PhysicsProcess(float delta)
@@ -44,8 +49,11 @@ namespace TowerDefenseMC.Towers
         {
             _attackRange = num;
             ConvexPolygonShape2D newShape = new ConvexPolygonShape2D { Points = GetAttackRangeShape(num) };
-            
-            if(GetNode<CollisionShape2D>("AttackRange/AttackRangeCollision") != null) GetNode<CollisionShape2D>("AttackRange/AttackRangeCollision").Shape = newShape;
+
+            if (GetNode<CollisionShape2D>("AttackRange/AttackRangeCollision") != null)
+            {
+                GetNode<CollisionShape2D>("AttackRange/AttackRangeCollision").Shape = newShape;
+            }
         }
 
         public Vector2[] GetAttackRangeShape(int attackRange)
@@ -64,7 +72,9 @@ namespace TowerDefenseMC.Towers
             GetNode<Timer>("ReloadTimer").Start();
             Vector2 pos = GetNode<Position2D>("Node2D/ProjectileSpawn").GlobalPosition;
             PhysicsBody2D target = _targetList[0];
-            EmitSignal("shoot", Projectile, pos, target); //Emits the signal "shoot" with the following passed variables
+            
+            //Emits the signal "shoot" with the following passed variables
+            EmitSignal(nameof(ShootEvent), _projectile, pos, target);
         }
 
         public void OnAttackRangeBodyEntered(PhysicsBody2D body)

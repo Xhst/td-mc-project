@@ -1,5 +1,8 @@
 using Godot;
 
+using TowerDefenseMC.Levels;
+
+
 namespace TowerDefenseMC.Towers
 {
     public class ProjectileTemplate : Area2D
@@ -13,20 +16,24 @@ namespace TowerDefenseMC.Towers
             Movement(delta);
         }
 
-        public virtual void Start(Vector2 _pos, PhysicsBody2D _target)
+        public virtual void Start(Vector2 pos, EnemyTemplate target)
         {
-            Position = _pos;
-            Levels.EnemyTemplate target = (Levels.EnemyTemplate)_target;
-            Rotation = new Vector2(1,0).AngleTo((target.GlobalPosition - _pos + target.TargetOffset).Normalized());
-            float _rotOffset = Mathf.Abs(new Vector2(1,0).Dot((target.GlobalPosition - _pos + target.TargetOffset).Normalized()));
-            //Scale.y = 0.5f + (0.5f * _rotOffset);
-            _speed = (MaxSpeed/2) + ((MaxSpeed/2)*_rotOffset);
+            Position = pos;
+            
+            Rotation = new Vector2(1,0).AngleTo((target.GlobalPosition - pos + target.TargetOffset).Normalized());
+            float rotOffset = Mathf.Abs(new Vector2(1,0).Dot((target.GlobalPosition - pos + target.TargetOffset).Normalized()));
+
+            Scale = new Vector2(0.5f + 0.5f * rotOffset, Scale.y);
+            
+            _speed = (MaxSpeed/2) + ((MaxSpeed/2) * rotOffset);
         }
 
         private void Movement(float delta)
         {
-            Vector2 velocity = new Vector2(_speed*delta, 0);
-            Position += velocity.Rotated(Rotation); //Projectile goes to the direction it's pointing
+            Vector2 velocity = new Vector2(_speed * delta, 0);
+            
+            //Projectile goes to the direction it's pointing
+            Position += velocity.Rotated(Rotation); 
         }
 
         public void OnTweenTweenAllCompleted()
