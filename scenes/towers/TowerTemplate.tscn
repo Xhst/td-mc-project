@@ -48,6 +48,7 @@ shape = SubResource( 2 )
 
 [node name="ReloadTimer" type="Timer" parent="."]
 one_shot = true
+
 [connection signal="body_entered" from="AttackRange" to="." method="OnAttackRangeBodyEntered"]
 [connection signal="body_exited" from="AttackRange" to="." method="OnAttackRangeBodyExited"]
 [connection signal="timeout" from="ReloadTimer" to="." method="OnReloadTimerTimeout"]

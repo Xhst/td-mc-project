@@ -19,11 +19,11 @@ namespace TowerDefenseMC.Towers.Projectiles
             if (!(targetBody is EnemyTemplate target)) return;
             
             ProjectileTemplate projectile = (ProjectileTemplate) projectileScene.Instance();
-            projectile.Start(pos, target);
-        
+
             //Adds the projectile to the scene
             _levelTemplate.GetNode<YSort>("ProjectileContainer").AddChild(projectile);
-            
+
+            projectile.Start(pos, target);
         }
     }
 }

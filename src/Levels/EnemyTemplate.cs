@@ -17,5 +17,10 @@ namespace TowerDefenseMC.Levels
                 PositioningNode.Offset += Speed * delta;
             }
         }
+
+        public void Dead()
+        {
+            QueueFree();
+        }
     }
 }

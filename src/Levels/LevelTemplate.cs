@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 using Godot;
 
-using TowerDefenseMC.Towers;
 using TowerDefenseMC.Towers.Projectiles;
 
 using AStar = TowerDefenseMC.Utils.AStar;
