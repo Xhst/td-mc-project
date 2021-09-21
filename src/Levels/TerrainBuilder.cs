@@ -2,6 +2,7 @@
 
 using Godot;
 
+using TowerDefenseMC.Singletons;
 using TowerDefenseMC.Utils;
 
 

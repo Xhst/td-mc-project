@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 using TowerDefenseMC.Utils;
 
 
-namespace TowerDefenseMC.Levels
+namespace TowerDefenseMC.Singletons
 {
 
     public struct LevelData

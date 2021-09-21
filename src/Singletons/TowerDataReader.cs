@@ -4,10 +4,8 @@ using Godot;
 
 using Newtonsoft.Json.Linq;
 
-using TowerDefenseMC.Singletons;
 
-
-namespace TowerDefenseMC.Towers
+namespace TowerDefenseMC.Singletons
 {
     public struct TowerData
     {
