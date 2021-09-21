@@ -25,7 +25,7 @@ namespace TowerDefenseMC.Enemies
             _healthPoints -= damage;
 
             GD.Print(_healthPoints);
-            if (_healthPoints < 0)
+            if (_healthPoints <= 0)
             {
                 Death();
             }
