@@ -24,7 +24,7 @@ namespace TowerDefenseMC.Enemies
             PackedScene enemyScene = ResourceLoader.Load<PackedScene>("res://scenes/enemies/EnemyTemplate.tscn");
         
             Node2D pathsContainer = _levelTemplate.GetNode<Node2D>("Paths");
-            YSort enemyContainer = _levelTemplate.GetNode<YSort>("EnemyContainer");
+            YSort enemyContainer = _levelTemplate.GetNode<YSort>("EntitiesContainer");
 
             foreach (List<Vector2> path in _paths)
             {
@@ -40,7 +40,7 @@ namespace TowerDefenseMC.Enemies
 
                 path2D.Curve = enemyCurve;
 
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 100; i++)
                 {
                     EnemyTemplate enemy = (EnemyTemplate) enemyScene.Instance();
                     enemyContainer.AddChild(enemy);

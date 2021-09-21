@@ -94,7 +94,7 @@ namespace TowerDefenseMC.Levels
             
             Node newTower = _currentTower.Instance();
             ((Node2D) newTower).GlobalPosition = _levelTemplate.TileMap.MapToWorld(_currentTile);
-            _levelTemplate.GetNode<YSort>("TowerContainer").AddChild(newTower);
+            _levelTemplate.GetNode<YSort>("EntitiesContainer").AddChild(newTower);
         }
 
         public void OnSelectTowerButtonDown(string towerName)

@@ -7,11 +7,20 @@ namespace TowerDefenseMC.Enemies
     {
         public PathFollow2D PositioningNode;
         public Vector2 TargetOffset = new Vector2(0, -50);
-
+        
         private float _speed = 150;
         private int _healthPoints = 3;
-        
-        
+
+        private TextureProgress _healthBar;
+
+        public override void _Ready()
+        {
+            _healthBar = GetNode<TextureProgress>("HealthBar");
+
+            _healthBar.MaxValue = _healthPoints;
+            _healthBar.Value = _healthPoints;
+        }
+
         public override void _PhysicsProcess(float delta)
         {
             if (PositioningNode != null)
@@ -23,15 +32,15 @@ namespace TowerDefenseMC.Enemies
         public void TakeDamage(int damage)
         {
             _healthPoints -= damage;
-
-            GD.Print(_healthPoints);
+            _healthBar.Value = _healthPoints;
+            
             if (_healthPoints <= 0)
             {
-                Death();
+                OnDestroy();
             }
         }
 
-        private void Death()
+        private void OnDestroy()
         {
             QueueFree();
         }

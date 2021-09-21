@@ -22,7 +22,7 @@ namespace TowerDefenseMC.Towers.Projectiles
             ProjectileTemplate projectile = (ProjectileTemplate) projectileScene.Instance();
 
             //Adds the projectile to the scene
-            _levelTemplate.GetNode<YSort>("ProjectileContainer").AddChild(projectile);
+            _levelTemplate.GetNode<YSort>("EntitiesContainer").AddChild(projectile);
 
             projectile.Start(pos, target, damage);
         }
