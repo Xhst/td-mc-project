@@ -34,7 +34,7 @@ namespace TowerDefenseMC.Levels
             levelData.EnemyPathsPoints = new List<List<Vector2>>();
             levelData.RiversPoints = new List<List<Vector2>>();
             
-            string path = ProjectSettings.GlobalizePath($"res://assets/levels/level{level}.json");
+            string path = ProjectSettings.GlobalizePath($"res://assets/data/levels/level{ level }.json");
             string jsonFileText = System.IO.File.ReadAllText(path);
             
             JObject json = JObject.Parse(jsonFileText);

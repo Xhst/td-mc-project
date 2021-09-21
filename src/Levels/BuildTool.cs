@@ -2,6 +2,7 @@
 
 using Godot;
 
+using TowerDefenseMC.Singletons;
 using TowerDefenseMC.Towers;
 
 
@@ -21,8 +22,7 @@ namespace TowerDefenseMC.Levels
 
         private readonly HashSet<Vector2> _tilesWithBuildings;
         private Vector2 _currentTile = new Vector2();
-
-        private readonly TowersData _towersData = new TowersData();
+        
         private PackedScene _currentTower;
 
         private readonly TowerTemplate _towerTemplate = new TowerTemplate();
@@ -30,6 +30,8 @@ namespace TowerDefenseMC.Levels
         private readonly Node2D _buildToolInterface;
         private readonly Sprite _towerPlaceholder;
         private readonly Polygon2D _attackRange;
+        
+        private readonly Dictionary<string, TowerData> _towersData;
         
         public BuildTool(LevelTemplate levelTemplate)
         {
@@ -41,6 +43,9 @@ namespace TowerDefenseMC.Levels
             _attackRange = _levelTemplate.GetNode<Polygon2D>("BuildToolInterface/AttackRange");
 
             _attackRange.Color = _yellow;
+            
+            TowerDataReader tdr = _levelTemplate.GetNode<TowerDataReader>("/root/TowerDataReader");
+            _towersData = tdr.GetTowersData();
         }
 
         public void Process()
@@ -97,11 +102,36 @@ namespace TowerDefenseMC.Levels
             _levelTemplate.GetNode<YSort>("EntitiesContainer").AddChild(newTower);
         }
 
+        private async void UpdateTowerPlaceHolder()
+        {
+            TowerTemplate currentTowerScene = (TowerTemplate) _currentTower.Instance();
+            
+            Viewport previewViewport = _buildToolInterface.GetNode<Viewport>("Viewport");
+            previewViewport.AddChild(currentTowerScene);
+
+            await _levelTemplate.ToSignal(_levelTemplate.GetTree(), "idle_frame");
+            await _levelTemplate.ToSignal(_levelTemplate.GetTree(), "idle_frame");
+
+            ImageTexture imageTexture = new ImageTexture();
+            Image image = new Image();
+            
+            image.CopyFrom(previewViewport.GetTexture().GetData());
+            imageTexture.CreateFromImage(image);
+            
+            previewViewport.RemoveChild(currentTowerScene);
+            
+            _towerPlaceholder.Texture = imageTexture;
+        }
+        
         public void OnSelectTowerButtonDown(string towerName)
         {
-            _currentTower = _towersData.GetTower2PackedScene()[towerName];
-            _towerPlaceholder.Texture = _towersData.GetTower2Texture()[towerName];
-            _attackRange.Polygon = _towerTemplate.GetAttackRangeShape(_towersData.GetTower2AttackRange()[towerName]);
+            if (!_towersData.TryGetValue(towerName, out TowerData towerData)) return;
+
+            _currentTower = ResourceLoader.Load<PackedScene>($"res://scenes/towers/{ towerData.SceneName }.tscn");
+            
+            UpdateTowerPlaceHolder();
+            
+            _attackRange.Polygon = TowerTemplate.GetRangeShapePoints(towerData.AttackRange);
             _buildMode = true;
             _buildToolInterface.Show();
         }

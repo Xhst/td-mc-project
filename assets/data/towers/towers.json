@@ -1,0 +1,28 @@
+﻿{
+  "towers": [
+    {
+      "name": "RedA",
+      "scene_name" : "RedTowerA",
+      "cost": 1,
+      "attack_range": 1,
+      "damage": 1,
+      "attack_speed": 1,
+      "projectile_speed": 1,
+      "aura_range": 1,
+      "aura_attack_speed": 1,
+      "aura_damage": 1
+    },
+    {
+      "name": "PurpleA",
+      "scene_name" : "PurpleTowerA",
+      "cost": 1,
+      "attack_range": 5,
+      "damage": 1,
+      "attack_speed": 1,
+      "projectile_speed": 1,
+      "aura_range": 1,
+      "aura_attack_speed": 1,
+      "aura_damage": 1
+    }
+  ]  
+}

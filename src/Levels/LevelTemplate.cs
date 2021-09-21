@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Godot;
 
 using TowerDefenseMC.Enemies;
+using TowerDefenseMC.Singletons;
+using TowerDefenseMC.Towers;
 using TowerDefenseMC.Towers.Projectiles;
 
 using AStar = TowerDefenseMC.Utils.AStar;
@@ -25,6 +27,9 @@ namespace TowerDefenseMC.Levels
         {
             TileMap = GetNode<TileMap>("TileMap");
 
+            SceneManager sceneManager = GetNode<SceneManager>("/root/SceneManager");
+            sceneManager.CurrentScene = this;
+            
             LevelDataReader ldr = GetNode<LevelDataReader>("/root/LevelDataReader");
             LevelData levelData = ldr.GetLevelData(1);
 
@@ -40,8 +45,6 @@ namespace TowerDefenseMC.Levels
             _projectileSpawner = new ProjectileSpawner(this);
 
             new EnemySpawner(this, _paths).SpawnEnemies();
-
-            Singletons.Globals.MainGameNode = this;
         }
 
         private Vector2 GetViewSize()
