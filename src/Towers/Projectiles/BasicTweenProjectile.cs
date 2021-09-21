@@ -1,7 +1,6 @@
 using Godot;
 
 using TowerDefenseMC.Enemies;
-using TowerDefenseMC.Levels;
 
 
 namespace TowerDefenseMC.Towers.Projectiles

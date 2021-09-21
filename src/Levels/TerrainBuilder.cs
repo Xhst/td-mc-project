@@ -4,8 +4,6 @@ using Godot;
 
 using TowerDefenseMC.Utils;
 
-using TileMap = Godot.TileMap;
-
 
 namespace TowerDefenseMC.Levels
 {
