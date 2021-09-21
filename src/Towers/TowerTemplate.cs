@@ -33,7 +33,7 @@ namespace TowerDefenseMC.Towers
         {
             _targetList = new List<PhysicsBody2D>();
             
-            //Connects the signal "shoot" with the function "SpawnProjectile" passed by the Object "_mainGameNode"
+            //Connects the signal "ShootEvent" with the function "SpawnProjectile" passed by the Object "MainGameNode"
             Connect(nameof(ShootEvent), Singletons.Globals.MainGameNode, nameof(LevelTemplate.SpawnProjectile)); 
         }
 
@@ -73,7 +73,7 @@ namespace TowerDefenseMC.Towers
             Vector2 pos = GetNode<Position2D>("Node2D/ProjectileSpawn").GlobalPosition;
             PhysicsBody2D target = _targetList[0];
             
-            //Emits the signal "shoot" with the following passed variables
+            //Emits the signal "ShootEvent" with the following passed variables
             EmitSignal(nameof(ShootEvent), _projectile, pos, target);
         }
 

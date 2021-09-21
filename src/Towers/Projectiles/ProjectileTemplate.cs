@@ -28,6 +28,8 @@ namespace TowerDefenseMC.Towers.Projectiles
             Scale = new Vector2(0.5f + 0.5f * rotOffset, Scale.y);
             
             _speed = (MaxSpeed/2) + ((MaxSpeed/2) * rotOffset);
+
+            GetNode<Timer>("Timer").Start();
         }
 
         private void Movement(float delta)
@@ -38,7 +40,13 @@ namespace TowerDefenseMC.Towers.Projectiles
             Position += velocity.Rotated(Rotation); 
         }
 
-        public void OnTimerTimeout()
+        public void OnProjectileBodyEntered(PhysicsBody2D body)
+        {
+            ((EnemyTemplate) body).Dead();
+            QueueFree();
+        }
+
+        public void OnTimerTimeOut()
         {
             QueueFree();
         }

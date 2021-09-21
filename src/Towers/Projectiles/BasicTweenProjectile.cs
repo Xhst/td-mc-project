@@ -29,5 +29,10 @@ namespace TowerDefenseMC.Towers.Projectiles
         {
             QueueFree();
         }
+
+        public void OnTweenProjectileBodyEntered(PhysicsBody2D body)
+        {
+            ((EnemyTemplate) body).Dead();
+        }
     }
 }
