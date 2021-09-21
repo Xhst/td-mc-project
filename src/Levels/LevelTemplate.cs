@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using Godot;
 
+using TowerDefenseMC.Enemies;
 using TowerDefenseMC.Towers.Projectiles;
 
 using AStar = TowerDefenseMC.Utils.AStar;
@@ -76,9 +77,9 @@ namespace TowerDefenseMC.Levels
             return listsOfTiles;
         }
 
-        public void SpawnProjectile(PackedScene projectile, Vector2 pos, PhysicsBody2D target)
+        public void SpawnProjectile(PackedScene projectile, Vector2 pos, PhysicsBody2D target, int damage)
         {
-            _projectileSpawner.SpawnProjectile(projectile, pos, target);
+            _projectileSpawner.SpawnProjectile(projectile, pos, target, damage);
         }
 
         public void OnSelectTowerButtonDown(string towerName)

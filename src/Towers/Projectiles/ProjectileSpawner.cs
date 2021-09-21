@@ -1,5 +1,6 @@
 using Godot;
 
+using TowerDefenseMC.Enemies;
 using TowerDefenseMC.Levels;
 
 
@@ -14,7 +15,7 @@ namespace TowerDefenseMC.Towers.Projectiles
             _levelTemplate = levelTemplate;
         }
 
-        public void SpawnProjectile(PackedScene projectileScene, Vector2 pos, PhysicsBody2D targetBody)
+        public void SpawnProjectile(PackedScene projectileScene, Vector2 pos, PhysicsBody2D targetBody, int damage)
         {
             if (!(targetBody is EnemyTemplate target)) return;
             
@@ -23,7 +24,7 @@ namespace TowerDefenseMC.Towers.Projectiles
             //Adds the projectile to the scene
             _levelTemplate.GetNode<YSort>("ProjectileContainer").AddChild(projectile);
 
-            projectile.Start(pos, target);
+            projectile.Start(pos, target, damage);
         }
     }
 }

@@ -2,10 +2,11 @@
 
 using Godot;
 
+using TowerDefenseMC.Levels;
 using TowerDefenseMC.Utils;
 
 
-namespace TowerDefenseMC.Levels
+namespace TowerDefenseMC.Enemies
 {
     public class EnemySpawner
     {
@@ -39,7 +40,7 @@ namespace TowerDefenseMC.Levels
 
                 path2D.Curve = enemyCurve;
 
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     EnemyTemplate enemy = (EnemyTemplate) enemyScene.Instance();
                     enemyContainer.AddChild(enemy);
@@ -54,7 +55,7 @@ namespace TowerDefenseMC.Levels
                     pathFollow.AddChild(remoteTransform);
                     path2D.AddChild(pathFollow);
 
-                    await _levelTemplate.ToSignal(_levelTemplate.GetTree().CreateTimer(0.75f), "timeout");
+                    await _levelTemplate.ToSignal(_levelTemplate.GetTree().CreateTimer(0.5f), "timeout");
                 }
             }
         }

@@ -29,6 +29,5 @@ shape = SubResource( 3 )
 [node name="Timer" type="Timer" parent="."]
 wait_time = 4.0
 one_shot = true
-
 [connection signal="body_entered" from="." to="." method="OnProjectileBodyEntered"]
 [connection signal="timeout" from="Timer" to="." method="OnTimerTimeOut"]

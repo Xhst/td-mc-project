@@ -13,9 +13,10 @@ namespace TowerDefenseMC.Towers
         private bool _canShoot = true;
 
         private int _attackRange = 1;
+        private int _damage = 1;
 
         [Signal]
-        private delegate void ShootEvent();
+        private delegate void ShootEvent(int damage);
 
         [Export] 
         private int AttackRange 
@@ -74,7 +75,7 @@ namespace TowerDefenseMC.Towers
             PhysicsBody2D target = _targetList[0];
             
             //Emits the signal "ShootEvent" with the following passed variables
-            EmitSignal(nameof(ShootEvent), _projectile, pos, target);
+            EmitSignal(nameof(ShootEvent), _projectile, pos, target, _damage);
         }
 
         public void OnAttackRangeBodyEntered(PhysicsBody2D body)

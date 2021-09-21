@@ -1,5 +1,6 @@
 using Godot;
 
+using TowerDefenseMC.Enemies;
 using TowerDefenseMC.Levels;
 
 
@@ -7,9 +8,9 @@ namespace TowerDefenseMC.Towers.Projectiles
 {
     public class BasicTweenProjectile : ProjectileTemplate
     {
-        public override void Start(Vector2 pos, EnemyTemplate target)
+        public override void Start(Vector2 pos, EnemyTemplate target, int damage)
         {
-            base.Start(pos, target);
+            base.Start(pos, target, damage);
 
             Tween tween = GetNode<Tween>("Tween");
 
@@ -32,7 +33,9 @@ namespace TowerDefenseMC.Towers.Projectiles
 
         public void OnTweenProjectileBodyEntered(PhysicsBody2D body)
         {
-            ((EnemyTemplate) body).Dead();
+            if (!(body is EnemyTemplate target)) return;
+            
+            target.TakeDamage(Damage);
         }
     }
 }
