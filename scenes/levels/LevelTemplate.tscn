@@ -103,6 +103,7 @@ expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="button_down" from="UI/RedTowerButton" to="." method="OnSelectTowerButtonDown" binds= [ "RedTower" ]]
 [connection signal="mouse_entered" from="UI/RedTowerButton" to="." method="OnTowerButtonMouseEntered"]
 [connection signal="mouse_exited" from="UI/RedTowerButton" to="." method="OnTowerButtonMouseExited"]
