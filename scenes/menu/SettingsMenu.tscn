@@ -1,0 +1,173 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://UI/Font/kenvector_future.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://UI/PNG/blue_panel.png" type="Texture" id=2]
+[ext_resource path="res://UI/PNG/grey_box.png" type="Texture" id=3]
+[ext_resource path="res://UI/PNG/blue_boxCheckmark.png" type="Texture" id=4]
+[ext_resource path="res://UI/Font/kenvector_future_thin.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://UI/PNG/music_symbol.png" type="Texture" id=6]
+[ext_resource path="res://UI/PNG/sound_symbol.png" type="Texture" id=7]
+[ext_resource path="res://UI/PNG/grey_arrowUpWhite.png" type="Texture" id=8]
+[ext_resource path="res://UI/PNG/grey_arrowUpGrey.png" type="Texture" id=9]
+[ext_resource path="res://src/Menu/SettingsMenu.cs" type="Script" id=10]
+
+[sub_resource type="DynamicFont" id=1]
+size = 150
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 100
+font_data = ExtResource( 5 )
+
+[node name="SettingsMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="NinePatchRect" parent="."]
+margin_right = 2048.0
+margin_bottom = 1200.0
+texture = ExtResource( 2 )
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="."]
+margin_right = 2048.0
+margin_bottom = 170.0
+custom_fonts/font = SubResource( 1 )
+text = "Settings"
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MusicSetting" type="Control" parent="."]
+margin_left = 856.0
+margin_top = 264.0
+margin_right = 1200.0
+margin_bottom = 456.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MusicSymbol" type="TextureRect" parent="MusicSetting"]
+margin_left = -24.0
+margin_right = 176.0
+margin_bottom = 200.0
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MusicOnOff" type="TextureButton" parent="MusicSetting"]
+margin_left = 200.0
+margin_top = 56.0
+margin_right = 238.0
+margin_bottom = 92.0
+rect_scale = Vector2( 2.5, 2.5 )
+toggle_mode = true
+pressed = true
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SoundSetting" type="Control" parent="."]
+margin_left = 792.0
+margin_top = 512.0
+margin_right = 1200.0
+margin_bottom = 712.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SoundSymbol" type="TextureRect" parent="SoundSetting"]
+margin_left = -40.0
+margin_top = -56.0
+margin_right = 160.0
+margin_bottom = 144.0
+rect_scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SoundOnOff" type="TextureButton" parent="SoundSetting"]
+margin_left = 264.0
+margin_top = 56.0
+margin_right = 302.0
+margin_bottom = 92.0
+rect_scale = Vector2( 2.5, 2.5 )
+toggle_mode = true
+pressed = true
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LenguageSetting" type="Control" parent="."]
+margin_left = 384.0
+margin_top = 768.0
+margin_right = 1600.0
+margin_bottom = 904.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LenguageText" type="Label" parent="LenguageSetting"]
+margin_left = 288.0
+margin_top = 16.0
+margin_right = 880.0
+margin_bottom = 129.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = " English"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LeftButton" type="TextureButton" parent="LenguageSetting"]
+margin_left = 224.0
+margin_top = 112.0
+margin_right = 239.0
+margin_bottom = 123.0
+rect_rotation = -90.0
+rect_scale = Vector2( 5, 5 )
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RightButton" type="TextureButton" parent="LenguageSetting"]
+margin_left = 944.0
+margin_top = 32.0
+margin_right = 959.0
+margin_bottom = 42.0
+rect_rotation = 90.0
+rect_scale = Vector2( 5, 5 )
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="LenguageSetting/LeftButton" to="." method="OnLeftButtonPressed"]
+[connection signal="pressed" from="LenguageSetting/RightButton" to="." method="OnRightButtonPressed"]
