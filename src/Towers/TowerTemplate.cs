@@ -3,27 +3,22 @@ using System.Collections.Generic;
 using Godot;
 
 using TowerDefenseMC.Levels;
+using TowerDefenseMC.Singletons;
 
 
 namespace TowerDefenseMC.Towers
 {
+    
     [Tool]
     public class TowerTemplate : Node2D
     {
         private bool _canShoot = true;
 
-        private int _attackRange = 1;
-        private int _damage = 1;
+        private TowerData _towerData;
+        private Timer _reloadTimer;
 
         [Signal]
-        private delegate void ShootEvent(int damage);
-
-        [Export] 
-        private int AttackRange 
-        {
-            get => _attackRange;
-            set { _attackRange = value; SetAttackRange(_attackRange); }
-        }
+        private delegate void ShootEvent(int damage, float projectileSpeed);
 
         [Export]
         private PackedScene _projectile;
@@ -33,9 +28,12 @@ namespace TowerDefenseMC.Towers
         public override void _Ready()
         {
             _targetList = new List<PhysicsBody2D>();
-            
+            _reloadTimer = GetNode<Timer>("ReloadTimer");
+
+            SceneManager sceneManager = GetNode<SceneManager>("/root/SceneManager");
+
             //Connects the signal "ShootEvent" with the function "SpawnProjectile" passed by the Object "MainGameNode"
-            Connect(nameof(ShootEvent), Singletons.Globals.MainGameNode, nameof(LevelTemplate.SpawnProjectile)); 
+            Connect(nameof(ShootEvent), sceneManager.CurrentScene, nameof(LevelTemplate.SpawnProjectile)); 
         }
 
         public override void _PhysicsProcess(float delta)
@@ -46,10 +44,14 @@ namespace TowerDefenseMC.Towers
             }
         }
 
-        private void SetAttackRange(int num)
+        public void SetTowerData(TowerData towerData)
         {
-            _attackRange = num;
-            ConvexPolygonShape2D newShape = new ConvexPolygonShape2D { Points = GetAttackRangeShape(num) };
+            _towerData = towerData;
+        }
+
+        private void SetAttackRangeShape(int num)
+        {
+            ConvexPolygonShape2D newShape = new ConvexPolygonShape2D { Points = GetRangeShapePoints(num) };
 
             if (GetNode<CollisionShape2D>("AttackRange/AttackRangeCollision") != null)
             {
@@ -57,7 +59,7 @@ namespace TowerDefenseMC.Towers
             }
         }
 
-        public Vector2[] GetAttackRangeShape(int attackRange)
+        public static Vector2[] GetRangeShapePoints(int attackRange)
         {
             Vector2[] points = new Vector2[4];
             points[0] = new Vector2(0, -32 - (attackRange * 64));
@@ -70,12 +72,15 @@ namespace TowerDefenseMC.Towers
         private void Shoot()
         {
             _canShoot = false;
-            GetNode<Timer>("ReloadTimer").Start();
+            
+            _reloadTimer.WaitTime = _towerData.AttackSpeed;
+            _reloadTimer.Start();
+            
             Vector2 pos = GetNode<Position2D>("Node2D/ProjectileSpawn").GlobalPosition;
             PhysicsBody2D target = _targetList[0];
-            
+
             //Emits the signal "ShootEvent" with the following passed variables
-            EmitSignal(nameof(ShootEvent), _projectile, pos, target, _damage);
+            EmitSignal(nameof(ShootEvent), _projectile, pos, target, _towerData.Damage, _towerData.ProjectileSpeed);
         }
 
         public void OnAttackRangeBodyEntered(PhysicsBody2D body)

@@ -2,6 +2,8 @@
 
 using Godot;
 
+using TowerDefenseMC.Shop;
+using TowerDefenseMC.Singletons;
 using TowerDefenseMC.Towers;
 
 
@@ -16,20 +18,24 @@ namespace TowerDefenseMC.Levels
         private bool _inMenu = false;
 
         private Color _currentColor;
-        private readonly Color _yellow = new Color(0.755123f, 0.800781f, 0.150146f, 0.564706f);
-        private readonly Color _red = new Color(0.8f, 0.14902f, 0.14902f, 0.564706f);
+        
+        private readonly Color _buildAllowedColor = new Color(1f, 1f, 1f, 0.7f);
+        private readonly Color _buildNotAllowedColor = new Color(0.9f, 0.2f, 0.2f, 0.7f);
+        private readonly Color _attackRangeColor = new Color(1f, 0.7f, 0f, 0.3f);
+        private readonly Color _auraRangeColor = new Color(0.2f, 0.75f, 0.8f, 0.3f);
 
         private readonly HashSet<Vector2> _tilesWithBuildings;
         private Vector2 _currentTile = new Vector2();
 
-        private readonly TowersData _towersData = new TowersData();
+        private string _currentTowerName;
         private PackedScene _currentTower;
 
-        private readonly TowerTemplate _towerTemplate = new TowerTemplate();
-        
         private readonly Node2D _buildToolInterface;
         private readonly Sprite _towerPlaceholder;
         private readonly Polygon2D _attackRange;
+        private readonly Polygon2D _auraRange;
+        
+        private readonly Dictionary<string, TowerData> _towersData;
         
         public BuildTool(LevelTemplate levelTemplate)
         {
@@ -39,8 +45,16 @@ namespace TowerDefenseMC.Levels
             _buildToolInterface = _levelTemplate.GetNode<Node2D>("BuildToolInterface");
             _towerPlaceholder = _levelTemplate.GetNode<Sprite>("BuildToolInterface/TowerPlaceholder");
             _attackRange = _levelTemplate.GetNode<Polygon2D>("BuildToolInterface/AttackRange");
+            _auraRange = _levelTemplate.GetNode<Polygon2D>("BuildToolInterface/AuraRange");
 
-            _attackRange.Color = _yellow;
+            _attackRange.Color = _attackRangeColor;
+            _auraRange.Color = _auraRangeColor;
+            
+            TowerDataReader tdr = _levelTemplate.GetNode<TowerDataReader>("/root/TowerDataReader");
+            _towersData = tdr.GetTowersData();
+
+            ShopInterface shopInterface = _levelTemplate.GetNode<ShopInterface>("UI/ShopInterface");
+            shopInterface.LoadButtons(_towersData);
         }
 
         public void Process()
@@ -67,41 +81,81 @@ namespace TowerDefenseMC.Levels
             _buildToolInterface.Position = _levelTemplate.TileMap.MapToWorld(_currentTile);
 
             if((_levelTemplate.TileMap.GetCellv(_currentTile) == _levelTemplate.TileMap.TileSet.FindTileByName("tile") ||
-                _levelTemplate.TileMap.GetCellv(_currentTile) == _levelTemplate.TileMap.TileSet.FindTileByName("snow_tile")) && _currentColor != _yellow)
+                _levelTemplate.TileMap.GetCellv(_currentTile) == _levelTemplate.TileMap.TileSet.FindTileByName("snow_tile")) && _currentColor != _buildAllowedColor)
             {
-                _currentColor = _yellow;
+                _currentColor = _buildAllowedColor;
                 _canBuild = true;
                 (_towerPlaceholder.Material as ShaderMaterial)?.SetShaderParam("current_color", _currentColor);
                 _attackRange.Show();
+                _auraRange.Show();
             }
 
             if(_tilesWithBuildings.Contains(_currentTile) || 
                _levelTemplate.TileMap.GetCellv(_currentTile) != _levelTemplate.TileMap.TileSet.FindTileByName("tile") &&
-               _levelTemplate.TileMap.GetCellv(_currentTile) != _levelTemplate.TileMap.TileSet.FindTileByName("snow_tile") && _currentColor != _red)
+               _levelTemplate.TileMap.GetCellv(_currentTile) != _levelTemplate.TileMap.TileSet.FindTileByName("snow_tile") && _currentColor != _buildNotAllowedColor)
             {
-                _currentColor = _red;
+                _currentColor = _buildNotAllowedColor;
                 _canBuild = false;
                 (_towerPlaceholder.Material as ShaderMaterial)?.SetShaderParam("current_color", _currentColor);
                 _attackRange.Hide();
+                _auraRange.Hide();
             }
         }
 
         private void BuildTower()
         {
             if (!_canBuild || _inMenu) return;
+            if (!_towersData.TryGetValue(_currentTowerName, out TowerData towerData)) return;
 
             _tilesWithBuildings.Add(_currentTile);
             
-            Node newTower = _currentTower.Instance();
-            ((Node2D) newTower).GlobalPosition = _levelTemplate.TileMap.MapToWorld(_currentTile);
+            TowerTemplate newTower = (TowerTemplate) _currentTower.Instance();
+            newTower.GlobalPosition = _levelTemplate.TileMap.MapToWorld(_currentTile);
+            newTower.SetTowerData(towerData);
+            
             _levelTemplate.GetNode<YSort>("EntitiesContainer").AddChild(newTower);
         }
 
+        private async void UpdateTowerPlaceHolder()
+        {
+            TowerTemplate currentTowerScene = (TowerTemplate) _currentTower.Instance();
+            
+            Viewport previewViewport = _buildToolInterface.GetNode<Viewport>("Viewport");
+            previewViewport.AddChild(currentTowerScene);
+
+            await _levelTemplate.ToSignal(_levelTemplate.GetTree(), "idle_frame");
+            await _levelTemplate.ToSignal(_levelTemplate.GetTree(), "idle_frame");
+
+            ImageTexture imageTexture = new ImageTexture();
+            Image image = new Image();
+            
+            image.CopyFrom(previewViewport.GetTexture().GetData());
+            imageTexture.CreateFromImage(image);
+            
+            previewViewport.RemoveChild(currentTowerScene);
+            
+            _towerPlaceholder.Texture = imageTexture;
+        }
+        
         public void OnSelectTowerButtonDown(string towerName)
         {
-            _currentTower = _towersData.GetTower2PackedScene()[towerName];
-            _towerPlaceholder.Texture = _towersData.GetTower2Texture()[towerName];
-            _attackRange.Polygon = _towerTemplate.GetAttackRangeShape(_towersData.GetTower2AttackRange()[towerName]);
+            if (!_towersData.TryGetValue(towerName, out TowerData towerData)) return;
+
+            _currentTowerName = towerName;
+            _currentTower = ResourceLoader.Load<PackedScene>($"scenes/towers/{ towerData.SceneName }.tscn");
+            
+            UpdateTowerPlaceHolder();
+
+            if (towerData.AttackRange > 0)
+            {
+                _attackRange.Polygon = TowerTemplate.GetRangeShapePoints(towerData.AttackRange);
+            }
+
+            if (towerData.AuraRange > 0)
+            {
+                _auraRange.Polygon = TowerTemplate.GetRangeShapePoints(towerData.AuraRange);
+            }
+            
             _buildMode = true;
             _buildToolInterface.Show();
         }

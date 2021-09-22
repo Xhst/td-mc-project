@@ -7,9 +7,9 @@ namespace TowerDefenseMC.Towers.Projectiles
 {
     public class BasicTweenProjectile : ProjectileTemplate
     {
-        public override void Start(Vector2 pos, EnemyTemplate target, int damage)
+        public override void Start(Vector2 pos, EnemyTemplate target, int damage, float projectileSpeed)
         {
-            base.Start(pos, target, damage);
+            base.Start(pos, target, damage, projectileSpeed);
 
             Tween tween = GetNode<Tween>("Tween");
 

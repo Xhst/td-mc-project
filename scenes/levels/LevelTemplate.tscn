@@ -1,13 +1,9 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/TileMap.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Levels/LevelTemplate.cs" type="Script" id=2]
 [ext_resource path="res://assets/img/towers/towerSquare_sampleF.png" type="Texture" id=3]
-[ext_resource path="res://UI/PNG/grey_button11.png" type="Texture" id=5]
-[ext_resource path="res://UI/PNG/yellow_button06.png" type="Texture" id=6]
-[ext_resource path="res://UI/PNG/grey_button07.png" type="Texture" id=7]
-[ext_resource path="res://assets/img/towers/Side/towerRound_sampleC.png" type="Texture" id=8]
-[ext_resource path="res://assets/img/towers/Side/towerSquare_sampleE.png" type="Texture" id=9]
+[ext_resource path="res://scenes/ui/ShopInterface.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -15,13 +11,13 @@ code = "shader_type canvas_item;
 uniform vec4 current_color : hint_color;
 
 void fragment() {
-	vec4 final = mix(texture(TEXTURE, UV), current_color, texture(TEXTURE, UV).a);
+	vec4 final = mix(texture(TEXTURE, UV), current_color, texture(TEXTURE, UV));
 	COLOR = final;
 }"
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )
-shader_param/current_color = Color( 0.8, 0.713726, 0.14902, 0.564706 )
+shader_param/current_color = Color( 0.145098, 0.839216, 0.776471, 0.564706 )
 
 [node name="LevelTemplate" type="Node2D"]
 script = ExtResource( 2 )
@@ -31,7 +27,6 @@ script = ExtResource( 2 )
 [node name="EntitiesContainer" type="YSort" parent="."]
 
 [node name="BuildToolInterface" type="Node2D" parent="."]
-visible = false
 
 [node name="TowerPlaceholder" type="Sprite" parent="BuildToolInterface"]
 material = SubResource( 2 )
@@ -42,71 +37,24 @@ texture = ExtResource( 3 )
 position = Vector2( 0, 10 )
 polygon = PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0 )
 
+[node name="AuraRange" type="Polygon2D" parent="BuildToolInterface"]
+position = Vector2( 0, 10 )
+polygon = PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0 )
+
+[node name="Viewport" type="Viewport" parent="BuildToolInterface"]
+size = Vector2( 128, 512 )
+transparent_bg = true
+usage = 0
+render_direct_to_screen = true
+render_target_v_flip = true
+render_target_update_mode = 3
+
+[node name="Camera2D" type="Camera2D" parent="BuildToolInterface/Viewport"]
+
 [node name="Paths" type="Node2D" parent="."]
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="RedTowerButton" type="TextureButton" parent="UI"]
-margin_left = 9.4585
-margin_top = 1033.02
-margin_right = 149.458
-margin_bottom = 1191.02
-rect_min_size = Vector2( 140, 80 )
-texture_normal = ExtResource( 7 )
-texture_pressed = ExtResource( 5 )
-texture_hover = ExtResource( 6 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect" type="TextureRect" parent="UI/RedTowerButton"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -42.0
-margin_top = -56.0
-margin_right = 40.0
-margin_bottom = 43.0
-texture = ExtResource( 8 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PurpleTowerButton" type="TextureButton" parent="UI"]
-margin_left = 1896.87
-margin_top = 1035.27
-margin_right = 2036.87
-margin_bottom = 1193.27
-rect_min_size = Vector2( 140, 0 )
-texture_normal = ExtResource( 7 )
-texture_pressed = ExtResource( 5 )
-texture_hover = ExtResource( 6 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect" type="TextureRect" parent="UI/PurpleTowerButton"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -42.0
-margin_top = -56.0
-margin_right = 40.0
-margin_bottom = 43.0
-texture = ExtResource( 9 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[connection signal="button_down" from="UI/RedTowerButton" to="." method="OnSelectTowerButtonDown" binds= [ "RedTower" ]]
-[connection signal="mouse_entered" from="UI/RedTowerButton" to="." method="OnTowerButtonMouseEntered"]
-[connection signal="mouse_exited" from="UI/RedTowerButton" to="." method="OnTowerButtonMouseExited"]
-[connection signal="button_down" from="UI/PurpleTowerButton" to="." method="OnSelectTowerButtonDown" binds= [ "PurpleTower" ]]
-[connection signal="mouse_entered" from="UI/PurpleTowerButton" to="." method="OnTowerButtonMouseEntered"]
-[connection signal="mouse_exited" from="UI/PurpleTowerButton" to="." method="OnTowerButtonMouseExited"]
+[node name="ShopInterface" parent="UI" instance=ExtResource( 4 )]
+margin_left = 0.0
+margin_right = 0.0

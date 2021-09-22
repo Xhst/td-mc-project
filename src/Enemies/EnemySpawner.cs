@@ -40,7 +40,7 @@ namespace TowerDefenseMC.Enemies
 
                 path2D.Curve = enemyCurve;
 
-                for (int i = 0; i < 100; i++)
+                for (int i = 0; i < 7; i++)
                 {
                     EnemyTemplate enemy = (EnemyTemplate) enemyScene.Instance();
                     enemyContainer.AddChild(enemy);

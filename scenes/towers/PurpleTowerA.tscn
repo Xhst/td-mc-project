@@ -10,7 +10,6 @@
 points = PoolVector2Array( 0, -160, 320, 0, 0, 160, -320, 0 )
 
 [node name="PurpleTower" instance=ExtResource( 2 )]
-AttackRange = 2
 _projectile = ExtResource( 5 )
 
 [node name="towerSquare_bottomA" type="Sprite" parent="Node2D" index="1"]

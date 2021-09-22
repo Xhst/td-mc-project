@@ -19,8 +19,9 @@ config/icon="res://icon.png"
 
 [autoload]
 
-LevelDataReader="*res://src/Levels/LevelDataReader.cs"
-Globals="*res://src/Singletons/Globals.cs"
+SceneManager="*res://src/Singletons/SceneManager.cs"
+LevelDataReader="*res://src/Singletons/LevelDataReader.cs"
+TowerDataReader="*res://src/Singletons/TowerDataReader.cs"
 
 [display]
 
