@@ -16,10 +16,11 @@ namespace TowerDefenseMC.Towers.Projectiles
             Movement(delta);
         }
 
-        public virtual void Start(Vector2 pos, EnemyTemplate target, int damage)
+        public virtual void Start(Vector2 pos, EnemyTemplate target, int damage, float projectileSpeed)
         {
             Position = pos;
             Damage = damage;
+            MaxSpeed = projectileSpeed;
 
             Vector2 targetPosition = (target.GlobalPosition - pos + target.TargetOffset).Normalized();
             

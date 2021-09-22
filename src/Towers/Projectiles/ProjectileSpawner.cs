@@ -15,16 +15,17 @@ namespace TowerDefenseMC.Towers.Projectiles
             _levelTemplate = levelTemplate;
         }
 
-        public void SpawnProjectile(PackedScene projectileScene, Vector2 pos, PhysicsBody2D targetBody, int damage)
+        public void SpawnProjectile(PackedScene projectileScene, Vector2 pos, PhysicsBody2D targetBody,
+            int damage, float projectileSpeed)
         {
-            if (!(targetBody is EnemyTemplate target)) return;
+            if (!(targetBody is EnemyTemplate target) || projectileSpeed <= 0) return;
             
             ProjectileTemplate projectile = (ProjectileTemplate) projectileScene.Instance();
 
             //Adds the projectile to the scene
             _levelTemplate.GetNode<YSort>("EntitiesContainer").AddChild(projectile);
 
-            projectile.Start(pos, target, damage);
+            projectile.Start(pos, target, damage, projectileSpeed);
         }
     }
 }

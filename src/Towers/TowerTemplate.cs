@@ -15,9 +15,10 @@ namespace TowerDefenseMC.Towers
         private bool _canShoot = true;
 
         private TowerData _towerData;
+        private Timer _reloadTimer;
 
         [Signal]
-        private delegate void ShootEvent(int damage);
+        private delegate void ShootEvent(int damage, float projectileSpeed);
 
         [Export]
         private PackedScene _projectile;
@@ -27,8 +28,10 @@ namespace TowerDefenseMC.Towers
         public override void _Ready()
         {
             _targetList = new List<PhysicsBody2D>();
+            _reloadTimer = GetNode<Timer>("ReloadTimer");
+
             SceneManager sceneManager = GetNode<SceneManager>("/root/SceneManager");
-            
+
             //Connects the signal "ShootEvent" with the function "SpawnProjectile" passed by the Object "MainGameNode"
             Connect(nameof(ShootEvent), sceneManager.CurrentScene, nameof(LevelTemplate.SpawnProjectile)); 
         }
@@ -41,10 +44,9 @@ namespace TowerDefenseMC.Towers
             }
         }
 
-        private void SetAttackRange(int num)
+        public void SetTowerData(TowerData towerData)
         {
-            _towerData.AttackRange = num;
-            SetAttackRangeShape(num);
+            _towerData = towerData;
         }
 
         private void SetAttackRangeShape(int num)
@@ -70,12 +72,15 @@ namespace TowerDefenseMC.Towers
         private void Shoot()
         {
             _canShoot = false;
-            GetNode<Timer>("ReloadTimer").Start();
+            
+            _reloadTimer.WaitTime = _towerData.AttackSpeed;
+            _reloadTimer.Start();
+            
             Vector2 pos = GetNode<Position2D>("Node2D/ProjectileSpawn").GlobalPosition;
             PhysicsBody2D target = _targetList[0];
-            
+
             //Emits the signal "ShootEvent" with the following passed variables
-            EmitSignal(nameof(ShootEvent), _projectile, pos, target, _towerData.Damage);
+            EmitSignal(nameof(ShootEvent), _projectile, pos, target, _towerData.Damage, _towerData.ProjectileSpeed);
         }
 
         public void OnAttackRangeBodyEntered(PhysicsBody2D body)

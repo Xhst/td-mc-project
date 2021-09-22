@@ -11,6 +11,7 @@ namespace TowerDefenseMC.Singletons
     {
         public string Name;
         public string SceneName;
+        public string ButtonImage;
         public int Cost;
         public int AttackRange;
         public int Damage;
@@ -53,6 +54,7 @@ namespace TowerDefenseMC.Singletons
 
             towerData.Name = tower["name"]?.ToString() ?? "";
             towerData.SceneName = tower["scene_name"]?.ToString() ?? "RedTowerA";
+            towerData.ButtonImage = tower["button_image"]?.ToString() ?? "tower_red_a";
             towerData.Cost = int.Parse(tower["cost"]?.ToString() ?? "0");
             towerData.AttackRange = int.Parse(tower["attack_range"]?.ToString() ?? "0");
             towerData.Damage = int.Parse(tower["damage"]?.ToString() ?? "0");
