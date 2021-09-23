@@ -1,6 +1,7 @@
 using Godot;
 
-namespace TowerDefenseMC.Menu
+
+namespace TowerDefenseMC.UserInterface.Menu
 {
     public class LevelsMenu : Control
     {
