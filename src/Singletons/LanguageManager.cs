@@ -5,6 +5,8 @@ using Godot;
 
 using Newtonsoft.Json.Linq;
 
+using TowerDefenseMC.Utils;
+
 
 namespace TowerDefenseMC.Singletons
 {
@@ -47,12 +49,7 @@ namespace TowerDefenseMC.Singletons
         /// <returns></returns>
         private static string UI(string baseTag, params string[] locations)
         {
-            var path = ProjectSettings.GlobalizePath($"res://assets/languages/{Language}.json");
-            string jsonFileText = System.IO.File.ReadAllText(path);
-            
-            JObject json = JObject.Parse(jsonFileText);
-            
-            JToken token = json;
+            JToken token = GetJsonTokenFromFile(Language);
             
             foreach (string location in locations)
             {
@@ -67,6 +64,32 @@ namespace TowerDefenseMC.Singletons
             }
 
             return result;
+        }
+
+        private static JToken GetJsonTokenFromFile(string fileName)
+        {
+            string path = ProjectSettings.GlobalizePath($"res://assets/languages/{ fileName }.json");
+            string jsonFileText = System.IO.File.ReadAllText(path);
+            
+            JObject json = JObject.Parse(jsonFileText);
+            
+            return json;
+        }
+
+        public static List<string> GetAvailableLanguages()
+        {
+            List<string> langFiles = FileHelper.FilesInDirectory("res://assets/languages/");
+            List<string> availableLanguages = new List<string>();
+
+            foreach (string file in langFiles)
+            {
+                string fileName = file.Replace(".json", "");
+                JToken token = GetJsonTokenFromFile(fileName);
+                
+                availableLanguages.Add(token["lang"]?.ToString() ?? "???");
+            }
+
+            return availableLanguages;
         }
     }
 }

@@ -1,5 +1,9 @@
 ﻿{
+  "lang": "English",
+  
   "main_menu": {
-    
+    "levels" : "Levels",
+    "settings" : "Settings",
+    "share" : "Share"
   }
 }

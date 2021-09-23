@@ -1,5 +1,9 @@
 ﻿{
+  "lang": "Italiano",
+  
   "main_menu": {
-
+    "levels" : "Livelli",
+    "settings" : "Impostazioni",
+    "share" : "Condividi"
   }
 }
