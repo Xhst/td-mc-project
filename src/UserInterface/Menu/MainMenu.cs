@@ -55,6 +55,11 @@ namespace TowerDefenseMC.UserInterface.Menu
             _clickSound.Play();
         }
 
+        public void OnShareButtonPressed()
+        {
+            _clickSound.Play();
+        }
+
         public void OnBackButtonPressed()
         {
             ShowMenu(Menu.MainMenu);

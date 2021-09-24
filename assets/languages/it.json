@@ -4,6 +4,7 @@
   "main_menu": {
     "levels" : "Livelli",
     "settings" : "Impostazioni",
-    "share" : "Condividi"
+    "share" : "Condividi",
+    "back" : "Torna Al Menu"
   }
 }
