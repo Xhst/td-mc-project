@@ -79,8 +79,7 @@ namespace TowerDefenseMC.Levels
             return listsOfTiles;
         }
 
-        public void SpawnProjectile(PackedScene projectile, Vector2 pos, PhysicsBody2D target, 
-            int damage, float projectileSpeed)
+        public void SpawnProjectile(PackedScene projectile, Vector2 pos, PhysicsBody2D target, int damage, float projectileSpeed)
         {
             _projectileSpawner.SpawnProjectile(projectile, pos, target, damage, projectileSpeed);
         }

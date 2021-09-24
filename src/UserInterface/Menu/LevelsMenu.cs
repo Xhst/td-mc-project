@@ -5,14 +5,9 @@ namespace TowerDefenseMC.UserInterface.Menu
 {
     public class LevelsMenu : Control
     {
-        public void OnLevelOneButtonPressed()
+        public void OnLevelButtonPressed()
         {
-            GetTree().ChangeScene("res://scenes/levels/LevelTemplate.tscn");
-        }
-
-        public void OnGenericLevelButtonPressed()
-        {
-            GetNode<AudioStreamPlayer>("UISounds/LevelButtonClick").Play();
+            GetNode<AudioStreamPlayer>("LevelButtonClickSound").Play();
         }
     }
 }

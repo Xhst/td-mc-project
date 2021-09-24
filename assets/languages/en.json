@@ -4,6 +4,7 @@
   "main_menu": {
     "levels" : "Levels",
     "settings" : "Settings",
-    "share" : "Share"
+    "share" : "Share",
+    "back" : "Main Menu"
   }
 }
