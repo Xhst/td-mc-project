@@ -20,6 +20,7 @@ namespace TowerDefenseMC.Towers
         private TowerData _towerData;
         private LevelTemplate _level;
         private Timer _reloadTimer;
+        private Vector2 _projectileSpawnPosition;
         
         private Dictionary<string, TowerEffect> _effects;
 
@@ -40,6 +41,7 @@ namespace TowerDefenseMC.Towers
             _effects = new Dictionary<string, TowerEffect>();
             _targetList = new List<PhysicsBody2D>();
             _reloadTimer = GetNode<Timer>("ReloadTimer");
+            _projectileSpawnPosition = GetNode<Position2D>("Node2D/ProjectileSpawn").GlobalPosition;
 
             SceneManager sceneManager = GetNode<SceneManager>("/root/SceneManager");
 
@@ -88,12 +90,11 @@ namespace TowerDefenseMC.Towers
                 _reloadTimer.WaitTime = 1 / _attackSpeed;
                 _reloadTimer.Start();
             }
-
-            Vector2 pos = GetNode<Position2D>("Node2D/ProjectileSpawn").GlobalPosition;
+            
             PhysicsBody2D target = _targetList[0];
             
             //Emits the signal "ShootEvent" with the following passed variables
-            EmitSignal(nameof(ShootEvent), _projectile, pos, target, _damage, _towerData.ProjectileSpeed);
+            EmitSignal(nameof(ShootEvent), _projectile, _projectileSpawnPosition, target, _damage, _towerData.ProjectileSpeed);
         }
 
         private void ApplyEffect(string effectName, float auraDamage, float auraAttackSpeed)
