@@ -14,11 +14,12 @@ namespace TowerDefenseMC.Singletons
         public string ButtonImage;
         public int Cost;
         public int AttackRange;
-        public int Damage;
+        public float Damage;
         public float AttackSpeed;
         public float ProjectileSpeed;
+        public string AuraEffectName;
         public int AuraRange;
-        public int AuraDamage;
+        public float AuraDamage;
         public float AuraAttackSpeed;
     }
     
@@ -57,13 +58,14 @@ namespace TowerDefenseMC.Singletons
             towerData.ButtonImage = tower["button_image"]?.ToString() ?? "tower_red_a";
             towerData.Cost = int.Parse(tower["cost"]?.ToString() ?? "0");
             towerData.AttackRange = int.Parse(tower["attack_range"]?.ToString() ?? "0");
-            towerData.Damage = int.Parse(tower["damage"]?.ToString() ?? "0");
+            towerData.Damage = float.Parse(tower["damage"]?.ToString() ?? "0");
             towerData.AttackSpeed = float.Parse(tower["attack_speed"]?.ToString() ?? "0");
             towerData.ProjectileSpeed = float.Parse(tower["projectile_speed"]?.ToString() ?? "0");
+            towerData.AuraEffectName = tower["aura_effect_name"]?.ToString() ?? "";
             towerData.AuraRange = int.Parse(tower["aura_range"]?.ToString() ?? "0");
-            towerData.AuraDamage = int.Parse(tower["aura_damage"]?.ToString() ?? "0");
+            towerData.AuraDamage = float.Parse(tower["aura_damage"]?.ToString() ?? "0");
             towerData.AuraAttackSpeed = float.Parse(tower["aura_attack_speed"]?.ToString() ?? "0");
-
+ 
             return towerData;
         }
     }

@@ -5,6 +5,7 @@ using Godot;
 
 using TowerDefenseMC.Enemies;
 using TowerDefenseMC.Singletons;
+using TowerDefenseMC.Towers;
 using TowerDefenseMC.Towers.Projectiles;
 
 using AStar = TowerDefenseMC.Utils.AStar;
@@ -19,12 +20,14 @@ namespace TowerDefenseMC.Levels
         private BuildTool _buildTool;
         private ProjectileSpawner _projectileSpawner;
 
+        private Dictionary<Vector2, TowerTemplate> _tilesWithTowers;
         private List<List<Vector2>> _paths;
         private List<List<Vector2>> _rivers;
 
         public override void _Ready()
         {
             TileMap = GetNode<TileMap>("TileMap");
+            _tilesWithTowers = new Dictionary<Vector2, TowerTemplate>();
 
             SceneManager sceneManager = GetNode<SceneManager>("/root/SceneManager");
             sceneManager.CurrentScene = this;
@@ -57,6 +60,16 @@ namespace TowerDefenseMC.Levels
             _buildTool.Process();
         }
 
+        public void AddTowerOnTile(Vector2 tile, TowerTemplate tower)
+        {
+            _tilesWithTowers.Add(tile, tower);
+        }
+
+        public bool TileHasTower(Vector2 tile)
+        {
+            return _tilesWithTowers.ContainsKey(tile);
+        }
+
         private List<List<Vector2>> CalculateTilesInPointsLists(List<List<Vector2>> pointsLists)
         {
             List<List<Vector2>> listsOfTiles = new List<List<Vector2>>();
@@ -79,6 +92,41 @@ namespace TowerDefenseMC.Levels
             return listsOfTiles;
         }
 
+        public HashSet<TowerTemplate> GetTowersOnArea(Vector2 center, int range)
+        {
+            HashSet<TowerTemplate> towersOnArea = new HashSet<TowerTemplate>();
+            
+            HashSet<Vector2> tilesOnArea = GetTilesOnArea(center, range);
+
+            foreach (Vector2 tile in tilesOnArea)
+            {
+                if (_tilesWithTowers.TryGetValue(tile, out TowerTemplate tower))
+                {
+                    towersOnArea.Add(tower);
+                }
+            }
+
+            return towersOnArea;
+        }
+
+        public HashSet<Vector2> GetTilesOnArea(Vector2 center, int range)
+        {
+            HashSet<Vector2> tilesOnArea = new HashSet<Vector2>();
+
+            for (int x = 0; x <= range; x++)
+            {
+                for (int y = 0; y <= range; y++)
+                {
+                    tilesOnArea.Add(new Vector2(center.x + x, center.y + y));
+                    tilesOnArea.Add(new Vector2(center.x + x, center.y - y));
+                    tilesOnArea.Add(new Vector2(center.x - x, center.y + y));
+                    tilesOnArea.Add(new Vector2(center.x - x, center.y - y));
+                }
+            }
+
+            return tilesOnArea;
+        }
+        
         public void SpawnProjectile(PackedScene projectile, Vector2 pos, PhysicsBody2D target, int damage, float projectileSpeed)
         {
             _projectileSpawner.SpawnProjectile(projectile, pos, target, damage, projectileSpeed);

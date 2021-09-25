@@ -9,7 +9,7 @@ namespace TowerDefenseMC.Enemies
         public Vector2 TargetOffset = new Vector2(0, -50);
         
         private float _speed = 150;
-        private int _healthPoints = 3;
+        private float _healthPoints = 3;
 
         private TextureProgress _healthBar;
 

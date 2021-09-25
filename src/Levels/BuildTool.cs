@@ -23,8 +23,7 @@ namespace TowerDefenseMC.Levels
         private readonly Color _buildNotAllowedColor = new Color(0.9f, 0.2f, 0.2f, 0.7f);
         private readonly Color _attackRangeColor = new Color(1f, 0.7f, 0f, 0.3f);
         private readonly Color _auraRangeColor = new Color(0.2f, 0.75f, 0.8f, 0.3f);
-
-        private readonly HashSet<Vector2> _tilesWithBuildings;
+        
         private Vector2 _currentTile = new Vector2();
 
         private string _currentTowerName;
@@ -40,8 +39,7 @@ namespace TowerDefenseMC.Levels
         public BuildTool(LevelTemplate levelTemplate)
         {
             _levelTemplate = levelTemplate;
-            _tilesWithBuildings = new HashSet<Vector2>();
-            
+
             _buildToolInterface = _levelTemplate.GetNode<Node2D>("BuildToolInterface");
             _towerPlaceholder = _levelTemplate.GetNode<Sprite>("BuildToolInterface/TowerPlaceholder");
             _attackRange = _levelTemplate.GetNode<Polygon2D>("BuildToolInterface/AttackRange");
@@ -80,7 +78,7 @@ namespace TowerDefenseMC.Levels
             _currentTile = _levelTemplate.TileMap.WorldToMap(mousePos);
             _buildToolInterface.Position = _levelTemplate.TileMap.MapToWorld(_currentTile);
 
-            if((_levelTemplate.TileMap.GetCellv(_currentTile) == _levelTemplate.TileMap.TileSet.FindTileByName("tile") ||
+            if ((_levelTemplate.TileMap.GetCellv(_currentTile) == _levelTemplate.TileMap.TileSet.FindTileByName("tile") ||
                 _levelTemplate.TileMap.GetCellv(_currentTile) == _levelTemplate.TileMap.TileSet.FindTileByName("snow_tile")) && _currentColor != _buildAllowedColor)
             {
                 _currentColor = _buildAllowedColor;
@@ -90,7 +88,7 @@ namespace TowerDefenseMC.Levels
                 _auraRange.Show();
             }
 
-            if(_tilesWithBuildings.Contains(_currentTile) || 
+            if (_levelTemplate.TileHasTower(_currentTile) || 
                _levelTemplate.TileMap.GetCellv(_currentTile) != _levelTemplate.TileMap.TileSet.FindTileByName("tile") &&
                _levelTemplate.TileMap.GetCellv(_currentTile) != _levelTemplate.TileMap.TileSet.FindTileByName("snow_tile") && _currentColor != _buildNotAllowedColor)
             {
@@ -107,12 +105,13 @@ namespace TowerDefenseMC.Levels
             if (!_canBuild || _inMenu) return;
             if (!_towersData.TryGetValue(_currentTowerName, out TowerData towerData)) return;
 
-            _tilesWithBuildings.Add(_currentTile);
-            
             TowerTemplate newTower = (TowerTemplate) _currentTower.Instance();
             newTower.GlobalPosition = _levelTemplate.TileMap.MapToWorld(_currentTile);
-            newTower.SetTowerData(towerData);
+            newTower.Init(towerData, _levelTemplate, _currentTile);
+            newTower.OnPlace();
             
+            _levelTemplate.AddTowerOnTile(_currentTile, newTower);
+
             _levelTemplate.GetNode<YSort>("EntitiesContainer").AddChild(newTower);
         }
 

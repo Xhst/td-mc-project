@@ -25,9 +25,10 @@
       "scene_name": "RedTowerCrystal",
       "button_image": "tower_crystal",
       "cost": 50,
+      "aura_effect_name": "as20_dmg30",
       "aura_range": 5,
-      "aura_attack_speed": 20,
-      "aura_damage": 30
+      "aura_attack_speed": 200,
+      "aura_damage": 100
     }
   ]  
 }
