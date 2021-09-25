@@ -21,7 +21,8 @@ config/icon="res://icon.png"
 
 [autoload]
 
-SceneManager="*res://src/Singletons/SceneManager.cs"
+Scenes="*res://src/Singletons/Scenes.cs"
+Game="*res://src/Singletons/Game.cs"
 LevelDataReader="*res://src/Singletons/LevelDataReader.cs"
 TowerDataReader="*res://src/Singletons/TowerDataReader.cs"
 

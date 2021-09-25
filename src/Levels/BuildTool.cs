@@ -2,9 +2,9 @@
 
 using Godot;
 
-using TowerDefenseMC.Shop;
 using TowerDefenseMC.Singletons;
 using TowerDefenseMC.Towers;
+using TowerDefenseMC.UserInterface.Shop;
 
 
 namespace TowerDefenseMC.Levels

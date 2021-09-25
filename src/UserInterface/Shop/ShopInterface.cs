@@ -2,11 +2,10 @@
 
 using Godot;
 
-using TowerDefenseMC.Levels;
 using TowerDefenseMC.Singletons;
 
 
-namespace TowerDefenseMC.Shop
+namespace TowerDefenseMC.UserInterface.Shop
 {
     public class ShopInterface : Control
     {
@@ -27,9 +26,6 @@ namespace TowerDefenseMC.Shop
                 _hBoxContainer.AddChild(shopItem);
                 
                 shopItem.UpdateData(tower.ButtonImage, tower.Cost, tower.Name);
-                
-                
-
             }
         }
     }
