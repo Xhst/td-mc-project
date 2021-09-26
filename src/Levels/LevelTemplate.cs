@@ -137,7 +137,6 @@ namespace TowerDefenseMC.Levels
 
         public void OnSelectTowerButtonDown(string towerName)
         {
-            GD.Print("prova2");
             _buildTool.OnSelectTowerButtonDown(towerName);
         }
 

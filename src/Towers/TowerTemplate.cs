@@ -46,14 +46,8 @@ namespace TowerDefenseMC.Towers
             _reloadTimer = GetNode<Timer>("ReloadTimer");
             _projectileSpawnPosition = GetNode<Position2D>("Node2D/ProjectileSpawn").GlobalPosition;
 
-            //Connects the signal "ShootEvent" with the function "SpawnProjectile" passed by the Object 
-            /*"MainGameNode"
-<<<<<<< src/Towers/TowerTemplate.cs
-            Connect(nameof(ShootEvent), sceneManager.CurrentScene, nameof(LevelTemplate.SpawnProjectile));
-            Connect(nameof(TouchEvent), sceneManager.CurrentScene, nameof(LevelTemplate.OnTouchScreenButtonReleased));
-=======
             Connect(nameof(ShootEvent), Scenes.MainScene.GetActiveScene(), nameof(LevelTemplate.SpawnProjectile)); 
->>>>>>> src/Towers/TowerTemplate.cs*/
+            Connect(nameof(TouchEvent), Scenes.MainScene.GetActiveScene(), nameof(LevelTemplate.OnTouchScreenButtonReleased));
         }
 
         public override void _PhysicsProcess(float delta)

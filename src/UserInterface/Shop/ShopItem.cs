@@ -52,7 +52,6 @@ namespace TowerDefenseMC.UserInterface.Shop
         
         public void OnButtonDown()
         {
-            GD.Print("prova");
             EmitSignal(nameof(ClickEvent), _onButtonDownBind);
         }
 
