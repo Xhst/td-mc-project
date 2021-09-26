@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://UI/Font/kenvector_future.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://UI/PNG/blue_button06.png" type="Texture" id=2]
 [ext_resource path="res://UI/PNG/grey_button07.png" type="Texture" id=3]
+[ext_resource path="res://scenes/ui/fonttest.tres" type="DynamicFont" id=4]
+[ext_resource path="res://src/UserInterface/Menu/LevelButton.cs" type="Script" id=5]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 2 )
@@ -449,15 +451,29 @@ WindowDialog/icons/close = null
 WindowDialog/icons/close_highlight = null
 WindowDialog/styles/panel = null
 
-[node name="LevelButton" type="Button"]
-margin_right = 52.0
-margin_bottom = 51.0
-rect_scale = Vector2( 2.46, 2.5 )
+[node name="LevelButtonContainer" type="CenterContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LevelButton" type="Button" parent="."]
+margin_left = 949.0
+margin_top = 525.0
+margin_right = 1099.0
+margin_bottom = 675.0
+rect_min_size = Vector2( 150, 150 )
 theme = SubResource( 4 )
+custom_fonts/font = ExtResource( 4 )
 custom_colors/font_color_disabled = Color( 0.992157, 0.992157, 0.992157, 1 )
 custom_constants/hseparation = 0
-text = "0"
+text = " 0"
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
 }
+[connection signal="pressed" from="LevelButton" to="." method="OnLevelButtonPressed"]

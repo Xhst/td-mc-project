@@ -28,12 +28,12 @@ namespace TowerDefenseMC.Levels
         {
             TileMap = GetNode<TileMap>("TileMap");
             _tilesWithTowers = new Dictionary<Vector2, TowerTemplate>();
+        }
 
-            SceneManager sceneManager = GetNode<SceneManager>("/root/SceneManager");
-            sceneManager.CurrentScene = this;
-            
+        public void PreStart(int level)
+        {
             LevelDataReader ldr = GetNode<LevelDataReader>("/root/LevelDataReader");
-            LevelData levelData = ldr.GetLevelData(1);
+            LevelData levelData = ldr.GetLevelData(level);
 
             _paths = CalculateTilesInPointsLists(levelData.EnemyPathsPoints);
             _rivers = CalculateTilesInPointsLists(levelData.RiversPoints);
@@ -42,7 +42,10 @@ namespace TowerDefenseMC.Levels
             terrainBuilder.FillViewPortWithTile(GetViewSize());
             terrainBuilder.DrawCustomTiles(levelData.Tiles);
             terrainBuilder.DrawPathsAndRivers(_paths, _rivers);
+        }
 
+        public void Start()
+        {
             _buildTool = new BuildTool(this);
             _projectileSpawner = new ProjectileSpawner(this);
 
@@ -134,6 +137,7 @@ namespace TowerDefenseMC.Levels
 
         public void OnSelectTowerButtonDown(string towerName)
         {
+            GD.Print("prova2");
             _buildTool.OnSelectTowerButtonDown(towerName);
         }
 

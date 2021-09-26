@@ -4,7 +4,7 @@ using TowerDefenseMC.Levels;
 using TowerDefenseMC.Singletons;
 
 
-namespace TowerDefenseMC.Shop
+namespace TowerDefenseMC.UserInterface.Shop
 {
     public class ShopItem : Control
     {
@@ -28,12 +28,12 @@ namespace TowerDefenseMC.Shop
         {
             _towerImage = GetNode<Sprite>("Button/TowerImage");
             _costText = GetNode<RichTextLabel>("Button/Cost/CostText");
-
-            SceneManager sceneManager = GetNode<SceneManager>("/root/SceneManager");
             
-            Connect(nameof(ClickEvent), sceneManager.CurrentScene, nameof(LevelTemplate.OnSelectTowerButtonDown));
-            Connect(nameof(MouseEntered), sceneManager.CurrentScene, nameof(LevelTemplate.OnTowerButtonMouseEntered)); 
-            Connect(nameof(MouseExited), sceneManager.CurrentScene, nameof(LevelTemplate.OnTowerButtonMouseExited)); 
+            GD.Print(Scenes.MainScene.GetActiveScene().GetClass().BaseName());
+
+            Connect(nameof(ClickEvent), Scenes.MainScene.GetActiveScene(), nameof(LevelTemplate.OnSelectTowerButtonDown));
+            Connect(nameof(MouseEntered), Scenes.MainScene.GetActiveScene(), nameof(LevelTemplate.OnTowerButtonMouseEntered)); 
+            Connect(nameof(MouseExited), Scenes.MainScene.GetActiveScene(), nameof(LevelTemplate.OnTowerButtonMouseExited)); 
 
         }
 
@@ -52,6 +52,7 @@ namespace TowerDefenseMC.Shop
         
         public void OnButtonDown()
         {
+            GD.Print("prova");
             EmitSignal(nameof(ClickEvent), _onButtonDownBind);
         }
 

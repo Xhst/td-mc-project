@@ -18,6 +18,7 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+_levelButtonScene = ExtResource( 8 )
 
 [node name="Background" type="NinePatchRect" parent="."]
 margin_right = 2048.0
@@ -43,87 +44,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LevelOneButton" parent="." instance=ExtResource( 8 )]
-margin_left = 560.0
-margin_top = 320.0
-margin_right = 612.0
-margin_bottom = 371.0
-text = "1"
-
-[node name="LevelTwoButton" parent="." instance=ExtResource( 8 )]
-margin_left = 752.0
-margin_top = 320.0
-margin_right = 804.0
-margin_bottom = 371.0
-text = "2"
-
-[node name="LevelThreeButton" parent="." instance=ExtResource( 8 )]
-margin_left = 944.0
-margin_top = 320.0
-margin_right = 996.0
-margin_bottom = 371.0
-text = "3"
-
-[node name="LevelFourButton" parent="." instance=ExtResource( 8 )]
-margin_left = 1136.0
-margin_top = 320.0
-margin_right = 1188.0
-margin_bottom = 371.0
-text = "4"
-
-[node name="LevelFiveButton" parent="." instance=ExtResource( 8 )]
-margin_left = 1328.0
-margin_top = 320.0
-margin_right = 1380.0
-margin_bottom = 371.0
-text = "5"
-
-[node name="LevelSixButton" parent="." instance=ExtResource( 8 )]
-margin_left = 560.0
-margin_top = 512.0
-margin_right = 612.0
-margin_bottom = 563.0
-text = "6"
-
-[node name="LevelSevenButton" parent="." instance=ExtResource( 8 )]
-margin_left = 752.0
-margin_top = 512.0
-margin_right = 804.0
-margin_bottom = 563.0
-text = "7"
-
-[node name="LevelEightButton" parent="." instance=ExtResource( 8 )]
-margin_left = 944.0
-margin_top = 512.0
-margin_right = 996.0
-margin_bottom = 563.0
-text = "8"
-
-[node name="LevelNineButton" parent="." instance=ExtResource( 8 )]
-margin_left = 1136.0
-margin_top = 512.0
-margin_right = 1188.0
-margin_bottom = 563.0
-text = "9"
-
-[node name="LevelTenButton" parent="." instance=ExtResource( 8 )]
-margin_left = 1328.0
-margin_top = 512.0
-margin_right = 1380.0
-margin_bottom = 563.0
-text = "10"
+[node name="ButtonsContainer" type="GridContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 450.0
+margin_top = 200.0
+margin_right = -450.0
+margin_bottom = -100.0
+columns = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="LevelButtonClickSound" type="AudioStreamPlayer" parent="."]
 pause_mode = 1
 stream = ExtResource( 7 )
-
-[connection signal="pressed" from="LevelOneButton" to="." method="OnLevelButtonPressed"]
-[connection signal="pressed" from="LevelTwoButton" to="." method="OnLevelButtonPressed"]
-[connection signal="pressed" from="LevelThreeButton" to="." method="OnLevelButtonPressed"]
-[connection signal="pressed" from="LevelFourButton" to="." method="OnLevelButtonPressed"]
-[connection signal="pressed" from="LevelFiveButton" to="." method="OnLevelButtonPressed"]
-[connection signal="pressed" from="LevelSixButton" to="." method="OnLevelButtonPressed"]
-[connection signal="pressed" from="LevelSevenButton" to="." method="OnLevelButtonPressed"]
-[connection signal="pressed" from="LevelEightButton" to="." method="OnLevelButtonPressed"]
-[connection signal="pressed" from="LevelNineButton" to="." method="OnLevelButtonPressed"]
-[connection signal="pressed" from="LevelTenButton" to="." method="OnLevelButtonPressed"]

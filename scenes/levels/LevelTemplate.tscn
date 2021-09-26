@@ -28,6 +28,7 @@ script = ExtResource( 2 )
 [node name="EntitiesContainer" type="YSort" parent="."]
 
 [node name="BuildToolInterface" type="Node2D" parent="."]
+visible = false
 
 [node name="TowerPlaceholder" type="Sprite" parent="BuildToolInterface"]
 material = SubResource( 2 )
