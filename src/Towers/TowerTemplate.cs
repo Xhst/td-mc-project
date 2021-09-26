@@ -30,6 +30,9 @@ namespace TowerDefenseMC.Towers
         [Signal]
         private delegate void ShootEvent(int damage, float projectileSpeed);
 
+        [Signal]
+        private delegate void TouchEvent(string bind);
+
         [Export]
         private PackedScene _projectile;
         
@@ -44,7 +47,8 @@ namespace TowerDefenseMC.Towers
             SceneManager sceneManager = GetNode<SceneManager>("/root/SceneManager");
 
             //Connects the signal "ShootEvent" with the function "SpawnProjectile" passed by the Object "MainGameNode"
-            Connect(nameof(ShootEvent), sceneManager.CurrentScene, nameof(LevelTemplate.SpawnProjectile)); 
+            Connect(nameof(ShootEvent), sceneManager.CurrentScene, nameof(LevelTemplate.SpawnProjectile));
+            Connect(nameof(TouchEvent), sceneManager.CurrentScene, nameof(LevelTemplate.OnTouchScreenButtonReleased));
         }
 
         public override void _PhysicsProcess(float delta)
@@ -136,6 +140,16 @@ namespace TowerDefenseMC.Towers
             }
         }
         
+        public float GetEffectDamageAdded()
+        {
+            return _damage - _towerData.Damage;
+        }
+
+        public float GetEffectAttackSpeedAdded()
+        {
+            return _attackSpeed - _towerData.AttackSpeed;
+        }
+
         public void OnPlace()
         {
             HashSet<TowerTemplate> towersOnAuraRange = _level.GetTowersOnArea(_position, _towerData.AuraRange);
@@ -144,6 +158,11 @@ namespace TowerDefenseMC.Towers
             {
                 tower.ApplyEffect(_towerData.AuraEffectName, _towerData.AuraDamage, _towerData.AuraAttackSpeed);
             }
+        }
+
+        public Dictionary<string, TowerEffect> GetEffects()
+        {
+            return _effects;
         }
 
         public void OnAttackRangeBodyEntered(PhysicsBody2D body)
@@ -161,6 +180,11 @@ namespace TowerDefenseMC.Towers
         public void OnReloadTimerTimeout()
         {
             _canShoot = true;
+        }
+
+        public void OnTouchScreenButtonReleased(string towerName)
+        {
+            EmitSignal(nameof(TouchEvent), towerName, this);
         }
     }
 }

@@ -6,5 +6,6 @@
 [node name="RedTower" instance=ExtResource( 2 )]
 
 [node name="towerRound_crystals" type="Sprite" parent="Node2D" index="1"]
-scale = Vector2( 1, 1 )
 texture = ExtResource( 1 )
+
+[connection signal="pressed" from="TouchScreenButton" to="." method="OnTouchScreenButtonReleased" binds= [ "Crystal" ]]

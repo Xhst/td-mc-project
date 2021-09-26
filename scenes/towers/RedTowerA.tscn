@@ -27,3 +27,5 @@ texture = ExtResource( 3 )
 
 [node name="ProjectileSpawn" parent="Node2D" index="5"]
 position = Vector2( 0, -70 )
+
+[connection signal="pressed" from="TouchScreenButton" to="." method="OnTouchScreenButtonReleased" binds= [ "RedA" ]]

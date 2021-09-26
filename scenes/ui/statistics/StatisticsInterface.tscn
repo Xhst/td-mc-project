@@ -1,0 +1,204 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://scenes/ui/statistics/StatisticName.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/UserInterface/Statistics/StatisticsInterface.cs" type="Script" id=2]
+[ext_resource path="res://UI/Font/kenvector_future.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://UI/PNG/red_panel.png" type="Texture" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 30
+font_data = ExtResource( 3 )
+
+[node name="StatisticsInterface" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+margin_top = 900.0
+margin_right = 580.0
+margin_bottom = 1200.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NinePatchRect" type="NinePatchRect" parent="ReferenceRect"]
+modulate = Color( 1, 1, 1, 0.392157 )
+margin_right = 580.0
+margin_bottom = 300.0
+texture = ExtResource( 4 )
+patch_margin_left = 7
+patch_margin_top = 7
+patch_margin_right = 7
+patch_margin_bottom = 7
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Statistics" type="VBoxContainer" parent="ReferenceRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -140.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Damage" parent="ReferenceRect/Statistics" instance=ExtResource( 1 )]
+margin_right = 560.0
+text = "Damage"
+Text = "statistics.damage"
+
+[node name="DamageValue" type="Label" parent="ReferenceRect/Statistics/Damage"]
+margin_right = 480.0
+margin_bottom = 35.0
+mouse_filter = 1
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 1 )
+text = "0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="EffectDamageAdded" type="Label" parent="ReferenceRect/Statistics/Damage"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = 480.0
+margin_right = 565.0
+margin_bottom = 35.0
+mouse_filter = 1
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="AttackSpeed" parent="ReferenceRect/Statistics" instance=ExtResource( 1 )]
+margin_top = 39.0
+margin_right = 560.0
+margin_bottom = 74.0
+text = "Attack Speed"
+Text = "statistics.attack_speed"
+
+[node name="AttackSpeedValue" type="Label" parent="ReferenceRect/Statistics/AttackSpeed"]
+margin_right = 480.0
+margin_bottom = 35.0
+mouse_filter = 1
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 1 )
+text = "0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="EffectAttackSpeedAdded" type="Label" parent="ReferenceRect/Statistics/AttackSpeed"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = 480.0
+margin_right = 565.0
+margin_bottom = 35.0
+mouse_filter = 1
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="AttackRange" parent="ReferenceRect/Statistics" instance=ExtResource( 1 )]
+margin_top = 78.0
+margin_right = 560.0
+margin_bottom = 113.0
+text = "Attack Range"
+Text = "statistics.attack_range"
+
+[node name="AttackRangeValue" type="Label" parent="ReferenceRect/Statistics/AttackRange"]
+margin_right = 480.0
+margin_bottom = 35.0
+mouse_filter = 1
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 1 )
+text = "0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="ProjectileSpeed" parent="ReferenceRect/Statistics" instance=ExtResource( 1 )]
+margin_top = 117.0
+margin_right = 560.0
+margin_bottom = 152.0
+text = "Projectile Speed"
+Text = "statistics.projectile_speed"
+
+[node name="ProjectileSpeedValue" type="Label" parent="ReferenceRect/Statistics/ProjectileSpeed"]
+margin_right = 480.0
+margin_bottom = 35.0
+mouse_filter = 1
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 1 )
+text = "0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="AuraEffects" type="VBoxContainer" parent="ReferenceRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 215.0
+margin_right = -10.0
+margin_bottom = -10.0
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="AuraDamage" parent="ReferenceRect/AuraEffects" instance=ExtResource( 1 )]
+margin_right = 560.0
+text = "AE: Damage"
+Text = "statistics.aura_damage"
+
+[node name="AuraDamageValue" type="Label" parent="ReferenceRect/AuraEffects/AuraDamage"]
+margin_right = 480.0
+margin_bottom = 35.0
+mouse_filter = 1
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 1 )
+text = "0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="AuraAttackSpeed" parent="ReferenceRect/AuraEffects" instance=ExtResource( 1 )]
+margin_top = 39.0
+margin_right = 560.0
+margin_bottom = 74.0
+text = "AE: Attack Speed"
+Text = "statistics.aura_attack_speed"
+
+[node name="AuraAttackSpeedValue" type="Label" parent="ReferenceRect/AuraEffects/AuraAttackSpeed"]
+margin_right = 480.0
+margin_bottom = 35.0
+mouse_filter = 1
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 1 )
+text = "0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}

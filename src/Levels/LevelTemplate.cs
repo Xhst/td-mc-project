@@ -147,5 +147,9 @@ namespace TowerDefenseMC.Levels
             _buildTool.OnTowerButtonMouseExited();
         }
 
+        public void OnTouchScreenButtonReleased(string towerName, TowerTemplate tower)
+        {
+            _buildTool.TowerStatistics(towerName, tower);
+        }
     }
 }
