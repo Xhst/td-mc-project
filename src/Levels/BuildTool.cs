@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 using Godot;
 
 using TowerDefenseMC.Singletons;
 using TowerDefenseMC.Towers;
+using TowerDefenseMC.UserInterface.Statistics;
 using TowerDefenseMC.UserInterface.Shop;
 
 
@@ -34,6 +35,8 @@ namespace TowerDefenseMC.Levels
         private readonly Polygon2D _attackRange;
         private readonly Polygon2D _auraRange;
         
+        private readonly StatisticsInterface _statisticsInterface;
+
         private readonly Dictionary<string, TowerData> _towersData;
         
         public BuildTool(LevelTemplate levelTemplate)
@@ -53,6 +56,8 @@ namespace TowerDefenseMC.Levels
 
             ShopInterface shopInterface = _levelTemplate.GetNode<ShopInterface>("UI/ShopInterface");
             shopInterface.LoadButtons(_towersData);
+
+            _statisticsInterface = _levelTemplate.GetNode<StatisticsInterface>("UI/StatisticsInterface");
         }
 
         public void Process()
@@ -70,6 +75,7 @@ namespace TowerDefenseMC.Levels
 
             _buildMode = false;
             _buildToolInterface.Hide();
+            _statisticsInterface.SetDefaultStatisticValues();
         }
         
         private void UpdateBuildTool()
@@ -157,6 +163,8 @@ namespace TowerDefenseMC.Levels
             
             _buildMode = true;
             _buildToolInterface.Show();
+
+            _statisticsInterface.SetTowerStatisticValues(towerData, true);
         }
 
         public void OnTowerButtonMouseEntered()
@@ -167,6 +175,14 @@ namespace TowerDefenseMC.Levels
         public void OnTowerButtonMouseExited()
         {
             _inMenu = false;
+        }
+
+        public void TowerStatistics(string towerName, TowerTemplate tower)
+        {
+            if (!_towersData.TryGetValue(towerName, out TowerData towerData)) return;
+
+            _statisticsInterface.SetTowerTemplate(tower);
+            _statisticsInterface.SetTowerStatisticValues(towerData, false);
         }
     }
 }

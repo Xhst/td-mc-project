@@ -1,16 +1,14 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/img/towers/towerSquare_bottomA.png" type="Texture" id=1]
 [ext_resource path="res://scenes/towers/TowerTemplate.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/img/towers/towerSquare_middleA.png" type="Texture" id=3]
 [ext_resource path="res://assets/img/towers/towerSquare_roofA.png" type="Texture" id=4]
-[ext_resource path="res://scenes/towers/projectiles/TweenProjectile.tscn" type="PackedScene" id=5]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, -160, 320, 0, 0, 160, -320, 0 )
 
 [node name="PurpleTower" instance=ExtResource( 2 )]
-_projectile = ExtResource( 5 )
 
 [node name="towerSquare_bottomA" type="Sprite" parent="Node2D" index="1"]
 texture = ExtResource( 1 )
@@ -28,3 +26,5 @@ position = Vector2( 0, -50 )
 
 [node name="AttackRangeCollision" parent="AttackRange" index="0"]
 shape = SubResource( 1 )
+
+[connection signal="pressed" from="TouchScreenButton" to="." method="OnTouchScreenButtonReleased" binds= [ "PurpleA" ]]
