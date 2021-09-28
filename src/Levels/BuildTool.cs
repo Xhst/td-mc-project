@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using Godot;
 
@@ -75,7 +75,6 @@ namespace TowerDefenseMC.Levels
 
             _buildMode = false;
             _buildToolInterface.Hide();
-            _statisticsInterface.SetDefaultStatisticValues();
         }
         
         private void UpdateBuildTool()
@@ -163,8 +162,6 @@ namespace TowerDefenseMC.Levels
             
             _buildMode = true;
             _buildToolInterface.Show();
-
-            _statisticsInterface.SetTowerStatisticValues(towerData, true);
         }
 
         public void OnTowerButtonMouseEntered()
@@ -182,7 +179,8 @@ namespace TowerDefenseMC.Levels
             if (!_towersData.TryGetValue(towerName, out TowerData towerData)) return;
 
             _statisticsInterface.SetTowerTemplate(tower);
-            _statisticsInterface.SetTowerStatisticValues(towerData, false);
+            _statisticsInterface.SetTowerStatisticValues(towerData);
+            _statisticsInterface.Show();
         }
     }
 }

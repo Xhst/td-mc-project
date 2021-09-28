@@ -16,8 +16,8 @@ namespace TowerDefenseMC.UserInterface.Statistics
 
         public override void _Ready()
         {
-            _statisticsContainer = GetNode<VBoxContainer>("ReferenceRect/Statistics");
-            _effectsContainer = GetNode<VBoxContainer>("ReferenceRect/AuraEffects");
+            _statisticsContainer = GetNode<VBoxContainer>("ReferenceRect/NinePatchRect/Statistics");
+            _effectsContainer = GetNode<VBoxContainer>("ReferenceRect/NinePatchRect/AuraEffects");
         }
 
         public void SetTowerTemplate(TowerTemplate tower)
@@ -25,7 +25,7 @@ namespace TowerDefenseMC.UserInterface.Statistics
             _tower = tower;
         }
 
-        public void SetTowerStatisticValues(TowerData towerData, bool isButtonDown)
+        public void SetTowerStatisticValues(TowerData towerData)
         {
             _towerData = towerData;
 
@@ -38,7 +38,7 @@ namespace TowerDefenseMC.UserInterface.Statistics
 
                 Label effectValue = (Label) statistic.GetChild(1);
 
-                if(isButtonDown || _tower.GetEffects().Count == 0)
+                if(_tower.GetEffects().Count == 0)
                 {
                     effectValue.Text = null;
                     continue;
@@ -50,7 +50,7 @@ namespace TowerDefenseMC.UserInterface.Statistics
             foreach (Label auraEffect in _effectsContainer.GetChildren())
             {
                 Label percentuageValue = (Label) auraEffect.GetChild(0);
-                percentuageValue.Text = StatisticValueToString(auraEffect.Name) + "%";
+                percentuageValue.Text = "+" + StatisticValueToString(auraEffect.Name) + "%";
             }
         }
 

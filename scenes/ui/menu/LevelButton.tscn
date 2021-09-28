@@ -3,7 +3,6 @@
 [ext_resource path="res://UI/Font/kenvector_future.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://UI/PNG/blue_button06.png" type="Texture" id=2]
 [ext_resource path="res://UI/PNG/grey_button07.png" type="Texture" id=3]
-[ext_resource path="res://scenes/ui/fonttest.tres" type="DynamicFont" id=4]
 [ext_resource path="res://src/UserInterface/Menu/LevelButton.cs" type="Script" id=5]
 
 [sub_resource type="StyleBoxTexture" id=1]
@@ -451,6 +450,10 @@ WindowDialog/icons/close = null
 WindowDialog/icons/close_highlight = null
 WindowDialog/styles/panel = null
 
+[sub_resource type="DynamicFont" id=5]
+size = 50
+font_data = ExtResource( 1 )
+
 [node name="LevelButtonContainer" type="CenterContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -468,7 +471,7 @@ margin_right = 1099.0
 margin_bottom = 675.0
 rect_min_size = Vector2( 150, 150 )
 theme = SubResource( 4 )
-custom_fonts/font = ExtResource( 4 )
+custom_fonts/font = SubResource( 5 )
 custom_colors/font_color_disabled = Color( 0.992157, 0.992157, 0.992157, 1 )
 custom_constants/hseparation = 0
 text = " 0"
@@ -476,4 +479,5 @@ __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
 }
+
 [connection signal="pressed" from="LevelButton" to="." method="OnLevelButtonPressed"]
