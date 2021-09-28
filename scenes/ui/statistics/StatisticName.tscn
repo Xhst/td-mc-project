@@ -4,19 +4,18 @@
 [ext_resource path="res://UI/Font/kenvector_future.ttf" type="DynamicFontData" id=2]
 
 [sub_resource type="DynamicFont" id=1]
-size = 30
+size = 20
 font_data = ExtResource( 2 )
 
 [node name="StatisticName" type="Label"]
 margin_right = 440.0
-margin_bottom = 35.0
+margin_bottom = 23.0
 mouse_filter = 1
-size_flags_vertical = 1
 custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Text"
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
 }
-Text = "Text"
