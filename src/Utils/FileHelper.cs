@@ -6,11 +6,11 @@ using Godot;
 
 namespace TowerDefenseMC.Utils
 {
-    public class FileHelper
+    public static class FileHelper
     {
-        public static List<string> FilesInDirectory(string dirPath)
+        public static HashSet<string> FilesInDirectory(string dirPath)
         {
-            List<string> fileNames = new List<string>();
+            HashSet<string> fileNames = new HashSet<string>();
             
             Directory dir = new Directory();
             dir.Open(dirPath);
