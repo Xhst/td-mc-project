@@ -28,6 +28,7 @@ script = ExtResource( 2 )
 [node name="EntitiesContainer" type="YSort" parent="."]
 
 [node name="BuildToolInterface" type="Node2D" parent="."]
+visible = false
 
 [node name="TowerPlaceholder" type="Sprite" parent="BuildToolInterface"]
 material = SubResource( 2 )
@@ -57,6 +58,7 @@ render_target_update_mode = 3
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="StatisticsInterface" parent="UI" instance=ExtResource( 5 )]
+visible = false
 
 [node name="ShopInterface" parent="UI" instance=ExtResource( 4 )]
 margin_left = 0.0

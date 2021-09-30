@@ -59,3 +59,4 @@ __meta__ = {
 [node name="LevelButtonClickSound" type="AudioStreamPlayer" parent="."]
 pause_mode = 1
 stream = ExtResource( 7 )
+bus = "Sound"
