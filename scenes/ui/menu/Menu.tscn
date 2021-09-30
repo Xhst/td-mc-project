@@ -109,6 +109,8 @@ Text = "main_menu.back"
 [node name="ButtonClickSound" type="AudioStreamPlayer" parent="."]
 pause_mode = 1
 stream = ExtResource( 8 )
+bus = "Sound"
+
 [connection signal="pressed" from="MainMenu/LevelsButton" to="." method="OnLevelsButtonPressed"]
 [connection signal="pressed" from="MainMenu/SettingsButton" to="." method="OnSettingsButtonPressed"]
 [connection signal="pressed" from="MainMenu/ShareButton" to="." method="OnShareButtonPressed"]

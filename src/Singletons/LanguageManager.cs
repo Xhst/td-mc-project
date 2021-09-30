@@ -37,7 +37,7 @@ namespace TowerDefenseMC.Singletons
             List<string> locations = tags.Split('.').ToList();
             string tag = locations.Last();
             locations.Remove(tag);
-
+            
             return UI(tag, locations.ToArray());
         }
 
@@ -62,7 +62,7 @@ namespace TowerDefenseMC.Singletons
             {
                 result = baseTag;
             }
-
+            
             return result;
         }
 

@@ -12,3 +12,5 @@ script = ExtResource( 2 )
 [node name="ActiveSceneContainer" type="Node" parent="."]
 
 [node name="Menu" parent="ActiveSceneContainer" instance=ExtResource( 3 )]
+anchor_left = -0.00174004
+anchor_right = -0.00174004
