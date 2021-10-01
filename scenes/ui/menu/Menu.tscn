@@ -92,8 +92,8 @@ margin_left = 64.0
 margin_top = 1032.0
 margin_right = 311.0
 margin_bottom = 1081.0
-text = ""
-Tag = null
+text = "Main Menu"
+Tag = "main_menu.back"
 
 [node name="SettingsMenu" parent="." instance=ExtResource( 10 )]
 visible = false
@@ -103,13 +103,14 @@ margin_left = 64.0
 margin_top = 1032.0
 margin_right = 311.0
 margin_bottom = 1081.0
-text = ""
-Tag = null
+text = "Main Menu"
+Tag = "main_menu.back"
 
 [node name="ButtonClickSound" type="AudioStreamPlayer" parent="."]
 pause_mode = 1
 stream = ExtResource( 8 )
 bus = "Sound"
+
 [connection signal="pressed" from="MainMenu/LevelsButton" to="." method="OnLevelsButtonPressed"]
 [connection signal="pressed" from="MainMenu/SettingsButton" to="." method="OnSettingsButtonPressed"]
 [connection signal="pressed" from="MainMenu/ShareButton" to="." method="OnShareButtonPressed"]

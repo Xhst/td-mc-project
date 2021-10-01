@@ -7,6 +7,7 @@ using TowerDefenseMC.Enemies;
 using TowerDefenseMC.Singletons;
 using TowerDefenseMC.Towers;
 using TowerDefenseMC.Towers.Projectiles;
+using TowerDefenseMC.UserInterface.Menu;
 
 using AStar = TowerDefenseMC.Utils.AStar;
 
@@ -28,6 +29,9 @@ namespace TowerDefenseMC.Levels
         {
             TileMap = GetNode<TileMap>("TileMap");
             _tilesWithTowers = new Dictionary<Vector2, TowerTemplate>();
+
+            LanguageManager languageManager = GetNode<LanguageManager>("/root/LanguageManager");
+            languageManager.SetLanguage(SettingsMenu.GetLanguage());
         }
 
         public void PreStart(int level)

@@ -53,6 +53,7 @@ __meta__ = {
 [node name="Damage" parent="ReferenceRect/NinePatchRect/Statistics" instance=ExtResource( 1 )]
 margin_right = 450.0
 text = "Damage"
+Tag = "statistics.damage"
 
 [node name="DamageValue" type="Label" parent="ReferenceRect/NinePatchRect/Statistics/Damage"]
 margin_right = 470.0
@@ -86,6 +87,7 @@ margin_top = 27.0
 margin_right = 450.0
 margin_bottom = 50.0
 text = "Attack Speed"
+Tag = "statistics.attack_speed"
 
 [node name="AttackSpeedValue" type="Label" parent="ReferenceRect/NinePatchRect/Statistics/AttackSpeed"]
 margin_right = 470.0
@@ -119,6 +121,7 @@ margin_top = 54.0
 margin_right = 450.0
 margin_bottom = 77.0
 text = "Attack Range"
+Tag = "statistics.attack_range"
 
 [node name="AttackRangeValue" type="Label" parent="ReferenceRect/NinePatchRect/Statistics/AttackRange"]
 margin_right = 470.0
@@ -139,6 +142,7 @@ margin_top = 81.0
 margin_right = 450.0
 margin_bottom = 104.0
 text = "Projectile Speed"
+Tag = "statistics.projectile_speed"
 
 [node name="ProjectileSpeedValue" type="Label" parent="ReferenceRect/NinePatchRect/Statistics/ProjectileSpeed"]
 margin_right = 470.0
@@ -169,6 +173,7 @@ __meta__ = {
 [node name="AuraDamage" parent="ReferenceRect/NinePatchRect/AuraEffects" instance=ExtResource( 1 )]
 margin_right = 450.0
 text = "AE: Damage"
+Tag = "statistics.aura_damage"
 
 [node name="AuraDamageValue" type="Label" parent="ReferenceRect/NinePatchRect/AuraEffects/AuraDamage"]
 margin_right = 470.0
@@ -189,6 +194,7 @@ margin_top = 27.0
 margin_right = 450.0
 margin_bottom = 50.0
 text = "AE: Attack Speed"
+Tag = "statistics.aura_attack_speed"
 
 [node name="AuraAttackSpeedValue" type="Label" parent="ReferenceRect/NinePatchRect/AuraEffects/AuraAttackSpeed"]
 margin_right = 470.0
