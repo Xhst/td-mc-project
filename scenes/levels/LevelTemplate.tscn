@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scenes/TileMap.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Levels/LevelTemplate.cs" type="Script" id=2]
 [ext_resource path="res://assets/img/towers/towerSquare_sampleF.png" type="Texture" id=3]
-[ext_resource path="res://scenes/ui/shop/ShopInterface.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/ui/statistics/StatisticsInterface.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/ui/level/shop/ShopInterface.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/ui/level/statistics/StatisticsInterface.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/ui/level/topbar/TopBar.tscn" type="PackedScene" id=6]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -63,3 +64,5 @@ visible = false
 [node name="ShopInterface" parent="UI" instance=ExtResource( 4 )]
 margin_left = 0.0
 margin_right = 0.0
+
+[node name="TopBar" parent="UI" instance=ExtResource( 6 )]
