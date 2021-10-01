@@ -38,6 +38,7 @@ namespace TowerDefenseMC.UserInterface.Components
             
 			_languageManager = GetNode<LanguageManager>("/root/LanguageManager");
 			_languageManager.Attach(this);
+			Update();
 		}
 
 		public override void _ExitTree()
