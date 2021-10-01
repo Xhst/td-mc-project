@@ -1,3 +1,5 @@
+using System.Globalization;
+
 using Godot;
 
 using TowerDefenseMC.Singletons;
@@ -49,8 +51,8 @@ namespace TowerDefenseMC.UserInterface.Statistics
 
             foreach (Label auraEffect in _effectsContainer.GetChildren())
             {
-                Label percentuageValue = (Label) auraEffect.GetChild(0);
-                percentuageValue.Text = "+" + StatisticValueToString(auraEffect.Name) + "%";
+                Label percentageValue = (Label) auraEffect.GetChild(0);
+                percentageValue.Text = "+" + StatisticValueToString(auraEffect.Name) + "%";
             }
         }
 
@@ -69,8 +71,8 @@ namespace TowerDefenseMC.UserInterface.Statistics
 
             foreach (Label auraEffect in _effectsContainer.GetChildren())
             {
-                Label percentuageValue = (Label) auraEffect.GetChild(0);
-                percentuageValue.Text = StatisticValueToString(null) + "%";
+                Label percentageValue = (Label) auraEffect.GetChild(0);
+                percentageValue.Text = StatisticValueToString(null) + "%";
             }
         }
 
@@ -78,12 +80,12 @@ namespace TowerDefenseMC.UserInterface.Statistics
         {
             return statisticName switch
             {
-                "Damage" => _towerData.Damage.ToString(),
-                "AttackSpeed" => _towerData.AttackSpeed.ToString(),
+                "Damage" => _towerData.Damage.ToString(CultureInfo.InvariantCulture),
+                "AttackSpeed" => _towerData.AttackSpeed.ToString(CultureInfo.InvariantCulture),
                 "AttackRange" => _towerData.AttackRange.ToString(),
-                "ProjectileSpeed" => _towerData.ProjectileSpeed.ToString(),
-                "AuraDamage" => _towerData.AuraDamage.ToString(),
-                "AuraAttackSpeed" => _towerData.AuraAttackSpeed.ToString(),
+                "ProjectileSpeed" => _towerData.ProjectileSpeed.ToString(CultureInfo.InvariantCulture),
+                "AuraDamage" => _towerData.AuraDamage.ToString(CultureInfo.InvariantCulture),
+                "AuraAttackSpeed" => _towerData.AuraAttackSpeed.ToString(CultureInfo.InvariantCulture),
                 _ => "0"
             };
         }
@@ -92,8 +94,8 @@ namespace TowerDefenseMC.UserInterface.Statistics
         {
             return statisticName switch
             {
-                "Damage" => "+" + _tower.GetEffectDamageAdded().ToString(),
-                "AttackSpeed" => "+" + _tower.GetEffectAttackSpeedAdded().ToString(),
+                "Damage" => "+" + _tower.GetEffectDamageAdded(),
+                "AttackSpeed" => "+" + _tower.GetEffectAttackSpeedAdded(),
                 _ => ""
             };
         }
