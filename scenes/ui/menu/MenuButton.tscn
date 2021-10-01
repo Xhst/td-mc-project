@@ -3,7 +3,7 @@
 [ext_resource path="res://UI/PNG/grey_button03.png" type="Texture" id=1]
 [ext_resource path="res://UI/PNG/blue_button13.png" type="Texture" id=2]
 [ext_resource path="res://UI/Font/kenvector_future.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://src/UserInterface/Menu/MenuButton.cs" type="Script" id=5]
+[ext_resource path="res://src/UserInterface/Components/UIButtonComponent.cs" type="Script" id=4]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 2 )
@@ -458,8 +458,8 @@ theme = SubResource( 4 )
 custom_colors/font_color_disabled = Color( 0.992157, 0.992157, 0.992157, 1 )
 custom_constants/hseparation = 0
 text = "Text"
-script = ExtResource( 5 )
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-Text = "Text"
+Tag = "Text"

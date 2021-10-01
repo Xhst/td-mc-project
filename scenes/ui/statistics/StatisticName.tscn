@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://src/UserInterface/Statistics/StatisticName.cs" type="Script" id=1]
+[ext_resource path="res://src/UserInterface/Components/UILabelComponent.cs" type="Script" id=1]
 [ext_resource path="res://UI/Font/kenvector_future.ttf" type="DynamicFontData" id=2]
 
 [sub_resource type="DynamicFont" id=1]

@@ -62,7 +62,7 @@ margin_right = -55.0
 margin_bottom = 349.0
 rect_scale = Vector2( 2.45682, 2.5 )
 text = "Levels"
-Text = "main_menu.levels"
+Tag = "main_menu.levels"
 
 [node name="SettingsButton" parent="MainMenu" instance=ExtResource( 11 )]
 anchor_left = 0.5
@@ -72,7 +72,7 @@ margin_top = 500.0
 margin_right = -55.0
 margin_bottom = 549.0
 text = "Settings"
-Text = "main_menu.settings"
+Tag = "main_menu.settings"
 
 [node name="ShareButton" parent="MainMenu" instance=ExtResource( 11 )]
 anchor_left = 0.5
@@ -82,7 +82,7 @@ margin_top = 700.0
 margin_right = -54.0
 margin_bottom = 749.0
 text = "Share"
-Text = "main_menu.share"
+Tag = "main_menu.share"
 
 [node name="LevelsMenu" parent="." instance=ExtResource( 9 )]
 visible = false
@@ -92,8 +92,8 @@ margin_left = 64.0
 margin_top = 1032.0
 margin_right = 311.0
 margin_bottom = 1081.0
-text = "Main Menu"
-Text = "main_menu.back"
+text = ""
+Tag = null
 
 [node name="SettingsMenu" parent="." instance=ExtResource( 10 )]
 visible = false
@@ -103,14 +103,13 @@ margin_left = 64.0
 margin_top = 1032.0
 margin_right = 311.0
 margin_bottom = 1081.0
-text = "Main Menu"
-Text = "main_menu.back"
+text = ""
+Tag = null
 
 [node name="ButtonClickSound" type="AudioStreamPlayer" parent="."]
 pause_mode = 1
 stream = ExtResource( 8 )
 bus = "Sound"
-
 [connection signal="pressed" from="MainMenu/LevelsButton" to="." method="OnLevelsButtonPressed"]
 [connection signal="pressed" from="MainMenu/SettingsButton" to="." method="OnSettingsButtonPressed"]
 [connection signal="pressed" from="MainMenu/ShareButton" to="." method="OnShareButtonPressed"]
