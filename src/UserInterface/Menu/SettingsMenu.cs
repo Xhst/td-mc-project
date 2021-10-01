@@ -9,66 +9,56 @@ namespace TowerDefenseMC.UserInterface.Menu
 {
     public class SettingsMenu : Control
     {
+        private LanguageManager _languageManager;
         private List<string> _languageList;
 
         private TextureButton _soundButton;
         private TextureButton _musicButton;
+        private Label _languageTextLabel;
 
-        private bool _changeAudioSetting = false;
+        private bool _hasAudioSettingsChanged = false;
 
         public override void _Ready()
         {
-            _languageList = LanguageManager.GetAvailableLanguages();
-
+            _languageManager = GetNode<LanguageManager>("/root/LanguageManager");
+            _languageList = new List<string>(_languageManager.GetAvailableLanguages());
+            _languageTextLabel = GetNode<Label>("LanguageSetting/LanguageText");
+            
             _soundButton = GetNode<TextureButton>("SoundSetting/SoundOnOff");
             _musicButton = GetNode<TextureButton>("MusicSetting/MusicOnOff");
         }
 
         public override void _PhysicsProcess(float delta)
         {
-            if(_changeAudioSetting)
+            if (_hasAudioSettingsChanged)
             {
-                if(_soundButton.Pressed)
-                {
-                    AudioServer.SetBusMute(AudioServer.GetBusIndex("Sound"), false);
-                }
-                else
-                {
-                    AudioServer.SetBusMute(AudioServer.GetBusIndex("Sound"), true);
-                }
+                AudioServer.SetBusMute(AudioServer.GetBusIndex("Sound"), !_soundButton.Pressed);
 
-                if(_musicButton.Pressed)
-                {
-                    AudioServer.SetBusMute(AudioServer.GetBusIndex("Music"), false);
-                }
-                else
-                {
-                    AudioServer.SetBusMute(AudioServer.GetBusIndex("Music"), true);
-                }
+                AudioServer.SetBusMute(AudioServer.GetBusIndex("Music"), !_musicButton.Pressed);
 
-                _changeAudioSetting = false;
+                _hasAudioSettingsChanged = false;
             }
         }
 
         public void OnLeftButtonPressed()
         {
-            Label lenguage = GetNode<Label>("LenguageSetting/LenguageText");
-            int index = _languageList.IndexOf(lenguage.Text);
+            int index = _languageList.IndexOf(_languageTextLabel.Text);
             
-            lenguage.Text = index - 1 < 0 ? _languageList[_languageList.Count - 1] : _languageList[index - 1];
+            _languageTextLabel.Text = index - 1 < 0 ? _languageList[_languageList.Count - 1] : _languageList[index - 1];
+            _languageManager.SetLanguage(_languageTextLabel.Text);
         }
 
         public void OnRightButtonPressed()
         {
-            Label lenguage = GetNode<Label>("LenguageSetting/LenguageText");
-            int index = _languageList.IndexOf(lenguage.Text);
+            int index = _languageList.IndexOf(_languageTextLabel.Text);
             
-            lenguage.Text = index + 1 == _languageList.Count ? _languageList[0] : _languageList[index + 1];
+            _languageTextLabel.Text = index + 1 == _languageList.Count ? _languageList[0] : _languageList[index + 1];
+            _languageManager.SetLanguage(_languageTextLabel.Text);
         }
 
         public void OnAudioButtonPressed()
         {
-           _changeAudioSetting = true;
+           _hasAudioSettingsChanged = true;
         }
     }
 }

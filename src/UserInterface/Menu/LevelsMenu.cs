@@ -39,7 +39,7 @@ namespace TowerDefenseMC.UserInterface.Menu
         {
             HashSet<string> levels = new HashSet<string>();
             
-            List<string> files = FileHelper.FilesInDirectory("res://assets/data/levels/");
+            HashSet<string> files = FileHelper.FilesInDirectory("res://assets/data/levels/");
 
             foreach (string file in files)
             {

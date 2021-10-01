@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://UI/Font/kenvector_future.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://UI/PNG/blue_panel.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://UI/PNG/grey_arrowUpWhite.png" type="Texture" id=8]
 [ext_resource path="res://UI/PNG/grey_arrowUpGrey.png" type="Texture" id=9]
 [ext_resource path="res://src/UserInterface/Menu/SettingsMenu.cs" type="Script" id=10]
+[ext_resource path="res://src/UserInterface/Components/UILabelComponent.cs" type="Script" id=11]
 
 [sub_resource type="DynamicFont" id=1]
 size = 150
@@ -48,9 +49,11 @@ text = "Settings"
 align = 1
 valign = 1
 uppercase = true
+script = ExtResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+Tag = "main_menu.settings"
 
 [node name="MusicSetting" type="Control" parent="."]
 margin_left = 856.0
@@ -118,7 +121,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LenguageSetting" type="Control" parent="."]
+[node name="LanguageSetting" type="Control" parent="."]
 margin_left = 416.0
 margin_top = 768.0
 margin_right = 1632.0
@@ -127,7 +130,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LenguageText" type="Label" parent="LenguageSetting"]
+[node name="LanguageText" type="Label" parent="LanguageSetting"]
 margin_left = 288.0
 margin_top = 16.0
 margin_right = 880.0
@@ -143,7 +146,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LeftButton" type="TextureButton" parent="LenguageSetting"]
+[node name="LeftButton" type="TextureButton" parent="LanguageSetting"]
 margin_left = 224.0
 margin_top = 112.0
 margin_right = 239.0
@@ -156,7 +159,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RightButton" type="TextureButton" parent="LenguageSetting"]
+[node name="RightButton" type="TextureButton" parent="LanguageSetting"]
 margin_left = 928.0
 margin_top = 40.0
 margin_right = 943.0
@@ -168,8 +171,7 @@ texture_pressed = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
 [connection signal="pressed" from="MusicSetting/MusicOnOff" to="." method="OnAudioButtonPressed"]
 [connection signal="pressed" from="SoundSetting/SoundOnOff" to="." method="OnAudioButtonPressed"]
-[connection signal="pressed" from="LenguageSetting/LeftButton" to="." method="OnLeftButtonPressed"]
-[connection signal="pressed" from="LenguageSetting/RightButton" to="." method="OnRightButtonPressed"]
+[connection signal="pressed" from="LanguageSetting/LeftButton" to="." method="OnLeftButtonPressed"]
+[connection signal="pressed" from="LanguageSetting/RightButton" to="." method="OnRightButtonPressed"]
