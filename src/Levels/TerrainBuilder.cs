@@ -102,6 +102,7 @@ namespace TowerDefenseMC.Levels
             DrawPaths(paths, pathTiles);
             DrawRivers(rivers, riverTiles, pathTiles);
         }
+        
         private void DrawPaths(List<List<Vector2>> paths, HashSet<Vector2> pathTiles)
         {
             foreach (List<Vector2> path in paths)
@@ -110,14 +111,8 @@ namespace TowerDefenseMC.Levels
                 {
                     int incidenceNumber = CalculateTileIncidencePathNumber(tile, pathTiles);
                     int tileId = GetPathTileIdFromIncidenceNumber(incidenceNumber);
-                    
-                    if (_isSnowy)
-                    {
-                        tileId += 123;
-                    }
-                    
-                    _tileMap.SetCellv(tile, tileId);
-                    
+
+                    DrawTile(tile, tileId);
                 }
             }
         }
@@ -133,27 +128,41 @@ namespace TowerDefenseMC.Levels
 
                     if (pathTiles.Contains(tile))
                     {
-                        int pathTileId = _tileMap.GetCellv(tile);
-
-                        tileId = pathTileId switch
-                        {
-                            97 => 50,
-                            96 => 51,
-                            220 => 50,
-                            119 => 51,
-                            _ => tileId
-                        };
+                        tileId = GetBridgeTileId(tileId, tile);
                     }
                     
-                    if (_isSnowy)
-                    {
-                        tileId += 123;
-                    }
-                    
-                    _tileMap.SetCellv(tile, tileId);
-                    
+                    DrawTile(tile, tileId);
                 }
             }
+        }
+
+        private void DrawTile(Vector2 tile, int tileId)
+        {
+            if (_isSnowy)
+            {
+                tileId = GetTileIdSnowyVersion(tileId);
+            }
+            
+            _tileMap.SetCellv(tile, tileId);
+        }
+
+        private int GetTileIdSnowyVersion(int tileId)
+        {
+            return tileId + 123;
+        }
+
+        private int GetBridgeTileId(int currentTileId, Vector2 tile)
+        {
+            int pathTileId = _tileMap.GetCellv(tile);
+
+            return pathTileId switch
+            {
+                97 => 50,
+                96 => 51,
+                220 => 50,
+                119 => 51,
+                _ => currentTileId
+            };
         }
 
         private int GetRiverTileIdFromIncidenceNumber(int incidenceNumber)
@@ -205,21 +214,25 @@ namespace TowerDefenseMC.Levels
         {
             int incidenceNumber = 0;
 
+            // Top
             if (tiles.Contains(new Vector2(tile.x, tile.y - 1)))
             {
                 incidenceNumber += 2;
             }
             
+            // Right
             if (tiles.Contains(new Vector2(tile.x + 1, tile.y)))
             {
                 incidenceNumber += 4;
             }
             
+            // Bottom
             if (tiles.Contains(new Vector2(tile.x, tile.y + 1)))
             {
                 incidenceNumber += 8;
             }
             
+            // Left
             if (tiles.Contains(new Vector2(tile.x - 1, tile.y)))
             {
                 incidenceNumber += 16;
