@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Godot;
@@ -10,20 +11,36 @@ using TowerDefenseMC.Utils;
 
 namespace TowerDefenseMC.Singletons
 {
-    public class LanguageManager : Node
+    public class LanguageManager : Node, ISubject
     {
-        public static string Language
+
+        public static string DefaultLanguage = "en";
+
+        private readonly Dictionary<string, string> _languageToFileName;
+        private readonly HashSet<IObserver> _observers;
+
+        private string Language
         {
             get
             {
                 if (!ProjectSettings.HasSetting("lang"))
                 {
-                    ProjectSettings.SetSetting("lang", "en");
+                    ProjectSettings.SetSetting("lang", DefaultLanguage);
                 }
                 
                 return (string) ProjectSettings.GetSetting("lang");
             }
-            set => ProjectSettings.SetSetting("lang", value);
+            set
+            {
+                ProjectSettings.SetSetting("lang", value);
+                Notify();
+            }
+        }
+
+        public LanguageManager()
+        {
+            _observers = new HashSet<IObserver>();
+            _languageToFileName = LanguagesToFileNameDictionary();
         }
 
         /// <summary>
@@ -31,25 +48,37 @@ namespace TowerDefenseMC.Singletons
         /// </summary>
         /// <param name="tags"></param>
         /// <returns></returns>
-        public static string UI(string tags)
+        public string UI(string tags)
+        {
+            return UI(Language, tags);
+        }
+
+        /// <summary>
+        /// Get the text from language file
+        /// </summary>
+        /// <param name="language"></param>
+        /// <param name="tags"></param>
+        /// <returns></returns>
+        public static string UI(string language, string tags)
         {
             if (tags == null) return "";
             List<string> locations = tags.Split('.').ToList();
             string tag = locations.Last();
             locations.Remove(tag);
             
-            return UI(tag, locations.ToArray());
+            return UI(language, tag, locations.ToArray());
         }
 
         /// <summary>
         /// Get the text from language file using the given locations and the base tag
         /// </summary>
+        /// <param name="language"></param>
         /// <param name="baseTag"></param>
         /// <param name="locations"></param>
         /// <returns></returns>
-        private static string UI(string baseTag, params string[] locations)
+        private static string UI(string language, string baseTag, params string[] locations)
         {
-            JToken token = GetJsonTokenFromFile(Language);
+            JToken token = GetJsonTokenFromFile(language);
             
             foreach (string location in locations)
             {
@@ -76,20 +105,55 @@ namespace TowerDefenseMC.Singletons
             return json;
         }
 
-        public static List<string> GetAvailableLanguages()
+        private static Dictionary<string, string> LanguagesToFileNameDictionary()
         {
-            List<string> langFiles = FileHelper.FilesInDirectory("res://assets/languages/");
-            List<string> availableLanguages = new List<string>();
+            HashSet<string> langFiles = FileHelper.FilesInDirectory("res://assets/languages/");
+            Dictionary<string, string> availableLanguagesAndFileName = new Dictionary<string, string>();
 
             foreach (string file in langFiles)
             {
                 string fileName = file.Replace(".json", "");
                 JToken token = GetJsonTokenFromFile(fileName);
                 
-                availableLanguages.Add(token["lang"]?.ToString() ?? "???");
+                if (token["lang"] == null) continue;
+                
+                availableLanguagesAndFileName.Add(token["lang"].ToString(), fileName);
             }
 
-            return availableLanguages;
+            return availableLanguagesAndFileName;
+        }
+        
+        public HashSet<string> GetAvailableLanguages()
+        {
+            return new HashSet<string>(_languageToFileName.Keys);
+        }
+
+        public void SetLanguage(string language)
+        {
+            if (!_languageToFileName.TryGetValue(language, out string lang))
+            {
+                throw new Exception("[LanguageManager] Trying to set non existing language.");
+            }
+
+            Language = lang;
+        }
+
+        public void Attach(IObserver observer)
+        {
+            _observers.Add(observer);
+        }
+
+        public void Detach(IObserver observer)
+        {
+            _observers.Remove(observer);
+        }
+
+        public void Notify()
+        {
+            foreach (IObserver observer in _observers)
+            {
+                observer.Update();
+            }
         }
     }
 }
