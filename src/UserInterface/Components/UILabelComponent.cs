@@ -11,37 +11,46 @@ namespace TowerDefenseMC.UserInterface.Components
     {
 
         private LanguageManager _languageManager;
-        
+		
         private string _tag;
-        
+		
         [Export]
-        protected string Tag
+        public string Tag
         {
             get => _tag;
             set
             {
                 _tag = value;
+				
+                if (Engine.EditorHint)
+                {
+                    Text = LanguageManager.UI(LanguageManager.DefaultLanguage, _tag);
+                    return;
+                }
+				
                 Update();
             }
         }
 
-        public override void _Ready()
+        public override void _EnterTree()
         {
-            if (!Engine.EditorHint)
-            {
-                _languageManager = GetNode<LanguageManager>("/root/LanguageManager");
-            }
-			
-            Update();
+            if (Engine.EditorHint) return;
+            
+            _languageManager = GetNode<LanguageManager>("/root/LanguageManager");
+            _languageManager.Attach(this);
+        }
+
+        public override void _ExitTree()
+        {
+            if (Engine.EditorHint) return;
+            
+            _languageManager.Detach(this);
         }
 
         public new void Update()
         {
-            if (Engine.EditorHint)
-            {
-                Text = LanguageManager.UI(LanguageManager.DefaultLanguage, _tag);
-                return;
-            }
+            if (_languageManager == null) return;
+			
             Text = _languageManager.UI(_tag);
         }
     }
