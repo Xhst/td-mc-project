@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 using Godot;
 
@@ -112,6 +113,16 @@ namespace TowerDefenseMC.Levels
                     int incidenceNumber = CalculateTileIncidencePathNumber(tile, pathTiles);
                     int tileId = GetPathTileIdFromIncidenceNumber(incidenceNumber);
 
+                    if (tile == path.First())
+                    {
+                        tileId = GetStartPathTileId(incidenceNumber);
+                    }
+
+                    if (tile == path.Last())
+                    {
+                        tileId = GetLastPathTileId(incidenceNumber);
+                    }
+
                     DrawTile(tile, tileId);
                 }
             }
@@ -144,6 +155,29 @@ namespace TowerDefenseMC.Levels
             }
             
             _tileMap.SetCellv(tile, tileId);
+        }
+        
+        private int GetStartPathTileId(int incidenceNumber)
+        {
+            return incidenceNumber switch
+            {
+                2 => 31,
+                4 => 30,
+                8 => 32,
+                16 => 33,
+                _ => 30
+            };
+        }
+        private int GetLastPathTileId(int incidenceNumber)
+        {
+            return incidenceNumber switch
+            {
+                2 => 39,
+                4 => 38,
+                8 => 40,
+                16 => 41,
+                _ => 38
+            };
         }
 
         private int GetTileIdSnowyVersion(int tileId)
