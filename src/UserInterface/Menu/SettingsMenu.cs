@@ -14,7 +14,7 @@ namespace TowerDefenseMC.UserInterface.Menu
 
         private TextureButton _soundButton;
         private TextureButton _musicButton;
-        private static Label _languageTextLabel;
+        private Label _languageTextLabel;
 
         private bool _hasAudioSettingsChanged = false;
 
@@ -38,11 +38,6 @@ namespace TowerDefenseMC.UserInterface.Menu
 
                 _hasAudioSettingsChanged = false;
             }
-        }
-
-        public static string GetLanguage()
-        {
-            return _languageTextLabel.Text;
         }
 
         public void OnLeftButtonPressed()

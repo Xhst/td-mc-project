@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://UI/PNG/blue_panel.png" type="Texture" id=1]
 [ext_resource path="res://UI/Font/kenvector_future.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://src/UserInterface/Menu/LevelsMenu.cs" type="Script" id=3]
-[ext_resource path="res://src/UserInterface/Components/UILabelComponent.cs" type="Script" id=4]
 [ext_resource path="res://assets/audio/UI_Sounds/click2.ogg" type="AudioStream" id=7]
 [ext_resource path="res://scenes/ui/menu/LevelButton.tscn" type="PackedScene" id=8]
 
@@ -41,11 +40,9 @@ text = "Levels"
 align = 1
 valign = 1
 uppercase = true
-script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-Tag = "main_menu.levels"
 
 [node name="ButtonsContainer" type="GridContainer" parent="."]
 anchor_right = 1.0

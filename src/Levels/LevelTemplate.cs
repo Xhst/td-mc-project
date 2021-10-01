@@ -29,9 +29,6 @@ namespace TowerDefenseMC.Levels
         {
             TileMap = GetNode<TileMap>("TileMap");
             _tilesWithTowers = new Dictionary<Vector2, TowerTemplate>();
-
-            LanguageManager languageManager = GetNode<LanguageManager>("/root/LanguageManager");
-            languageManager.SetLanguage(SettingsMenu.GetLanguage());
         }
 
         public void PreStart(int level)
