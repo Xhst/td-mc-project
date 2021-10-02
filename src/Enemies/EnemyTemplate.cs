@@ -1,4 +1,9 @@
-﻿using Godot;
+﻿using System;
+
+using Godot;
+
+using TowerDefenseMC.Levels;
+using TowerDefenseMC.Singletons;
 
 
 namespace TowerDefenseMC.Enemies
@@ -10,8 +15,12 @@ namespace TowerDefenseMC.Enemies
         
         private float _speed = 150;
         private float _healthPoints = 3;
+        private float _damage = 5;
 
         private TextureProgress _healthBar;
+
+        [Signal]
+        private delegate void EndOfPathReached(float damage);
 
         public override void _Ready()
         {
@@ -19,14 +28,29 @@ namespace TowerDefenseMC.Enemies
 
             _healthBar.MaxValue = _healthPoints;
             _healthBar.Value = _healthPoints;
+
+            Connect(nameof(EndOfPathReached), Scenes.MainScene.GetActiveScene(), nameof(LevelTemplate.OnEnemyReachEndOfPath));
         }
 
         public override void _PhysicsProcess(float delta)
         {
-            if (PositioningNode != null)
-            {
-                PositioningNode.Offset += _speed * delta;
-            }
+            Move(delta);
+            CheckEndOfPath();
+        }
+
+        private void Move(float delta)
+        {
+            if (PositioningNode == null) return;
+
+            PositioningNode.Offset += _speed * delta;
+        }
+
+        private void CheckEndOfPath()
+        {
+            if (Math.Abs(PositioningNode.UnitOffset - 1f) > 0) return;
+            
+            EmitSignal(nameof(EndOfPathReached), _damage);
+            QueueFree();
         }
 
         public void TakeDamage(int damage)

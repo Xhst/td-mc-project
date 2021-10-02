@@ -155,5 +155,10 @@ namespace TowerDefenseMC.Levels
         {
             _buildTool.TowerStatistics(towerName, tower);
         }
+
+        public void OnEnemyReachEndOfPath(float damage)
+        {
+            GD.Print($"Damage: {damage}");
+        }
     }
 }

@@ -40,17 +40,16 @@ namespace TowerDefenseMC.Enemies
 
                 path2D.Curve = enemyCurve;
 
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < 1; i++)
                 {
                     EnemyTemplate enemy = (EnemyTemplate) enemyScene.Instance();
                     enemyContainer.AddChild(enemy);
-                    
-                    PathFollow2D pathFollow = new PathFollow2D { Rotate = false };
+
+                    PathFollow2D pathFollow = new PathFollow2D { Rotate = false, Loop = false };
 
                     RemoteTransform2D remoteTransform = new RemoteTransform2D { RemotePath = enemy.GetPath() };
 
                     enemy.PositioningNode = pathFollow;
-
 
                     pathFollow.AddChild(remoteTransform);
                     path2D.AddChild(pathFollow);
