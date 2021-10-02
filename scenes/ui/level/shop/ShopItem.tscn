@@ -55,7 +55,6 @@ margin_top = -29.5
 margin_right = 197.5
 margin_bottom = 24.5
 custom_fonts/normal_font = ExtResource( 3 )
-custom_colors/default_color = Color( 0, 0, 0, 1 )
 text = " 9
 "
 fit_content_height = true

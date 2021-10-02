@@ -18,7 +18,7 @@ namespace TowerDefenseMC.UserInterface.Shop
 
         public void LoadButtons(Dictionary<string, TowerData> towers)
         {
-            PackedScene shopItemScene = ResourceLoader.Load<PackedScene>("scenes/ui/shop/ShopItem.tscn");
+            PackedScene shopItemScene = ResourceLoader.Load<PackedScene>("scenes/ui/level/shop/ShopItem.tscn");
             
             foreach (TowerData tower in towers.Values)
             {
