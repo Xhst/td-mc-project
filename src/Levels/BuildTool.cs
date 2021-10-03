@@ -5,6 +5,7 @@ using Godot;
 using TowerDefenseMC.Singletons;
 using TowerDefenseMC.Towers;
 using TowerDefenseMC.UserInterface.Statistics;
+using TowerDefenseMC.UserInterface.TopBar;
 using TowerDefenseMC.UserInterface.Shop;
 
 
@@ -19,6 +20,7 @@ namespace TowerDefenseMC.Levels
         private bool _inMenu = false;
 
         private Color _currentColor;
+        private TopBar _topBar;
         
         private readonly Color _buildAllowedColor = new Color(1f, 1f, 1f, 0.7f);
         private readonly Color _buildNotAllowedColor = new Color(0.9f, 0.2f, 0.2f, 0.7f);
@@ -28,6 +30,8 @@ namespace TowerDefenseMC.Levels
         private Vector2 _currentTile = new Vector2();
 
         private string _currentTowerName;
+        private int _towerCost;
+
         private PackedScene _currentTower;
 
         private readonly Node2D _buildToolInterface;
@@ -36,6 +40,7 @@ namespace TowerDefenseMC.Levels
         private readonly Polygon2D _auraRange;
         
         private readonly StatisticsInterface _statisticsInterface;
+        private readonly ShopInterface _shopInterface;
 
         private readonly Dictionary<string, TowerData> _towersData;
         
@@ -54,10 +59,12 @@ namespace TowerDefenseMC.Levels
             TowerDataReader tdr = _levelTemplate.GetNode<TowerDataReader>("/root/TowerDataReader");
             _towersData = tdr.GetTowersData();
 
-            ShopInterface shopInterface = _levelTemplate.GetNode<ShopInterface>("UI/ShopInterface");
-            shopInterface.LoadButtons(_towersData);
-
+            _topBar = _levelTemplate.GetNode<TopBar>("UI/TopBar");
+            _shopInterface = _levelTemplate.GetNode<ShopInterface>("UI/ShopInterface");
             _statisticsInterface = _levelTemplate.GetNode<StatisticsInterface>("UI/StatisticsInterface");
+
+            _shopInterface.LoadButtons(_towersData);
+            _shopInterface.SetTopBar(_topBar);
         }
 
         public void Process()
@@ -71,7 +78,7 @@ namespace TowerDefenseMC.Levels
                 BuildTower();
             }
 
-            if (!Input.IsActionJustPressed("right_mouse_button")) return;
+            if (!Input.IsActionJustPressed("right_mouse_button") && CanBuildAnotherTower()) return;
 
             _buildMode = false;
             _buildToolInterface.Hide();
@@ -118,6 +125,14 @@ namespace TowerDefenseMC.Levels
             _levelTemplate.AddTowerOnTile(_currentTile, newTower);
 
             _levelTemplate.GetNode<YSort>("EntitiesContainer").AddChild(newTower);
+
+            _topBar.DecreaseAvailableCrystals(_towerCost);
+            _shopInterface.TowerBuilt();
+        }
+
+        private bool CanBuildAnotherTower()
+        {
+            return _topBar.GetAvailableCrystals() - _towerCost < 0 ? false : true;
         }
 
         private async void UpdateTowerPlaceHolder()
@@ -140,8 +155,8 @@ namespace TowerDefenseMC.Levels
             
             _towerPlaceholder.Texture = imageTexture;
         }
-        
-        public void OnSelectTowerButtonDown(string towerName)
+
+        public void OnSelectTowerButtonDown(string towerName, int towerCost)
         {
             if (!_towersData.TryGetValue(towerName, out TowerData towerData)) return;
 
@@ -162,6 +177,8 @@ namespace TowerDefenseMC.Levels
             
             _buildMode = true;
             _buildToolInterface.Show();
+
+            _towerCost = towerCost;
         }
 
         public void OnTowerButtonMouseEntered()

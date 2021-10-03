@@ -7,10 +7,6 @@ namespace TowerDefenseMC.Singletons
     {
         public int CurrentLevel = -1;
 
-        public void ChangeCurrentScene()
-        {
-            
-        }
-
+        public static bool EnemyIsDead { set; get; }
     }
 }
