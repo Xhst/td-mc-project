@@ -9,11 +9,36 @@ namespace TowerDefenseMC.UserInterface.Shop
 {
     public class ShopInterface : Control
     {
+        private bool _isTowerBuilt = true;
+
         private HBoxContainer _hBoxContainer;
+        private TopBar.TopBar _topBar;
 
         public override void _Ready()
         {
             _hBoxContainer = GetNode<HBoxContainer>("ReferenceRect/HBoxContainer");
+        }
+
+        public override void _PhysicsProcess(float delta)
+        {
+            if(!_isTowerBuilt && !Game.EnemyIsDead) return;
+
+            foreach (ShopItem shopItem in _hBoxContainer.GetChildren())
+            {
+                shopItem.SetButtonDisabled(_topBar);
+            }
+
+            _isTowerBuilt = false;
+        }
+
+        public void SetTopBar(TopBar.TopBar topBar)
+        {
+            _topBar = topBar;
+        }
+
+        public void TowerBuilt()
+        {
+            _isTowerBuilt = true;
         }
 
         public void LoadButtons(Dictionary<string, TowerData> towers)

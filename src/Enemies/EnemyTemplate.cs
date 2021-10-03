@@ -66,6 +66,7 @@ namespace TowerDefenseMC.Enemies
 
         private void OnDestroy()
         {
+            Game.EnemyIsDead = true;
             QueueFree();
         }
     }
