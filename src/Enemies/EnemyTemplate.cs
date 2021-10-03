@@ -15,12 +15,16 @@ namespace TowerDefenseMC.Enemies
         
         private float _speed = 150;
         private float _healthPoints = 3;
-        private float _damage = 5;
+        private int _damage = 1;
+        private int _feed = 1;
 
         private TextureProgress _healthBar;
 
         [Signal]
         private delegate void EndOfPathReached(float damage);
+
+        [Signal]
+        private delegate void EnemyDestroyed(int feed);
 
         public override void _Ready()
         {
@@ -30,6 +34,7 @@ namespace TowerDefenseMC.Enemies
             _healthBar.Value = _healthPoints;
 
             Connect(nameof(EndOfPathReached), Scenes.MainScene.GetActiveScene(), nameof(LevelTemplate.OnEnemyReachEndOfPath));
+            Connect(nameof(EnemyDestroyed), Scenes.MainScene.GetActiveScene(), nameof(LevelTemplate.OnEnemyDestroyed));
         }
 
         public override void _PhysicsProcess(float delta)
@@ -53,7 +58,7 @@ namespace TowerDefenseMC.Enemies
             QueueFree();
         }
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(float damage)
         {
             _healthPoints -= damage;
             _healthBar.Value = _healthPoints;
@@ -66,7 +71,7 @@ namespace TowerDefenseMC.Enemies
 
         private void OnDestroy()
         {
-            Game.EnemyIsDead = true;
+            EmitSignal(nameof(EnemyDestroyed), _feed);
             QueueFree();
         }
     }

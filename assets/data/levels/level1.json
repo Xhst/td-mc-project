@@ -1,6 +1,9 @@
 ﻿{
   "snowy": false,
   
+  "start_health": 100,
+  "start_crystals": 10,
+  
   "tiles": [
     {
       "tile_treeDouble": [

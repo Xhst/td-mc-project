@@ -7,7 +7,7 @@ using TowerDefenseMC.Enemies;
 using TowerDefenseMC.Singletons;
 using TowerDefenseMC.Towers;
 using TowerDefenseMC.Towers.Projectiles;
-
+using TowerDefenseMC.UserInterface.TopBar;
 
 using AStar = TowerDefenseMC.Utils.AStar;
 
@@ -17,6 +17,10 @@ namespace TowerDefenseMC.Levels
     public class LevelTemplate : Node2D
     {
         public TileMap TileMap { get; private set; }
+
+        public Player Player;
+
+        private TopBar _topBar;
         
         private BuildTool _buildTool;
         private ProjectileSpawner _projectileSpawner;
@@ -28,6 +32,7 @@ namespace TowerDefenseMC.Levels
         public override void _Ready()
         {
             TileMap = GetNode<TileMap>("TileMap");
+            _topBar = GetNode<TopBar>("UI/TopBar");
             _tilesWithTowers = new Dictionary<Vector2, TowerTemplate>();
         }
 
@@ -43,13 +48,18 @@ namespace TowerDefenseMC.Levels
             terrainBuilder.FillViewPortWithTile(GetViewSize());
             terrainBuilder.DrawCustomTiles(levelData.Tiles);
             terrainBuilder.DrawPathsAndRivers(_paths, _rivers);
+            
+            Player = new Player(levelData.StartHealth, levelData.StartCrystals);
+
+            _topBar.Crystals.SetPlayer(Player);
+            _topBar.HealthBar.SetPlayer(Player);
         }
 
         public void Start()
         {
             _buildTool = new BuildTool(this);
             _projectileSpawner = new ProjectileSpawner(this);
-
+            
             new EnemySpawner(this, _paths).SpawnEnemies();
         }
 
@@ -156,9 +166,14 @@ namespace TowerDefenseMC.Levels
             _buildTool.TowerStatistics(towerName, tower);
         }
 
-        public void OnEnemyReachEndOfPath(float damage)
+        public void OnEnemyReachEndOfPath(int damage)
         {
-            GD.Print($"Damage: {damage}");
+            Player.TakeDamage(damage);
+        }
+
+        public void OnEnemyDestroyed(int feed)
+        {
+            Player.Crystals += feed;
         }
     }
 }

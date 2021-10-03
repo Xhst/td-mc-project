@@ -16,6 +16,8 @@ namespace TowerDefenseMC.Singletons
         public Dictionary<string, List<TilePosition>> Tiles;
         public List<List<Vector2>> EnemyPathsPoints;
         public List<List<Vector2>> RiversPoints;
+        public int StartHealth;
+        public int StartCrystals;
     }
     public struct TilePosition
     {
@@ -33,6 +35,8 @@ namespace TowerDefenseMC.Singletons
             levelData.Tiles =  new Dictionary<string, List<TilePosition>>();
             levelData.EnemyPathsPoints = new List<List<Vector2>>();
             levelData.RiversPoints = new List<List<Vector2>>();
+            levelData.StartHealth = 10;
+            levelData.StartCrystals = 10;
             
             string path = ProjectSettings.GlobalizePath($"res://assets/data/levels/level{ level }.json");
             string jsonFileText = System.IO.File.ReadAllText(path);
@@ -45,10 +49,10 @@ namespace TowerDefenseMC.Singletons
             if (json["tiles"] is null) return levelData;
 
             levelData.Tiles = GetTilesData(json["tiles"]);
-            
             levelData.EnemyPathsPoints = GetPointsListData(json["enemy_paths"]);
-            
             levelData.RiversPoints = GetPointsListData(json["rivers"]);
+            levelData.StartHealth = int.Parse(json["start_health"]?.ToString() ?? "10");
+            levelData.StartCrystals = int.Parse(json["start_crystals"]?.ToString() ?? "10");
             
 
             return levelData;

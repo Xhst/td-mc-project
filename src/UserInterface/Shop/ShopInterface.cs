@@ -2,6 +2,7 @@
 
 using Godot;
 
+using TowerDefenseMC.Levels;
 using TowerDefenseMC.Singletons;
 
 
@@ -12,7 +13,7 @@ namespace TowerDefenseMC.UserInterface.Shop
         private bool _isTowerBuilt = true;
 
         private HBoxContainer _hBoxContainer;
-        private TopBar.TopBar _topBar;
+        private Player _player;
 
         public override void _Ready()
         {
@@ -21,19 +22,19 @@ namespace TowerDefenseMC.UserInterface.Shop
 
         public override void _PhysicsProcess(float delta)
         {
-            if(!_isTowerBuilt && !Game.EnemyIsDead) return;
-
+            if(!_isTowerBuilt) return;
+            
             foreach (ShopItem shopItem in _hBoxContainer.GetChildren())
             {
-                shopItem.SetButtonDisabled(_topBar);
+                shopItem.SetButtonDisabled(_player.Crystals < shopItem.Cost);
             }
 
             _isTowerBuilt = false;
         }
 
-        public void SetTopBar(TopBar.TopBar topBar)
+        public void SetPlayer(Player player)
         {
-            _topBar = topBar;
+            _player = player;
         }
 
         public void TowerBuilt()

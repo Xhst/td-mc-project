@@ -3,6 +3,7 @@
 using Godot;
 
 using TowerDefenseMC.Levels;
+using TowerDefenseMC.Singletons;
 using TowerDefenseMC.Utils;
 
 
@@ -12,11 +13,16 @@ namespace TowerDefenseMC.Enemies
     {
         private readonly LevelTemplate _levelTemplate;
         private readonly List<List<Vector2>> _paths;
+
+        private readonly Dictionary<string, EnemyData> _enemiesData;
         
         public EnemySpawner(LevelTemplate levelTemplate, List<List<Vector2>> paths)
         {
             _levelTemplate = levelTemplate;
             _paths = paths;
+
+            EnemyDataReader edr = _levelTemplate.GetNode<EnemyDataReader>("/root/EnemyDataReader");
+            _enemiesData = edr.GetEnemiesData();
         }
         
         public async void SpawnEnemies()

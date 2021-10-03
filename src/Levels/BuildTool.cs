@@ -5,7 +5,6 @@ using Godot;
 using TowerDefenseMC.Singletons;
 using TowerDefenseMC.Towers;
 using TowerDefenseMC.UserInterface.Statistics;
-using TowerDefenseMC.UserInterface.TopBar;
 using TowerDefenseMC.UserInterface.Shop;
 
 
@@ -20,8 +19,7 @@ namespace TowerDefenseMC.Levels
         private bool _inMenu = false;
 
         private Color _currentColor;
-        private TopBar _topBar;
-        
+
         private readonly Color _buildAllowedColor = new Color(1f, 1f, 1f, 0.7f);
         private readonly Color _buildNotAllowedColor = new Color(0.9f, 0.2f, 0.2f, 0.7f);
         private readonly Color _attackRangeColor = new Color(1f, 0.7f, 0f, 0.3f);
@@ -58,13 +56,12 @@ namespace TowerDefenseMC.Levels
             
             TowerDataReader tdr = _levelTemplate.GetNode<TowerDataReader>("/root/TowerDataReader");
             _towersData = tdr.GetTowersData();
-
-            _topBar = _levelTemplate.GetNode<TopBar>("UI/TopBar");
+            
             _shopInterface = _levelTemplate.GetNode<ShopInterface>("UI/ShopInterface");
             _statisticsInterface = _levelTemplate.GetNode<StatisticsInterface>("UI/StatisticsInterface");
 
             _shopInterface.LoadButtons(_towersData);
-            _shopInterface.SetTopBar(_topBar);
+            _shopInterface.SetPlayer(_levelTemplate.Player);
         }
 
         public void Process()
@@ -126,13 +123,13 @@ namespace TowerDefenseMC.Levels
 
             _levelTemplate.GetNode<YSort>("EntitiesContainer").AddChild(newTower);
 
-            _topBar.DecreaseAvailableCrystals(_towerCost);
+            _levelTemplate.Player.Crystals -= _towerCost;
             _shopInterface.TowerBuilt();
         }
 
         private bool CanBuildAnotherTower()
         {
-            return _topBar.GetAvailableCrystals() - _towerCost < 0 ? false : true;
+            return _levelTemplate.Player.Crystals - _towerCost >= 0;
         }
 
         private async void UpdateTowerPlaceHolder()

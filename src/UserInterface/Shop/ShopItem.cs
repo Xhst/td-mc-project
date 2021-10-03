@@ -8,7 +8,7 @@ namespace TowerDefenseMC.UserInterface.Shop
 {
     public class ShopItem : Control
     {
-        private int _cost;
+        public int Cost { get; private set; }
 
         private string _onButtonDownBind;
 
@@ -46,22 +46,22 @@ namespace TowerDefenseMC.UserInterface.Shop
             _towerImage.Texture = towerTexture;
             
 
-            _cost = cost;
+            Cost = cost;
             _onButtonDownBind = onButtonDownBind;
             
-            _costText.Text = _cost.ToString();
+            _costText.Text = Cost.ToString();
         }
         
-        public void SetButtonDisabled(TopBar.TopBar topBar)
+        public void SetButtonDisabled(bool disabled)
         {
-            _towerButton.Disabled = topBar.GetAvailableCrystals() - _cost < 0 ? true : false;
+            _towerButton.Disabled = disabled;
 
             _towerButton.Modulate = _towerButton.Disabled ? _buttonDisabled : _buttonActive;
         }
 
         public void OnButtonDown()
         {
-            EmitSignal(nameof(ClickEvent), _onButtonDownBind, _cost);
+            EmitSignal(nameof(ClickEvent), _onButtonDownBind, Cost);
         }
 
         public void OnMouseEntered()
