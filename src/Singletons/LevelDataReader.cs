@@ -16,6 +16,7 @@ namespace TowerDefenseMC.Singletons
         public Dictionary<string, List<TilePosition>> Tiles;
         public List<List<Vector2>> EnemyPathsPoints;
         public List<List<Vector2>> RiversPoints;
+        public List<WaveData> Waves;
         public int StartHealth;
         public int StartCrystals;
     }
@@ -24,6 +25,18 @@ namespace TowerDefenseMC.Singletons
         public int X;
         public int Y;
         public Rotation Rot;
+    }
+
+    public struct WaveData
+    {
+        public float WaitTime;
+        public List<WaveEnemyGroupData> WaveEnemies;
+    }
+    
+    public struct WaveEnemyGroupData
+    {
+        public string Name;
+        public int Amount;
     }
     
     public class LevelDataReader : Node
@@ -35,6 +48,7 @@ namespace TowerDefenseMC.Singletons
             levelData.Tiles =  new Dictionary<string, List<TilePosition>>();
             levelData.EnemyPathsPoints = new List<List<Vector2>>();
             levelData.RiversPoints = new List<List<Vector2>>();
+            levelData.Waves = new List<WaveData>();
             levelData.StartHealth = 10;
             levelData.StartCrystals = 10;
             
@@ -51,9 +65,9 @@ namespace TowerDefenseMC.Singletons
             levelData.Tiles = GetTilesData(json["tiles"]);
             levelData.EnemyPathsPoints = GetPointsListData(json["enemy_paths"]);
             levelData.RiversPoints = GetPointsListData(json["rivers"]);
+            levelData.Waves = GetWavesData(json["enemies_waves"]);
             levelData.StartHealth = int.Parse(json["start_health"]?.ToString() ?? "10");
             levelData.StartCrystals = int.Parse(json["start_crystals"]?.ToString() ?? "10");
-            
 
             return levelData;
         }
@@ -113,6 +127,42 @@ namespace TowerDefenseMC.Singletons
             }
             
             return pointsList;
+        }
+
+        private List<WaveData> GetWavesData(JToken jsonWavesData)
+        {
+            List<WaveData> wavesData = new List<WaveData>();
+
+            foreach (JToken wave in jsonWavesData)
+            {
+                WaveData waveData;
+                
+                waveData.WaitTime = float.Parse(wave["wait_time"]?.ToString() ?? "5");
+                waveData.WaveEnemies = GetWaveEnemiesData(wave["enemies"]);
+                
+                wavesData.Add(waveData);
+            }
+
+            return wavesData;
+        }
+
+        private List<WaveEnemyGroupData> GetWaveEnemiesData(JToken jsonWaveEnemiesData)
+        {
+            List<WaveEnemyGroupData> waveEnemiesData = new List<WaveEnemyGroupData>();
+
+            foreach (JToken enemiesGroup in jsonWaveEnemiesData)
+            {
+                WaveEnemyGroupData waveEnemyGroupData;
+
+                waveEnemyGroupData.Name = enemiesGroup["name"]?.ToString() ?? "";
+                waveEnemyGroupData.Amount = int.Parse(enemiesGroup["amount"]?.ToString() ?? "0");
+                
+                if (waveEnemyGroupData.Name == "" || waveEnemyGroupData.Amount == 0) continue;
+                
+                waveEnemiesData.Add(waveEnemyGroupData);
+            }
+
+            return waveEnemiesData;
         }
     }
 }
