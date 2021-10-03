@@ -7,7 +7,7 @@ using TowerDefenseMC.Enemies;
 using TowerDefenseMC.Singletons;
 using TowerDefenseMC.Towers;
 using TowerDefenseMC.Towers.Projectiles;
-using TowerDefenseMC.UserInterface.Menu;
+
 
 using AStar = TowerDefenseMC.Utils.AStar;
 
@@ -136,9 +136,9 @@ namespace TowerDefenseMC.Levels
             _projectileSpawner.SpawnProjectile(projectile, pos, target, damage, projectileSpeed);
         }
 
-        public void OnSelectTowerButtonDown(string towerName)
+        public void OnSelectTowerButtonDown(string towerName, int towerCost)
         {
-            _buildTool.OnSelectTowerButtonDown(towerName);
+            _buildTool.OnSelectTowerButtonDown(towerName, towerCost);
         }
 
         public void OnTowerButtonMouseEntered()
