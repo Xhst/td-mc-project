@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/enemy_ufoRed_E.png-fde765012bf570dfc5f5b273bbd9d045.stex"
+path="res://.import/enemy_ufoPurple.png-d10ac0955fa822ae631891a8e583c7d8.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/img/enemies/enemy_ufoRed_E.png"
-dest_files=[ "res://.import/enemy_ufoRed_E.png-fde765012bf570dfc5f5b273bbd9d045.stex" ]
+source_file="res://assets/img/enemies/enemy_ufoPurple.png"
+dest_files=[ "res://.import/enemy_ufoPurple.png-d10ac0955fa822ae631891a8e583c7d8.stex" ]
 
 [params]
 
