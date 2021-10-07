@@ -53,37 +53,15 @@
   
   "enemies_waves": [
     {
-      "wait_time": 10,
+      "wait_time": 1,
       "enemies": [
         {
-          "name": "purple",
+          "name": "Purple",
           "amount": 10
         },
         {
-          "name": "red",
-          "amount": 5
-        },
-        {
-          "name": "purple",
-          "amount": 10
-        }
-      ]
-    },
-
-    {
-      "wait_time": 10,
-      "enemies": [
-        {
-          "name": "purple",
-          "amount": 20
-        },
-        {
-          "name": "red",
-          "amount": 10
-        },
-        {
-          "name": "purple",
-          "amount": 10
+          "name": "Green",
+          "amount": 2
         }
       ]
     }

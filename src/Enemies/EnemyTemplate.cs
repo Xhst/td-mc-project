@@ -14,10 +14,11 @@ namespace TowerDefenseMC.Enemies
         public Vector2 TargetOffset = new Vector2(0, -50);
         
         private float _speed = 150;
-        private float _healthPoints = 3;
-        private int _damage = 1;
+        private float _health = 3;
+        private float _damage = 1;
         private int _feed = 1;
 
+        private Sprite _sprite;
         private TextureProgress _healthBar;
 
         [Signal]
@@ -28,13 +29,24 @@ namespace TowerDefenseMC.Enemies
 
         public override void _Ready()
         {
+            _sprite = GetNode<Sprite>("SpriteContainer/Sprite");
             _healthBar = GetNode<TextureProgress>("HealthBar");
 
-            _healthBar.MaxValue = _healthPoints;
-            _healthBar.Value = _healthPoints;
+            _healthBar.MaxValue = _health;
+            _healthBar.Value = _health;
 
             Connect(nameof(EndOfPathReached), Scenes.MainScene.GetActiveScene(), nameof(LevelTemplate.OnEnemyReachEndOfPath));
             Connect(nameof(EnemyDestroyed), Scenes.MainScene.GetActiveScene(), nameof(LevelTemplate.OnEnemyDestroyed));
+        }
+
+        public void Init(EnemyData enemyData)
+        {
+            _damage = enemyData.Damage;
+            _feed = enemyData.Feed;
+            _health = enemyData.Health;
+            _speed = enemyData.Speed;
+            
+            _sprite.Texture = ResourceLoader.Load<Texture>($"res://assets/img/enemies/{ enemyData.Image }.png");
         }
 
         public override void _PhysicsProcess(float delta)
@@ -60,10 +72,10 @@ namespace TowerDefenseMC.Enemies
 
         public void TakeDamage(float damage)
         {
-            _healthPoints -= damage;
-            _healthBar.Value = _healthPoints;
+            _health -= damage;
+            _healthBar.Value = _health;
             
-            if (_healthPoints <= 0)
+            if (_health <= 0)
             {
                 OnDestroy();
             }
