@@ -21,14 +21,13 @@ namespace TowerDefenseMC.Levels
         public TileMap TileMap { get; private set; }
 
         public Player Player;
-
         private EnemySpawner _enemySpawner;
-
         private TopBar _topBar;
-        
         private BuildTool _buildTool;
         private ProjectileSpawner _projectileSpawner;
         private PauseMenu _pauseMenu;
+        private Timer _waveTimer;
+
 
         private Dictionary<Vector2, TowerTemplate> _tilesWithTowers;
         private List<List<Vector2>> _paths;
@@ -39,6 +38,8 @@ namespace TowerDefenseMC.Levels
             TileMap = GetNode<TileMap>("TileMap");
             _topBar = GetNode<TopBar>("UI/TopBar");
             _pauseMenu = GetNode<PauseMenu>("Pause/PauseMenu");
+            _waveTimer = GetNode<Timer>("WaveTimer");
+
             _tilesWithTowers = new Dictionary<Vector2, TowerTemplate>();
         }
 
@@ -57,10 +58,11 @@ namespace TowerDefenseMC.Levels
             Task pathAndRiversTask = terrainBuilder.DrawPathsAndRivers(_paths, _rivers);
 
             Player = new Player(levelData.StartHealth, levelData.StartCrystals);
-            _enemySpawner = new EnemySpawner(this, _paths, levelData.Waves);
+            _enemySpawner = new EnemySpawner(this, _paths, _waveTimer, levelData.Waves);
 
             _topBar.Crystals.SetPlayer(Player);
             _topBar.HealthBar.SetPlayer(Player);
+            _topBar.WaveTimer.SetWaveTimer(_waveTimer);
             
             await Task.WhenAll(customTilesTask, pathAndRiversTask);
         }
@@ -70,7 +72,7 @@ namespace TowerDefenseMC.Levels
             _buildTool = new BuildTool(this);
             _projectileSpawner = new ProjectileSpawner(this);
             
-            _enemySpawner.SpawnEnemies();
+            _enemySpawner.StartNextWaveTimer();
         }
 
         private Vector2 GetViewSize()
@@ -179,6 +181,11 @@ namespace TowerDefenseMC.Levels
         public void OnPauseMenuButtonPressed()
         {
             _pauseMenu.PauseMode();
+        }
+
+        public void OnWaveTimerTimeout()
+        {
+            _enemySpawner.SpawnWaveEnemies();
         }
 
         public void OnEnemyReachEndOfPath(int damage)

@@ -9,6 +9,7 @@ namespace TowerDefenseMC.UserInterface.TopBar
     {
         public Crystals Crystals;
         public HealthBar HealthBar;
+        public WaveTimer WaveTimer;
 
         [Signal]
         private delegate void PauseMenuButtonPressed();
@@ -24,6 +25,7 @@ namespace TowerDefenseMC.UserInterface.TopBar
         public void OnMenuButtonPressed()
         {
             EmitSignal(nameof(PauseMenuButtonPressed));
+            WaveTimer = GetNode<WaveTimer>("ColorRect/HBoxContainer/TimerTextContainer/Timer");
         }
     }
 }

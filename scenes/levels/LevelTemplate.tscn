@@ -68,8 +68,13 @@ margin_right = 0.0
 
 [node name="TopBar" parent="UI" instance=ExtResource( 6 )]
 
+
 [node name="Pause" type="CanvasLayer" parent="."]
 layer = 2
 
 [node name="PauseMenu" parent="Pause" instance=ExtResource( 7 )]
 visible = false
+
+[node name="WaveTimer" type="Timer" parent="."]
+[connection signal="timeout" from="WaveTimer" to="." method="OnWaveTimerTimeout"]
+
