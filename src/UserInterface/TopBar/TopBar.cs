@@ -18,6 +18,7 @@ namespace TowerDefenseMC.UserInterface.TopBar
         {
             Crystals = GetNode<Crystals>("ColorRect/HBoxContainer/Crystal");
             HealthBar = GetNode<HealthBar>("ColorRect/HBoxContainer/HealthBar");
+            WaveTimer = GetNode<WaveTimer>("ColorRect/HBoxContainer/TimerTextContainer/Timer");
 
             Connect(nameof(PauseMenuButtonPressed), Scenes.MainScene.GetActiveScene(), nameof(LevelTemplate.OnPauseMenuButtonPressed));
         }
