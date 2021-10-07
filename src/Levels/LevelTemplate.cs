@@ -9,6 +9,7 @@ using TowerDefenseMC.Singletons;
 using TowerDefenseMC.Towers;
 using TowerDefenseMC.Towers.Projectiles;
 using TowerDefenseMC.UserInterface.TopBar;
+using TowerDefenseMC.UserInterface.PauseMenu;
 
 using AStar = TowerDefenseMC.Utils.AStar;
 
@@ -24,7 +25,9 @@ namespace TowerDefenseMC.Levels
         private TopBar _topBar;
         private BuildTool _buildTool;
         private ProjectileSpawner _projectileSpawner;
+        private PauseMenu _pauseMenu;
         private Timer _waveTimer;
+
 
         private Dictionary<Vector2, TowerTemplate> _tilesWithTowers;
         private List<List<Vector2>> _paths;
@@ -34,7 +37,9 @@ namespace TowerDefenseMC.Levels
         {
             TileMap = GetNode<TileMap>("TileMap");
             _topBar = GetNode<TopBar>("UI/TopBar");
+            _pauseMenu = GetNode<PauseMenu>("Pause/PauseMenu");
             _waveTimer = GetNode<Timer>("WaveTimer");
+
             _tilesWithTowers = new Dictionary<Vector2, TowerTemplate>();
         }
 
@@ -171,6 +176,11 @@ namespace TowerDefenseMC.Levels
         public void OnTouchScreenButtonReleased(string towerName, TowerTemplate tower)
         {
             _buildTool.TowerStatistics(towerName, tower);
+        }
+
+        public void OnPauseMenuButtonPressed()
+        {
+            _pauseMenu.PauseMode();
         }
 
         public void OnWaveTimerTimeout()
