@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using Godot;
 
@@ -20,6 +21,8 @@ namespace TowerDefenseMC.Levels
 
         public Player Player;
 
+        private EnemySpawner _enemySpawner;
+
         private TopBar _topBar;
         
         private BuildTool _buildTool;
@@ -36,7 +39,7 @@ namespace TowerDefenseMC.Levels
             _tilesWithTowers = new Dictionary<Vector2, TowerTemplate>();
         }
 
-        public void PreStart(int level)
+        public async void PreStart(int level)
         {
             LevelDataReader ldr = GetNode<LevelDataReader>("/root/LevelDataReader");
             LevelData levelData = ldr.GetLevelData(level);
@@ -44,15 +47,19 @@ namespace TowerDefenseMC.Levels
             _paths = CalculateTilesInPointsLists(levelData.EnemyPathsPoints);
             _rivers = CalculateTilesInPointsLists(levelData.RiversPoints);
             
-            TerrainBuilder terrainBuilder = new TerrainBuilder(levelData.IsSnowy, TileMap);
+            TerrainBuilder terrainBuilder = new TerrainBuilder(this, levelData.IsSnowy, TileMap);
             terrainBuilder.FillViewPortWithTile(GetViewSize());
-            terrainBuilder.DrawCustomTiles(levelData.Tiles);
-            terrainBuilder.DrawPathsAndRivers(_paths, _rivers);
             
+            Task customTilesTask = terrainBuilder.DrawCustomTiles(levelData.Tiles);
+            Task pathAndRiversTask = terrainBuilder.DrawPathsAndRivers(_paths, _rivers);
+
             Player = new Player(levelData.StartHealth, levelData.StartCrystals);
+            _enemySpawner = new EnemySpawner(this, _paths, levelData.Waves);
 
             _topBar.Crystals.SetPlayer(Player);
             _topBar.HealthBar.SetPlayer(Player);
+            
+            await Task.WhenAll(customTilesTask, pathAndRiversTask);
         }
 
         public void Start()
@@ -60,7 +67,7 @@ namespace TowerDefenseMC.Levels
             _buildTool = new BuildTool(this);
             _projectileSpawner = new ProjectileSpawner(this);
             
-            new EnemySpawner(this, _paths).SpawnEnemies();
+            _enemySpawner.SpawnEnemies();
         }
 
         private Vector2 GetViewSize()

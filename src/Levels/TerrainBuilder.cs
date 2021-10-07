@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 using Godot;
 
@@ -11,16 +12,21 @@ namespace TowerDefenseMC.Levels
 {
     public class TerrainBuilder
     {
+        private const float TimeBetweenTileDraw = 0.01f;
+        
         private const int TileLength = 128;
         private const int TileHeight = 64;
+
+        private readonly LevelTemplate _levelTemplate;
 
         private readonly TileMap _tileMap;
         private readonly bool _isSnowy;
         
         private readonly int _fillTileId;
 
-        public TerrainBuilder(bool isSnowy, TileMap tileMap)
+        public TerrainBuilder(LevelTemplate levelTemplate, bool isSnowy, TileMap tileMap)
         {
+            _levelTemplate = levelTemplate;
             _isSnowy = isSnowy;
             _tileMap = tileMap;
 
@@ -63,7 +69,7 @@ namespace TowerDefenseMC.Levels
             return _tileMap.TileSet.FindTileByName(name + "_" + rotation.ToStringPair());
         }
         
-        public void DrawCustomTiles(Dictionary<string, List<TilePosition>> tiles)
+        public async Task DrawCustomTiles(Dictionary<string, List<TilePosition>> tiles)
         {
             foreach (KeyValuePair<string, List<TilePosition>> tile in tiles)
             {
@@ -74,11 +80,12 @@ namespace TowerDefenseMC.Levels
                     int tileId = FindTileByNameTryingRotation(tileName, tilePosition.Rot);
                     
                     _tileMap.SetCell(tilePosition.X, tilePosition.Y, tileId);
+                    await _levelTemplate.ToSignal(_levelTemplate.GetTree().CreateTimer(TimeBetweenTileDraw), "timeout");
                 }
             }
         }
 
-        public void DrawPathsAndRivers(List<List<Vector2>> paths, List<List<Vector2>> rivers)
+        public async Task DrawPathsAndRivers(List<List<Vector2>> paths, List<List<Vector2>> rivers)
         {
             HashSet<Vector2> pathTiles = new HashSet<Vector2>();
             
@@ -100,11 +107,11 @@ namespace TowerDefenseMC.Levels
                 }
             }
             
-            DrawPaths(paths, pathTiles);
-            DrawRivers(rivers, riverTiles, pathTiles);
+            await DrawPaths(paths, pathTiles);
+            await DrawRivers(rivers, riverTiles, pathTiles);
         }
         
-        private void DrawPaths(List<List<Vector2>> paths, HashSet<Vector2> pathTiles)
+        private async Task DrawPaths(List<List<Vector2>> paths, HashSet<Vector2> pathTiles)
         {
             foreach (List<Vector2> path in paths)
             {
@@ -124,11 +131,12 @@ namespace TowerDefenseMC.Levels
                     }
 
                     DrawTile(tile, tileId);
+                    await _levelTemplate.ToSignal(_levelTemplate.GetTree().CreateTimer(TimeBetweenTileDraw), "timeout");
                 }
             }
         }
         
-        private void DrawRivers(List<List<Vector2>> rivers, HashSet<Vector2> riverTiles, HashSet<Vector2> pathTiles)
+        private async Task DrawRivers(List<List<Vector2>> rivers, HashSet<Vector2> riverTiles, HashSet<Vector2> pathTiles)
         {
             foreach (List<Vector2> river in rivers)
             {
@@ -143,6 +151,7 @@ namespace TowerDefenseMC.Levels
                     }
                     
                     DrawTile(tile, tileId);
+                    await _levelTemplate.ToSignal(_levelTemplate.GetTree().CreateTimer(TimeBetweenTileDraw), "timeout");
                 }
             }
         }
