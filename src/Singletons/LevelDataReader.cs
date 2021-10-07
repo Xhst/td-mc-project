@@ -37,6 +37,7 @@ namespace TowerDefenseMC.Singletons
     {
         public string Name;
         public int Amount;
+        public int Path;
     }
     
     public class LevelDataReader : Node
@@ -156,6 +157,7 @@ namespace TowerDefenseMC.Singletons
 
                 waveEnemyGroupData.Name = enemiesGroup["name"]?.ToString() ?? "";
                 waveEnemyGroupData.Amount = int.Parse(enemiesGroup["amount"]?.ToString() ?? "0");
+                waveEnemyGroupData.Path = int.Parse(enemiesGroup["path"]?.ToString() ?? "0");
                 
                 if (waveEnemyGroupData.Name == "" || waveEnemyGroupData.Amount == 0) continue;
                 

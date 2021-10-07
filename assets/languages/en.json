@@ -8,6 +8,10 @@
     "back" : "Main Menu"
   },
 
+  "top_bar": {
+    "wave_timer": "Next Wave"
+  },
+
   "statistics": {
     "damage" : "Damage",
     "attack_speed" : "Attack Speed",

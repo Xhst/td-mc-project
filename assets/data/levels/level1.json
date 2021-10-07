@@ -48,20 +48,54 @@
         "x": 17,
         "y": 0
       }
+    ],
+    [
+      {
+        "x": 8,
+        "y": -4
+      },
+      {
+        "x": 10,
+        "y": 5
+      }
     ]
   ],
   
   "enemies_waves": [
     {
-      "wait_time": 1,
+      "wait_time": 10,
       "enemies": [
         {
-          "name": "Purple",
+          "name": "Yellow",
           "amount": 10
         },
         {
+          "path": 1,
           "name": "Green",
           "amount": 2
+        },
+        {
+          "path": 1,
+          "name": "Purple",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "wait_time": 15,
+      "enemies": [
+        {
+          "name": "Yellow",
+          "amount": 3
+        },
+        {
+          "name": "Green",
+          "amount": 3
+        },
+        {
+          "path": 1,
+          "name": "Purple",
+          "amount": 4
         }
       ]
     }

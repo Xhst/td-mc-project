@@ -20,50 +20,85 @@ namespace TowerDefenseMC.Enemies
         private readonly Dictionary<string, EnemyData> _enemiesData;
         private readonly List<WaveData> _wavesData;
 
-        private PackedScene _enemyScene;
+        private readonly PackedScene _enemyScene;
         private readonly YSort _enemyContainer;
+
+        private readonly Timer _waveTimer;
+        private int _currentWave = 0;
         
-        public EnemySpawner(LevelTemplate levelTemplate, List<List<Vector2>> paths, List<WaveData> wavesData)
+        public EnemySpawner(LevelTemplate levelTemplate, List<List<Vector2>> paths, Timer waveTimer, List<WaveData> wavesData)
         {
             _levelTemplate = levelTemplate;
             _paths = paths;
+            _waveTimer = waveTimer;
             _wavesData = wavesData;
-            
+
             _enemyScene = ResourceLoader.Load<PackedScene>("res://scenes/enemies/EnemyTemplate.tscn");
             _enemyContainer = _levelTemplate.GetNode<YSort>("EntitiesContainer");
 
             EnemyDataReader edr = _levelTemplate.GetNode<EnemyDataReader>("/root/EnemyDataReader");
             _enemiesData = edr.GetEnemiesData();
         }
-        
-        public async void SpawnEnemies()
-        {
-            Node2D pathsContainer = _levelTemplate.GetNode<Node2D>("Paths");
 
+        public void StartNextWaveTimer()
+        {
+            if (_wavesData.Count <= _currentWave)
+            {
+                _waveTimer.Stop();
+                return;
+            }
+            
+            GD.Print("Next wave");
+            WaveData currentWaveData = _wavesData[_currentWave];
+            
+            _waveTimer.WaitTime = currentWaveData.WaitTime;
+            _waveTimer.Start();
+        }
+        
+        public void SpawnWaveEnemies()
+        {
             foreach (List<Vector2> path in _paths)
             {
-                Path2D path2D = new Path2D();
-                pathsContainer.AddChild(path2D);
+                Path2D path2D = GetPath2DWithCurveForPath(path);
                 
-                Curve2D enemyCurve = new Curve2D();
-                
-                foreach (Vector2 tile in path)
-                {
-                    enemyCurve.AddPoint(tile.CartesianToIsometric());
-                }
-
-                path2D.Curve = enemyCurve;
-
-                foreach (WaveData waveData in _wavesData)
-                {
-                    await _levelTemplate.ToSignal(_levelTemplate.GetTree().CreateTimer(waveData.WaitTime), "timeout");
-                    
-                    foreach (WaveEnemyGroupData enemyGroup in waveData.WaveEnemies)
-                    {
-                        await SpawnEnemyGroup(enemyGroup.Name, enemyGroup.Amount, path2D);
-                    }
-                }
+                SpawnWaveForPath(_paths.IndexOf(path), path2D);
             }
+
+            _currentWave++;
+            StartNextWaveTimer();
+        }
+
+        private Path2D GetPath2DWithCurveForPath(List<Vector2> path)
+        {
+            Node2D pathsContainer = _levelTemplate.GetNode<Node2D>("Paths");
+            
+            Path2D path2D = new Path2D();
+            pathsContainer.AddChild(path2D);
+            Curve2D enemyCurve = new Curve2D();
+                
+            foreach (Vector2 tile in path)
+            {
+                enemyCurve.AddPoint(tile.CartesianToIsometric());
+            }
+
+            path2D.Curve = enemyCurve;
+
+            return path2D;
+        }
+
+        private async void SpawnWaveForPath(int pathIndex, Path2D path2D)
+        {
+            if (_wavesData.Count <= _currentWave) return;
+            
+            WaveData currentWaveData = _wavesData[_currentWave];
+            
+            foreach (WaveEnemyGroupData enemyGroup in currentWaveData.WaveEnemies)
+            {
+                if (enemyGroup.Path != pathIndex) continue;
+                        
+                await SpawnEnemyGroup(enemyGroup.Name, enemyGroup.Amount, path2D);
+            }
+            
         }
 
         private async Task SpawnEnemyGroup(string enemyType, int amount, Path2D path2D)

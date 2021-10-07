@@ -7,6 +7,10 @@
     "share" : "Condividi",
     "back" : "Torna Al Menu"
   },
+  
+  "top_bar": {
+    "wave_timer": "Prossima Ondata"
+  },
 
   "statistics": {
     "damage" : "Danno",

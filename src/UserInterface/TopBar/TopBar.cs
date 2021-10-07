@@ -8,11 +8,13 @@ namespace TowerDefenseMC.UserInterface.TopBar
     {
         public Crystals Crystals;
         public HealthBar HealthBar;
+        public WaveTimer WaveTimer;
 
         public override void _Ready()
         {
             Crystals = GetNode<Crystals>("ColorRect/HBoxContainer/Crystal");
             HealthBar = GetNode<HealthBar>("ColorRect/HBoxContainer/HealthBar");
+            WaveTimer = GetNode<WaveTimer>("ColorRect/HBoxContainer/TimerTextContainer/Timer");
         }
     }
 }

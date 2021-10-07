@@ -66,3 +66,6 @@ margin_left = 0.0
 margin_right = 0.0
 
 [node name="TopBar" parent="UI" instance=ExtResource( 6 )]
+
+[node name="WaveTimer" type="Timer" parent="."]
+[connection signal="timeout" from="WaveTimer" to="." method="OnWaveTimerTimeout"]
