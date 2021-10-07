@@ -86,7 +86,6 @@ margin_right = 1850.0
 margin_bottom = 65.0
 rect_min_size = Vector2( 750, 50 )
 size_flags_vertical = 4
-max_value = 100.0
 value = 60.0
 texture_under = ExtResource( 3 )
 texture_progress = ExtResource( 3 )
@@ -120,3 +119,5 @@ margin_bottom = -19.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[connection signal="pressed" from="ColorRect/HBoxContainer/MenuButton" to="." method="OnMenuButtonPressed"]

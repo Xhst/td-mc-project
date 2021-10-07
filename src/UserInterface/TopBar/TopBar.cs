@@ -1,5 +1,6 @@
 using Godot;
 
+using TowerDefenseMC.Levels;
 using TowerDefenseMC.Singletons;
 
 namespace TowerDefenseMC.UserInterface.TopBar
@@ -9,10 +10,20 @@ namespace TowerDefenseMC.UserInterface.TopBar
         public Crystals Crystals;
         public HealthBar HealthBar;
 
+        [Signal]
+        private delegate void PauseMenuButtonPressed();
+
         public override void _Ready()
         {
             Crystals = GetNode<Crystals>("ColorRect/HBoxContainer/Crystal");
             HealthBar = GetNode<HealthBar>("ColorRect/HBoxContainer/HealthBar");
+
+            Connect(nameof(PauseMenuButtonPressed), Scenes.MainScene.GetActiveScene(), nameof(LevelTemplate.OnPauseMenuButtonPressed));
+        }
+        
+        public void OnMenuButtonPressed()
+        {
+            EmitSignal(nameof(PauseMenuButtonPressed));
         }
     }
 }
