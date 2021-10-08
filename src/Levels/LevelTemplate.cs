@@ -180,7 +180,7 @@ namespace TowerDefenseMC.Levels
 
         public void OnPauseMenuButtonPressed()
         {
-            _pauseMenu.PauseMode();
+            _pauseMenu.SetPauseMode(true);
         }
 
         public void OnWaveTimerTimeout()

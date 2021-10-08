@@ -12,6 +12,11 @@
     "wave_timer": "Next Wave"
   },
 
+  "pause_menu": {
+    "continue" : "Continue",
+    "back_to_menu" : "Back To Menu"
+  },
+
   "statistics": {
     "damage" : "Damage",
     "attack_speed" : "Attack Speed",
