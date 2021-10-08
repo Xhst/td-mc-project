@@ -1,23 +1,85 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://src/userInterface/PauseMenu/PauseMenu.cs" type="Script" id=1]
+[ext_resource path="res://UI/PNG/music_symbol.png" type="Texture" id=1]
 [ext_resource path="res://scenes/ui/menu/MenuButton.tscn" type="PackedScene" id=2]
+[ext_resource path="res://UI/PNG/grey_box.png" type="Texture" id=3]
+[ext_resource path="res://UI/PNG/blue_boxCheckmark.png" type="Texture" id=4]
+[ext_resource path="res://UI/PNG/sound_symbol.png" type="Texture" id=5]
+[ext_resource path="res://assets/audio/UI_Sounds/click1.ogg" type="AudioStream" id=6]
+
+[sub_resource type="CSharpScript" id=1]
+resource_name = "PauseMenu"
+script/source = "using Godot;
+using System;
+
+public class PauseMenu : Control
+{
+	// Declare member variables here. Examples:
+	// private int a = 2;
+	// private string b = \"text\";
+
+	// Called when the node enters the scene tree for the first time.
+	public override void _Ready()
+	{
+		
+	}
+
+//  // Called every frame. 'delta' is the elapsed time since the previous frame.
+//  public override void _Process(float delta)
+//  {
+//      
+//  }
+}
+
+
+private void OnContinueButtonPressed()
+{
+	// Replace with function body.
+}
+
+
+private void OnSettingsButtonPressed()
+{
+	// Replace with function body.
+}
+
+
+private void OnBackToMenuButtonPressed()
+{
+	// Replace with function body.
+}
+
+
+private void OnAudioSettingPressed()
+{
+	// Replace with function body.
+}
+
+
+private void OnAudioSettingPressed()
+{
+	// Replace with function body.
+}
+"
 
 [node name="PauseMenu" type="Control"]
 pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 1 )
+script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BlackOverlay" type="ColorRect" parent="."]
+[node name="BlueOverlay" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0, 0, 0, 0.392157 )
+color = Color( 0, 0.670588, 1, 0.392157 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Buttons" type="VBoxContainer" parent="."]
+[node name="CenterButtons" type="VBoxContainer" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
@@ -30,17 +92,94 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ContinueButton" parent="Buttons" instance=ExtResource( 2 )]
-margin_top = 171.0
-margin_bottom = 214.0
+[node name="ContinueButton" parent="CenterButtons" instance=ExtResource( 2 )]
+margin_top = 195.0
+margin_bottom = 238.0
 rect_scale = Vector2( 1, 1 )
+text = "Continue"
+Tag = "pause_menu.continue"
 
-[node name="SettingsButton" parent="Buttons" instance=ExtResource( 2 )]
-margin_top = 218.0
-margin_bottom = 261.0
+[node name="BackToMenuButton" parent="CenterButtons" instance=ExtResource( 2 )]
+margin_top = 242.0
+margin_bottom = 285.0
 rect_scale = Vector2( 1, 1 )
+text = "Back To Menu"
+Tag = "pause_menu.back_to_menu"
 
-[node name="BackToMenuButton" parent="Buttons" instance=ExtResource( 2 )]
-margin_top = 265.0
-margin_bottom = 308.0
-rect_scale = Vector2( 1, 1 )
+[node name="MusicSetting" type="Control" parent="."]
+margin_left = -8.0
+margin_top = 8.0
+margin_right = 317.0
+margin_bottom = 397.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MusicSymbol" type="TextureRect" parent="MusicSetting"]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MusicOnOff" type="TextureButton" parent="MusicSetting"]
+margin_left = 200.0
+margin_top = 56.0
+margin_right = 238.0
+margin_bottom = 92.0
+rect_scale = Vector2( 2.5, 2.5 )
+toggle_mode = true
+pressed = true
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="SoundSetting" type="Control" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -152.0
+margin_top = -24.0
+margin_right = -8.0
+margin_bottom = 16.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SoundSymbol" type="TextureRect" parent="SoundSetting"]
+margin_left = -220.0
+margin_right = -20.0
+margin_bottom = 200.0
+rect_scale = Vector2( 1.3, 1.3 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SoundOnOff" type="TextureButton" parent="SoundSetting"]
+margin_left = 30.0
+margin_top = 85.0
+margin_right = 68.0
+margin_bottom = 121.0
+rect_scale = Vector2( 2.5, 2.5 )
+toggle_mode = true
+pressed = true
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="ButtonClickSound" type="AudioStreamPlayer" parent="."]
+pause_mode = 1
+stream = ExtResource( 6 )
+bus = "Sound"
+
+[connection signal="pressed" from="CenterButtons/ContinueButton" to="." method="OnContinueButtonPressed"]
+[connection signal="pressed" from="CenterButtons/BackToMenuButton" to="." method="OnBackToMenuButtonPressed"]
+[connection signal="pressed" from="MusicSetting/MusicOnOff" to="." method="OnAudioSettingPressed"]
+[connection signal="pressed" from="SoundSetting/SoundOnOff" to="." method="OnAudioSettingPressed"]

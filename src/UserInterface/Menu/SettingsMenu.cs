@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 using Godot;
 
+using TowerDefenseMC.Levels;
 using TowerDefenseMC.Singletons;
 
 
@@ -16,6 +17,8 @@ namespace TowerDefenseMC.UserInterface.Menu
         private TextureButton _musicButton;
         private Label _languageTextLabel;
 
+        private LevelTemplate _levelTemplate;
+
         private bool _hasAudioSettingsChanged = false;
 
         public override void _Ready()
@@ -26,6 +29,9 @@ namespace TowerDefenseMC.UserInterface.Menu
             
             _soundButton = GetNode<TextureButton>("SoundSetting/SoundOnOff");
             _musicButton = GetNode<TextureButton>("MusicSetting/MusicOnOff");
+
+            SetSoundButtonPressed(!Audio.SoundPressed);
+            SetMusicButtonPressed(!Audio.MusicPressed);
         }
 
         public override void _PhysicsProcess(float delta)
@@ -33,11 +39,23 @@ namespace TowerDefenseMC.UserInterface.Menu
             if (_hasAudioSettingsChanged)
             {
                 AudioServer.SetBusMute(AudioServer.GetBusIndex("Sound"), !_soundButton.Pressed);
+                Audio.SoundPressed = !_soundButton.Pressed;
 
                 AudioServer.SetBusMute(AudioServer.GetBusIndex("Music"), !_musicButton.Pressed);
+                Audio.MusicPressed = !_musicButton.Pressed;
 
                 _hasAudioSettingsChanged = false;
             }
+        }
+
+        public void SetSoundButtonPressed(bool pressed)
+        {
+            _soundButton.Pressed = pressed;
+        }
+
+        public void SetMusicButtonPressed(bool pressed)
+        {
+            _musicButton.Pressed = pressed;
         }
 
         public void OnLeftButtonPressed()

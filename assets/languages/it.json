@@ -12,6 +12,11 @@
     "wave_timer": "Prossima Ondata"
   },
 
+  "pause_menu": {
+    "continue" : "Continua",
+    "back_to_menu" : "Torna Al Menu"
+  },
+
   "statistics": {
     "damage" : "Danno",
     "attack_speed" : "Velocità Di Attacco",

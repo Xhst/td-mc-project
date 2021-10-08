@@ -10,7 +10,6 @@ config_version=4
 
 _global_script_classes=[  ]
 _global_script_class_icons={
-
 }
 lang="en"
 
@@ -25,6 +24,7 @@ config/icon="res://icon.png"
 LanguageManager="*res://src/Singletons/LanguageManager.cs"
 Scenes="*res://src/Singletons/Scenes.cs"
 Game="*res://src/Singletons/Game.cs"
+Audio="*res://src/Singletons/Audio.cs"
 LevelDataReader="*res://src/Singletons/LevelDataReader.cs"
 EnemyDataReader="*res://src/Singletons/EnemyDataReader.cs"
 TowerDataReader="*res://src/Singletons/TowerDataReader.cs"
