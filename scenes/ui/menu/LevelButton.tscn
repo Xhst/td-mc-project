@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://UI/Font/kenvector_future.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://UI/PNG/blue_button06.png" type="Texture" id=2]
@@ -6,10 +6,23 @@
 [ext_resource path="res://src/UserInterface/Menu/LevelButton.cs" type="Script" id=5]
 
 [sub_resource type="StyleBoxTexture" id=1]
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 region_rect = Rect2( 0, 0, 49, 49 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
+modulate_color = Color( 0.627451, 0.627451, 0.627451, 1 )
 
 [sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 49, 49 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id=3]
 texture = ExtResource( 3 )
 region_rect = Rect2( 0, 0, 49, 49 )
 margin_left = 10.0
@@ -17,22 +30,22 @@ margin_right = 10.0
 margin_top = 10.0
 margin_bottom = 10.0
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=4]
 size = 20
 font_data = ExtResource( 1 )
 
-[sub_resource type="Theme" id=4]
-default_font = SubResource( 3 )
+[sub_resource type="Theme" id=5]
+default_font = SubResource( 4 )
 Button/colors/font_color = Color( 0.109804, 0.109804, 0.109804, 1 )
 Button/colors/font_color_disabled = Color( 0, 0, 0, 1 )
 Button/colors/font_color_hover = Color( 0, 0, 0, 1 )
 Button/colors/font_color_pressed = Color( 0, 0, 0, 1 )
 Button/constants/hseparation = 2
 Button/fonts/font = null
-Button/styles/disabled = null
+Button/styles/disabled = SubResource( 1 )
 Button/styles/focus = null
-Button/styles/hover = SubResource( 1 )
-Button/styles/normal = SubResource( 2 )
+Button/styles/hover = SubResource( 2 )
+Button/styles/normal = SubResource( 3 )
 Button/styles/pressed = null
 CheckBox/colors/font_color = Color( 0, 0, 0, 1 )
 CheckBox/colors/font_color_disabled = Color( 0, 0, 0, 1 )
@@ -450,7 +463,7 @@ WindowDialog/icons/close = null
 WindowDialog/icons/close_highlight = null
 WindowDialog/styles/panel = null
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=6]
 size = 50
 font_data = ExtResource( 1 )
 
@@ -470,14 +483,12 @@ margin_top = 525.0
 margin_right = 1099.0
 margin_bottom = 675.0
 rect_min_size = Vector2( 150, 150 )
-theme = SubResource( 4 )
-custom_fonts/font = SubResource( 5 )
-custom_colors/font_color_disabled = Color( 0.992157, 0.992157, 0.992157, 1 )
+theme = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
 custom_constants/hseparation = 0
 text = " 0"
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
 }
-
 [connection signal="pressed" from="LevelButton" to="." method="OnLevelButtonPressed"]

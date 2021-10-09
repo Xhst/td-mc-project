@@ -18,6 +18,7 @@ namespace TowerDefenseMC.Singletons
 
         private readonly Dictionary<string, string> _languageToFileName;
         private readonly HashSet<IObserver> _observers;
+        private Persist _persist;
 
         private string Language
         {
@@ -41,6 +42,11 @@ namespace TowerDefenseMC.Singletons
         {
             _observers = new HashSet<IObserver>();
             _languageToFileName = LanguagesToFileNameDictionary();
+        }
+
+        public override void _Ready()
+        {
+            _persist = GetNode<Persist>("/root/Persist");
         }
 
         /// <summary>
@@ -136,6 +142,17 @@ namespace TowerDefenseMC.Singletons
             }
 
             Language = lang;
+            _persist.Save();
+        }
+
+        public void SetLanguageLoad(string lang)
+        {
+            Language = lang;
+        }
+
+        public string GetLanguage()
+        {
+            return Language;
         }
 
         public void Attach(IObserver observer)

@@ -10,6 +10,7 @@ config_version=4
 
 _global_script_classes=[  ]
 _global_script_class_icons={
+
 }
 lang="en"
 
@@ -17,6 +18,7 @@ lang="en"
 
 config/name="Tower Defense MC"
 run/main_scene="res://scenes/Main.tscn"
+config/use_custom_user_dir=true
 config/icon="res://icon.png"
 
 [autoload]
@@ -24,10 +26,10 @@ config/icon="res://icon.png"
 LanguageManager="*res://src/Singletons/LanguageManager.cs"
 Scenes="*res://src/Singletons/Scenes.cs"
 Game="*res://src/Singletons/Game.cs"
-Audio="*res://src/Singletons/Audio.cs"
 LevelDataReader="*res://src/Singletons/LevelDataReader.cs"
 EnemyDataReader="*res://src/Singletons/EnemyDataReader.cs"
 TowerDataReader="*res://src/Singletons/TowerDataReader.cs"
+Persist="*res://src/Singletons/Persist.cs"
 
 [display]
 

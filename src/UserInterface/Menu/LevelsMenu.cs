@@ -12,13 +12,16 @@ namespace TowerDefenseMC.UserInterface.Menu
     {
         [Export] 
         private PackedScene _levelButtonScene;
-        
+
         private Control _buttonsContainer;
+        private Game _game;
         
         
         public override void _Ready()
         {
             _buttonsContainer = GetNode<Control>("ButtonsContainer");
+            _game = GetNode<Game>("/root/Game");
+            
             CreateLevelButtons();
         }
 
@@ -28,8 +31,18 @@ namespace TowerDefenseMC.UserInterface.Menu
 
             foreach (string level in levels)
             {
+                int levelNumber = int.Parse(level);
+                
                 LevelButton btn = (LevelButton) _levelButtonScene.Instance();
-                btn.Init(this, int.Parse(level));
+                
+                if (_game.TryGetCompletedLevel(levelNumber, out CompletedLevel completedLevel))
+                {
+                    btn.Init(this, levelNumber, completedLevel.Stars);
+                }
+                else
+                {
+                    btn.Init(this, levelNumber, 0, true);
+                }
 
                 _buttonsContainer.AddChild(btn);
             }
