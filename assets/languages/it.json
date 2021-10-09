@@ -17,6 +17,13 @@
     "back_to_menu" : "Torna Al Menu"
   },
 
+  "end_level": {
+    "level_completed" : "Livello Completato",
+    "back_to_menu" : "Torna Al Menu",
+    "next_level" : "Prossimo Livello",
+    "share" : "Condividi"
+  },
+
   "statistics": {
     "damage" : "Danno",
     "attack_speed" : "Velocità Di Attacco",

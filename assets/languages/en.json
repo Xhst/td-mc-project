@@ -17,6 +17,13 @@
     "back_to_menu" : "Back To Menu"
   },
 
+  "end_level": {
+    "level_completed" : "Level Completed",
+    "back_to_menu" : "Back To Menu",
+    "next_level" : "Next Level",
+    "share" : "Share"
+  },
+
   "statistics": {
     "damage" : "Damage",
     "attack_speed" : "Attack Speed",
