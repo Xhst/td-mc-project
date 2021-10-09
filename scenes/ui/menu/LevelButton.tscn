@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://UI/Font/kenvector_future.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://UI/PNG/blue_button06.png" type="Texture" id=2]
 [ext_resource path="res://UI/PNG/grey_button07.png" type="Texture" id=3]
+[ext_resource path="res://assets/img/stars.png" type="Texture" id=4]
 [ext_resource path="res://src/UserInterface/Menu/LevelButton.cs" type="Script" id=5]
 
 [sub_resource type="StyleBoxTexture" id=1]
@@ -490,5 +491,19 @@ text = " 0"
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
+}
+
+[node name="Stars" type="TextureProgress" parent="LevelButton"]
+margin_left = -3.0
+margin_top = 152.0
+margin_right = 777.0
+margin_bottom = 408.0
+rect_scale = Vector2( 0.2, 0.2 )
+value = 50.0
+texture_under = ExtResource( 4 )
+texture_progress = ExtResource( 4 )
+tint_under = Color( 0, 0, 0, 0.392157 )
+__meta__ = {
+"_edit_use_anchors_": false
 }
 [connection signal="pressed" from="LevelButton" to="." method="OnLevelButtonPressed"]
