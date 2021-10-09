@@ -41,7 +41,7 @@ namespace TowerDefenseMC.UserInterface.Menu
                 }
                 else
                 {
-                    btn.Init(this, levelNumber, 0, true);
+                    btn.Init(this, levelNumber, 0, _game.NextLevel != levelNumber);
                 }
 
                 _buttonsContainer.AddChild(btn);

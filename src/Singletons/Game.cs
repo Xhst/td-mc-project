@@ -21,6 +21,8 @@ namespace TowerDefenseMC.Singletons
     
     public class Game : Node
     {
+        public int NextLevel { get; private set; }
+        
         private Dictionary<int, CompletedLevel> _completedLevels;
 
         public override void _Ready()
@@ -65,13 +67,20 @@ namespace TowerDefenseMC.Singletons
 
         public void LoadLevelsCompleted(Godot.Collections.Dictionary dict)
         {
+            int lastLevelCompleted = 0;
+            
             foreach (DictionaryEntry entry in dict)
             {
+                int levelNumber = int.Parse(entry.Key.ToString());
+
+                if (levelNumber > lastLevelCompleted) lastLevelCompleted = levelNumber;
+                
                 _completedLevels.Add(
-                    int.Parse(entry.Key.ToString()), 
-                    new CompletedLevel(int.Parse(entry.Key.ToString()), int.Parse(entry.Value.ToString()))
+                    levelNumber, new CompletedLevel(levelNumber, int.Parse(entry.Value.ToString()))
                 );
             }
+
+            NextLevel = lastLevelCompleted + 1;
         }
     }
 }
