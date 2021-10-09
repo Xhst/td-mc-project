@@ -58,9 +58,11 @@ one_shot = true
 [node name="TouchScreenButton" type="TouchScreenButton" parent="."]
 position = Vector2( 0, -35 )
 scale = Vector2( 5, 4 )
+z_index = 1
+z_as_relative = false
 shape = SubResource( 3 )
 shape_centered = false
-
+passby_press = true
 [connection signal="body_entered" from="AttackRange" to="." method="OnAttackRangeBodyEntered"]
 [connection signal="body_exited" from="AttackRange" to="." method="OnAttackRangeBodyExited"]
 [connection signal="timeout" from="ReloadTimer" to="." method="OnReloadTimerTimeout"]

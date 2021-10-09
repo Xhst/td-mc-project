@@ -45,6 +45,7 @@ namespace TowerDefenseMC.Enemies
             if (_wavesData.Count <= _currentWave)
             {
                 _waveTimer.Stop();
+                _levelTemplate.LevelCompleted();
                 return;
             }
             

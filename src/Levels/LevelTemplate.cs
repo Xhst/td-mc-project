@@ -21,6 +21,9 @@ namespace TowerDefenseMC.Levels
         public TileMap TileMap { get; private set; }
 
         public Player Player;
+
+        private int _levelNumber;
+        
         private EnemySpawner _enemySpawner;
         private TopBar _topBar;
         private BuildTool _buildTool;
@@ -45,6 +48,8 @@ namespace TowerDefenseMC.Levels
 
         public async void PreStart(int level)
         {
+            _levelNumber = level;
+            
             LevelDataReader ldr = GetNode<LevelDataReader>("/root/LevelDataReader");
             LevelData levelData = ldr.GetLevelData(level);
 
@@ -152,6 +157,34 @@ namespace TowerDefenseMC.Levels
 
             return tilesOnArea;
         }
+
+        public void LevelCompleted()
+        {
+            if (Player.Health == 0)
+            {
+                // TODO
+                return;
+            }
+            
+            int stars = CalculateStars();
+            
+            Game game = GetNode<Game>("/root/Game");
+            game.LevelCompleted(_levelNumber, stars);
+            
+            GD.Print($"Level { _levelNumber } completed with { stars } stars.");
+        }
+
+        private int CalculateStars()
+        {
+            if (Player.MaxHealth == Player.Health) return 6;
+            if (Player.Health < Player.MaxHealth && Player.Health >= Player.MaxHealth / 1.25f) return 5;
+            if (Player.Health < Player.MaxHealth && Player.Health >= Player.MaxHealth / 1.5f) return 4;
+            if (Player.Health < Player.MaxHealth && Player.Health >= Player.MaxHealth / 1.75f) return 3;
+            if (Player.Health < Player.MaxHealth && Player.Health >= Player.MaxHealth / 2f) return 2;
+            if (Player.Health < Player.MaxHealth && Player.Health >= Player.MaxHealth / 3f) return 1;
+
+            return 0;
+        }
         
         public void SpawnProjectile(PackedScene projectile, Vector2 pos, PhysicsBody2D target, int damage, float projectileSpeed)
         {
@@ -196,6 +229,11 @@ namespace TowerDefenseMC.Levels
         public void OnEnemyDestroyed(int feed)
         {
             Player.Crystals += feed;
+        }
+
+        public void OnTouchScreenTerrainReleased()
+        {
+            _buildTool.HideTowerStatistics();
         }
     }
 }
