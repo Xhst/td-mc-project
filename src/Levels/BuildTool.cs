@@ -196,5 +196,10 @@ namespace TowerDefenseMC.Levels
             _statisticsInterface.SetTowerStatisticValues(towerData);
             _statisticsInterface.Show();
         }
+
+        public void HideTowerStatistics()
+        {
+            _statisticsInterface.Hide();
+        }
     }
 }
