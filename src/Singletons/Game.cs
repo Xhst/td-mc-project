@@ -59,13 +59,13 @@ namespace TowerDefenseMC.Singletons
             return _levels.Contains(level);
         }
 
-        public void LevelCompleted(int levelNumber, int stars)
+        public CompletedLevel LevelCompleted(int levelNumber, int stars)
         {
             CompletedLevel completedLevel = new CompletedLevel(levelNumber, stars);
             
             if (_completedLevels.TryGetValue(levelNumber, out CompletedLevel currentCompletedLevel))
             {
-                if (stars <= currentCompletedLevel.Stars) return;
+                if (stars <= currentCompletedLevel.Stars) return completedLevel;
 
                 _completedLevels[levelNumber] = completedLevel;
             }
@@ -75,6 +75,8 @@ namespace TowerDefenseMC.Singletons
             }
 
             GetNode<Persist>("/root/Persist").Save();
+
+            return completedLevel;
         }
 
         public bool TryGetCompletedLevel(int levelNumber, out CompletedLevel completedLevel)

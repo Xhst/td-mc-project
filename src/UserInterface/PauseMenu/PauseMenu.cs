@@ -65,8 +65,10 @@ namespace TowerDefenseMC.UserInterface.PauseMenu
         public void OnBackToMenuButtonPressed()
         {
             _clickSound.Play();
-
-            GetTree().ChangeScene("res://scenes/Main.tscn");
+            
+            Scenes scenes = GetNode<Scenes>("/root/Scenes");
+            scenes.ChangeScene("res://scenes/Main.tscn");
+            
             GetTree().Paused = false;
         }
 

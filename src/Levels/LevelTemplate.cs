@@ -172,9 +172,9 @@ namespace TowerDefenseMC.Levels
             int stars = CalculateStars();
             
             Game game = GetNode<Game>("/root/Game");
-            game.LevelCompleted(_levelNumber, stars);
+            CompletedLevel completedLevel = game.LevelCompleted(_levelNumber, stars);
 
-            _endLevel.SetStars(stars);
+            _endLevel.SetCompletedLevelData(completedLevel);
             _endLevel.Show();
             
             GD.Print($"Level { _levelNumber } completed with { stars } stars.");
