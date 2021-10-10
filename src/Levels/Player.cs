@@ -9,6 +9,8 @@ namespace TowerDefenseMC.Levels
 {
     public class Player : ISubject
     {
+        public bool CrystalsIncreased { set; get; }
+
         private readonly HashSet<IObserver> _observers;
         
         public int MaxHealth { get; }
