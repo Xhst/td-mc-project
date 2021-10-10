@@ -5,15 +5,31 @@ namespace TowerDefenseMC.UserInterface.EndLevel
 {
     public class EndLevel : Control
     {
-        private Star _star1;
-        private Star _star2;
-        private Star _star3;
+        private TextureProgress _stars;
 
         public override void _Ready()
         {
-            _star1 = GetNode<Star>("LevelCompletedScreen/Star1");
-            _star2 = GetNode<Star>("LevelCompletedScreen/Star2");
-            _star3 = GetNode<Star>("LevelCompletedScreen/Star3");
+            _stars = GetNode<TextureProgress>("LevelCompletedScreen/Stars");
+        }
+
+        public void SetStars(int stars)
+        {
+            _stars.Value = (float) stars / 6 * 100;
+        }
+
+        public void OnNextLevelButtonPressed()
+        {
+            
+        }
+
+        public void OnShareButtonPressed()
+        {
+
+        }
+
+        public void OnBackToMenuButtonPressed()
+        {
+            GetTree().ChangeScene("res://scenes/Main.tscn");
         }
     }
 }

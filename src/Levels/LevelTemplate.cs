@@ -10,6 +10,7 @@ using TowerDefenseMC.Towers;
 using TowerDefenseMC.Towers.Projectiles;
 using TowerDefenseMC.UserInterface.TopBar;
 using TowerDefenseMC.UserInterface.PauseMenu;
+using TowerDefenseMC.UserInterface.EndLevel;
 
 using AStar = TowerDefenseMC.Utils.AStar;
 
@@ -29,6 +30,7 @@ namespace TowerDefenseMC.Levels
         private BuildTool _buildTool;
         private ProjectileSpawner _projectileSpawner;
         private PauseMenu _pauseMenu;
+        private EndLevel _endLevel;
         private Timer _waveTimer;
 
 
@@ -41,6 +43,7 @@ namespace TowerDefenseMC.Levels
             TileMap = GetNode<TileMap>("TileMap");
             _topBar = GetNode<TopBar>("UI/TopBar");
             _pauseMenu = GetNode<PauseMenu>("Pause/PauseMenu");
+            _endLevel = GetNode<EndLevel>("LevelCompleted/EndLevel");
             _waveTimer = GetNode<Timer>("WaveTimer");
 
             _tilesWithTowers = new Dictionary<Vector2, TowerTemplate>();
@@ -170,6 +173,9 @@ namespace TowerDefenseMC.Levels
             
             Game game = GetNode<Game>("/root/Game");
             game.LevelCompleted(_levelNumber, stars);
+
+            _endLevel.SetStars(stars);
+            _endLevel.Show();
             
             GD.Print($"Level { _levelNumber } completed with { stars } stars.");
         }
@@ -229,6 +235,7 @@ namespace TowerDefenseMC.Levels
         public void OnEnemyDestroyed(int feed)
         {
             Player.Crystals += feed;
+            Player.CrystalsIncreased = true;
         }
 
         public void OnTouchScreenTerrainReleased()

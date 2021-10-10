@@ -22,7 +22,7 @@ namespace TowerDefenseMC.UserInterface.Shop
 
         public override void _PhysicsProcess(float delta)
         {
-            if(!_isTowerBuilt) return;
+            if(!_isTowerBuilt && !_player.CrystalsIncreased) return;
             
             foreach (ShopItem shopItem in _hBoxContainer.GetChildren())
             {
@@ -30,6 +30,7 @@ namespace TowerDefenseMC.UserInterface.Shop
             }
 
             _isTowerBuilt = false;
+            _player.CrystalsIncreased = false;
         }
 
         public void SetPlayer(Player player)
