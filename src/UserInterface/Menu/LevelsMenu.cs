@@ -27,40 +27,23 @@ namespace TowerDefenseMC.UserInterface.Menu
 
         private void CreateLevelButtons()
         {
-            HashSet<string> levels = GetLevels();
+            HashSet<int> levels = _game.GetAllLevels();
 
-            foreach (string level in levels)
+            foreach (int level in levels)
             {
-                int levelNumber = int.Parse(level);
-                
                 LevelButton btn = (LevelButton) _levelButtonScene.Instance();
                 
-                if (_game.TryGetCompletedLevel(levelNumber, out CompletedLevel completedLevel))
+                if (_game.TryGetCompletedLevel(level, out CompletedLevel completedLevel))
                 {
-                    btn.Init(this, levelNumber, completedLevel.Stars);
+                    btn.Init(this, level, completedLevel.Stars);
                 }
                 else
                 {
-                    btn.Init(this, levelNumber, 0, _game.NextLevel != levelNumber);
+                    btn.Init(this, level, 0, _game.NextLevel != level);
                 }
 
                 _buttonsContainer.AddChild(btn);
             }
-        }
-
-        private HashSet<string> GetLevels()
-        {
-            HashSet<string> levels = new HashSet<string>();
-            
-            HashSet<string> files = FileHelper.FilesInDirectory("res://assets/data/levels/");
-
-            foreach (string file in files)
-            {
-                string level = file.Replace(".json", "").Replace("level", "");
-                levels.Add(level);
-            }
-
-            return levels;
         }
 
         public void OnLevelButtonPressed(int level)

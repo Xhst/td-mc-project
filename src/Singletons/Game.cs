@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 using Godot;
 
+using TowerDefenseMC.Utils;
+
 
 namespace TowerDefenseMC.Singletons
 {
@@ -22,12 +24,39 @@ namespace TowerDefenseMC.Singletons
     public class Game : Node
     {
         public int NextLevel { get; private set; }
-        
+
+        private HashSet<int> _levels;
         private Dictionary<int, CompletedLevel> _completedLevels;
 
         public override void _Ready()
         {
             _completedLevels = new Dictionary<int, CompletedLevel>();
+            _levels = LoadLevels();
+        }
+        
+        private HashSet<int> LoadLevels()
+        {
+            HashSet<int> levels = new HashSet<int>();
+            
+            HashSet<string> files = FileHelper.FilesInDirectory("res://assets/data/levels/");
+
+            foreach (string file in files)
+            {
+                int level = int.Parse(file.Replace(".json", "").Replace("level", ""));
+                levels.Add(level);
+            }
+
+            return levels;
+        }
+
+        public HashSet<int> GetAllLevels()
+        {
+            return _levels;
+        }
+
+        public bool LevelsExists(int level)
+        {
+            return _levels.Contains(level);
         }
 
         public void LevelCompleted(int levelNumber, int stars)
