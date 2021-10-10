@@ -8,6 +8,7 @@ namespace TowerDefenseMC.UserInterface.EndLevel
 {
     public class EndLevel : Control
     {
+        private Scenes _scenes;
         private CompletedLevel _completedLevel;
         private TextureProgress _stars;
         private Game _game;
@@ -16,6 +17,7 @@ namespace TowerDefenseMC.UserInterface.EndLevel
         {
             _stars = GetNode<TextureProgress>("LevelCompletedScreen/Stars");
             _game = GetNode<Game>("/root/Game");
+            _scenes = GetNode<Scenes>("/root/Scenes");
         }
 
         public void SetCompletedLevelData(CompletedLevel completedLevel)
@@ -26,15 +28,13 @@ namespace TowerDefenseMC.UserInterface.EndLevel
 
         public void OnNextLevelButtonPressed()
         {
-            Scenes scenes = GetNode<Scenes>("/root/Scenes");
-            
             if (_game.LevelsExists(_completedLevel.Level + 1))
             {
-                scenes.ChangeScene("res://scenes/levels/LevelTemplate.tscn", _completedLevel.Level + 1);
+                _scenes.ChangeScene("res://scenes/levels/LevelTemplate.tscn", _completedLevel.Level + 1);
                 return;
             }
             
-            scenes.ChangeScene("res://scenes/Main.tscn");
+            _scenes.ChangeScene("res://scenes/Main.tscn");
         }
 
         public void OnShareButtonPressed()
@@ -44,7 +44,7 @@ namespace TowerDefenseMC.UserInterface.EndLevel
 
         public void OnBackToMenuButtonPressed()
         {
-            GetTree().ChangeScene("res://scenes/Main.tscn");
+            _scenes.ChangeScene("res://scenes/Main.tscn");
         }
     }
 }
