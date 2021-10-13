@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using Godot;
+using Godot.Collections;
 
 using TowerDefenseMC.Levels;
 using TowerDefenseMC.Singletons;
@@ -22,7 +24,7 @@ namespace TowerDefenseMC.Towers
         private Timer _reloadTimer;
         private Vector2 _projectileSpawnPosition;
         
-        private Dictionary<string, TowerEffect> _effects;
+        private System.Collections.Generic.Dictionary<string, TowerEffect> _effects;
 
         private float _damage;
         private float _attackSpeed;
@@ -41,7 +43,7 @@ namespace TowerDefenseMC.Towers
 
         public override void _Ready()
         {
-            _effects = new Dictionary<string, TowerEffect>();
+            _effects = new System.Collections.Generic.Dictionary<string, TowerEffect>();
             _targetList = new List<PhysicsBody2D>();
             _reloadTimer = GetNode<Timer>("ReloadTimer");
             _projectileSpawnPosition = GetNode<Position2D>("Node2D/ProjectileSpawn").GlobalPosition;
@@ -148,8 +150,10 @@ namespace TowerDefenseMC.Towers
             return _attackSpeed - _towerData.AttackSpeed;
         }
 
-        public void OnPlace()
+        public async void OnPlace()
         {
+            await BuildingProcess();
+            
             HashSet<TowerTemplate> towersOnAuraRange = _level.GetTowersOnArea(_position, _towerData.AuraRange);
 
             foreach (TowerTemplate tower in towersOnAuraRange)
@@ -158,7 +162,27 @@ namespace TowerDefenseMC.Towers
             }
         }
 
-        public Dictionary<string, TowerEffect> GetEffects()
+        private async Task BuildingProcess()
+        {
+            Array children = GetNode<Node2D>("Node2D").GetChildren();
+
+            foreach (object child in children)
+            {
+                if (!(child is Sprite sprite)) continue;
+
+                sprite.Visible = false;
+            }
+            
+            foreach (object child in children)
+            {
+                if (!(child is Sprite sprite)) continue;
+
+                await ToSignal(GetTree().CreateTimer(0.125f), "timeout");
+                sprite.Visible = true;
+            }
+        }
+
+        public System.Collections.Generic.Dictionary<string, TowerEffect> GetEffects()
         {
             return _effects;
         }

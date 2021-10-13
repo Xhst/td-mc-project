@@ -41,8 +41,6 @@ _projectile = ExtResource( 1 )
 position = Vector2( 0, -35 )
 scale = Vector2( 0.8, 0.8 )
 
-[node name="Tower" type="Sprite" parent="Node2D"]
-
 [node name="ProjectileSpawn" type="Position2D" parent="Node2D"]
 
 [node name="AttackRange" type="Area2D" parent="."]

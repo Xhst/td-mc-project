@@ -117,11 +117,10 @@ namespace TowerDefenseMC.Levels
             TowerTemplate newTower = (TowerTemplate) _currentTower.Instance();
             newTower.GlobalPosition = _levelTemplate.TileMap.MapToWorld(_currentTile);
             newTower.Init(towerData, _levelTemplate, _currentTile);
-            newTower.OnPlace();
             
-            _levelTemplate.AddTowerOnTile(_currentTile, newTower);
-
             _levelTemplate.GetNode<YSort>("EntitiesContainer").AddChild(newTower);
+            _levelTemplate.AddTowerOnTile(_currentTile, newTower);
+            newTower.OnPlace();
 
             _levelTemplate.Player.Crystals -= _towerCost;
             _shopInterface.TowerBuilt();
