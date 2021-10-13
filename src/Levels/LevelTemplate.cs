@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -24,7 +23,23 @@ namespace TowerDefenseMC.Levels
         public Player Player;
 
         private int _levelNumber;
+        private bool _wavesCompleted = false;
         
+        private int _enemiesAlive;
+        public int EnemiesAlive
+        {
+            get => _enemiesAlive;
+            set
+            {
+                _enemiesAlive = value;
+
+                if (_wavesCompleted && _enemiesAlive <= 0)
+                {
+                    LevelCompleted();
+                }
+            }
+        }
+
         private EnemySpawner _enemySpawner;
         private TopBar _topBar;
         private BuildTool _buildTool;
@@ -161,6 +176,11 @@ namespace TowerDefenseMC.Levels
             return tilesOnArea;
         }
 
+        public void WavesCompleted()
+        {
+            _wavesCompleted = true;
+        }
+        
         public void LevelCompleted()
         {
             if (Player.Health == 0)
@@ -230,12 +250,14 @@ namespace TowerDefenseMC.Levels
         public void OnEnemyReachEndOfPath(int damage)
         {
             Player.TakeDamage(damage);
+            EnemiesAlive--;
         }
 
         public void OnEnemyDestroyed(int feed)
         {
             Player.Crystals += feed;
             Player.CrystalsIncreased = true;
+            EnemiesAlive--;
         }
 
         public void OnTouchScreenTerrainReleased()

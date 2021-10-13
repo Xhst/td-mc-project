@@ -45,7 +45,7 @@ namespace TowerDefenseMC.Enemies
             if (_wavesData.Count <= _currentWave)
             {
                 _waveTimer.Stop();
-                _levelTemplate.LevelCompleted();
+                _levelTemplate.WavesCompleted();
                 return;
             }
             
@@ -121,6 +121,7 @@ namespace TowerDefenseMC.Enemies
                 pathFollow.AddChild(remoteTransform);
                 path2D.AddChild(pathFollow);
 
+                _levelTemplate.EnemiesAlive++;
                 await _levelTemplate.ToSignal(_levelTemplate.GetTree().CreateTimer(SpawnTimeBetweenEnemies), "timeout");
             }
         }
