@@ -32,6 +32,8 @@ namespace TowerDefenseMC.UserInterface.Menu
 
             SetSoundButtonPressed(!Audio.SoundPressed);
             SetMusicButtonPressed(!Audio.MusicPressed);
+
+            _languageTextLabel.Text = _languageManager.GetLanguageText();
         }
 
         public override void _PhysicsProcess(float delta)
