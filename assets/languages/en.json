@@ -19,8 +19,10 @@
 
   "end_level": {
     "level_completed" : "Level Completed",
+    "game_over" : "You Lost",
     "back_to_menu" : "Back To Menu",
     "next_level" : "Next Level",
+    "retry" : "Restart Level",
     "share" : "Share"
   },
 

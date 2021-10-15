@@ -19,8 +19,10 @@
 
   "end_level": {
     "level_completed" : "Livello Completato",
+    "game_over" : "Hai Perso",
     "back_to_menu" : "Torna Al Menu",
     "next_level" : "Prossimo Livello",
+    "retry" : "Ricomincia Il Livello",
     "share" : "Condividi"
   },
 
