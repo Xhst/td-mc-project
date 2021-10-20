@@ -155,6 +155,13 @@ namespace TowerDefenseMC.Singletons
             return Language;
         }
 
+        public string GetLanguageText()
+        {
+            JToken token = GetJsonTokenFromFile(GetLanguage());
+
+            return token["lang"].ToString();
+        }
+
         public void Attach(IObserver observer)
         {
             _observers.Add(observer);

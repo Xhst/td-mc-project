@@ -171,6 +171,7 @@ texture_pressed = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="pressed" from="MusicSetting/MusicOnOff" to="." method="OnAudioButtonPressed"]
 [connection signal="pressed" from="SoundSetting/SoundOnOff" to="." method="OnAudioButtonPressed"]
 [connection signal="pressed" from="LanguageSetting/LeftButton" to="." method="OnLeftButtonPressed"]
