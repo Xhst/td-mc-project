@@ -99,6 +99,41 @@ namespace TowerDefenseMC.Towers
             EmitSignal(nameof(ShootEvent), _projectile, _projectileSpawnPosition, target, _damage, _towerData.ProjectileSpeed);
         }
 
+        public float GetEffectDamageAdded()
+        {
+            return _damage - _towerData.Damage;
+        }
+
+        public float GetEffectAttackSpeedAdded()
+        {
+            return _attackSpeed - _towerData.AttackSpeed;
+        }
+
+        public async void OnPlace()
+        {
+            _level.TowerPlaced(_position, this);
+            
+            await BuildingProcess();
+        }
+
+        public void ApplyAura()
+        {
+            HashSet<TowerTemplate> towersOnAuraRange = _level.GetTowersOnArea(_position, _towerData.AuraRange);
+
+            foreach (TowerTemplate tower in towersOnAuraRange)
+            {
+                ShaderMaterial shaderMaterial = null;
+                
+                if (_towerData.AuraShaderMaterialName != "")
+                {
+                    shaderMaterial = ResourceLoader
+                        .Load<ShaderMaterial>($"res://assets/shaders/{ _towerData.AuraShaderMaterialName }.material");
+                }
+
+                tower.ApplyEffect(_towerData.AuraEffectName, _towerData.AuraDamage, _towerData.AuraAttackSpeed, shaderMaterial);
+            }
+        }
+        
         private void ApplyEffect(string effectName, float auraDamage, float auraAttackSpeed, ShaderMaterial shaderMaterial = null)
         {
             if (_effects.ContainsKey(effectName)) return;
@@ -109,7 +144,7 @@ namespace TowerDefenseMC.Towers
             CalculateDamage();
             CalculateAttackSpeed();
 
-            ApplyShader(shaderMaterial);
+            if (shaderMaterial != null) ApplyShader(shaderMaterial);
         }
 
         private void ApplyShader(ShaderMaterial shaderMaterial)
@@ -150,31 +185,6 @@ namespace TowerDefenseMC.Towers
             if (_attackSpeed > MaxAttackSpeed)
             {
                 _attackSpeed = MaxAttackSpeed;
-            }
-        }
-        
-        public float GetEffectDamageAdded()
-        {
-            return _damage - _towerData.Damage;
-        }
-
-        public float GetEffectAttackSpeedAdded()
-        {
-            return _attackSpeed - _towerData.AttackSpeed;
-        }
-
-        public async void OnPlace()
-        {
-            await BuildingProcess();
-            
-            HashSet<TowerTemplate> towersOnAuraRange = _level.GetTowersOnArea(_position, _towerData.AuraRange);
-
-            foreach (TowerTemplate tower in towersOnAuraRange)
-            {
-                ShaderMaterial shaderMaterial =
-                    ResourceLoader.Load<ShaderMaterial>($"res://assets/shaders/{_towerData.AuraShaderMaterialName}.material");
-                
-                tower.ApplyEffect(_towerData.AuraEffectName, _towerData.AuraDamage, _towerData.AuraAttackSpeed, shaderMaterial);
             }
         }
 

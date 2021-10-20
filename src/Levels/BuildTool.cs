@@ -119,7 +119,6 @@ namespace TowerDefenseMC.Levels
             newTower.Init(towerData, _levelTemplate, _currentTile);
             
             _levelTemplate.GetNode<YSort>("EntitiesContainer").AddChild(newTower);
-            _levelTemplate.AddTowerOnTile(_currentTile, newTower);
             newTower.OnPlace();
 
             _levelTemplate.Player.Crystals -= _towerCost;

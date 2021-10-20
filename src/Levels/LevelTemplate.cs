@@ -48,7 +48,6 @@ namespace TowerDefenseMC.Levels
         private EndLevel _endLevel;
         private Timer _waveTimer;
 
-
         private Dictionary<Vector2, TowerTemplate> _tilesWithTowers;
         private List<List<Vector2>> _paths;
         private List<List<Vector2>> _rivers;
@@ -109,9 +108,14 @@ namespace TowerDefenseMC.Levels
             _buildTool.Process();
         }
 
-        public void AddTowerOnTile(Vector2 tile, TowerTemplate tower)
+        public void TowerPlaced(Vector2 tile, TowerTemplate newTower)
         {
-            _tilesWithTowers.Add(tile, tower);
+            _tilesWithTowers.Add(tile, newTower);
+            
+            foreach (TowerTemplate tower in _tilesWithTowers.Values)
+            {
+                tower.ApplyAura();
+            }
         }
 
         public bool TileHasTower(Vector2 tile)
@@ -158,7 +162,7 @@ namespace TowerDefenseMC.Levels
             return towersOnArea;
         }
 
-        public HashSet<Vector2> GetTilesOnArea(Vector2 center, int range)
+        private HashSet<Vector2> GetTilesOnArea(Vector2 center, int range)
         {
             HashSet<Vector2> tilesOnArea = new HashSet<Vector2>();
 
