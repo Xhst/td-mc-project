@@ -2,7 +2,7 @@
   "snowy": false,
   
   "start_health": 100,
-  "start_crystals": 10,
+  "start_crystals": 100,
   
   "tiles": [
     {

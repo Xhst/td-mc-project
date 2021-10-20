@@ -21,6 +21,7 @@ namespace TowerDefenseMC.Singletons
         public int AuraRange;
         public float AuraDamage;
         public float AuraAttackSpeed;
+        public string AuraShaderMaterialName;
     }
     
     public class TowerDataReader : Node
@@ -65,6 +66,7 @@ namespace TowerDefenseMC.Singletons
             towerData.AuraRange = int.Parse(tower["aura_range"]?.ToString() ?? "0");
             towerData.AuraDamage = float.Parse(tower["aura_damage"]?.ToString() ?? "0");
             towerData.AuraAttackSpeed = float.Parse(tower["aura_attack_speed"]?.ToString() ?? "0");
+            towerData.AuraShaderMaterialName = tower["aura_shader_material_name"]?.ToString() ?? "";
  
             return towerData;
         }

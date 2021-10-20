@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Godot;
-using Godot.Collections;
 
 using TowerDefenseMC.Levels;
 using TowerDefenseMC.Singletons;
@@ -24,7 +23,7 @@ namespace TowerDefenseMC.Towers
         private Timer _reloadTimer;
         private Vector2 _projectileSpawnPosition;
         
-        private System.Collections.Generic.Dictionary<string, TowerEffect> _effects;
+        private Dictionary<string, TowerEffect> _effects;
 
         private float _damage;
         private float _attackSpeed;
@@ -43,7 +42,7 @@ namespace TowerDefenseMC.Towers
 
         public override void _Ready()
         {
-            _effects = new System.Collections.Generic.Dictionary<string, TowerEffect>();
+            _effects = new Dictionary<string, TowerEffect>();
             _targetList = new List<PhysicsBody2D>();
             _reloadTimer = GetNode<Timer>("ReloadTimer");
             _projectileSpawnPosition = GetNode<Position2D>("Node2D/ProjectileSpawn").GlobalPosition;
@@ -100,15 +99,29 @@ namespace TowerDefenseMC.Towers
             EmitSignal(nameof(ShootEvent), _projectile, _projectileSpawnPosition, target, _damage, _towerData.ProjectileSpeed);
         }
 
-        private void ApplyEffect(string effectName, float auraDamage, float auraAttackSpeed)
+        private void ApplyEffect(string effectName, float auraDamage, float auraAttackSpeed, ShaderMaterial shaderMaterial = null)
         {
             if (_effects.ContainsKey(effectName)) return;
             
-            TowerEffect towerEffect = new TowerEffect(effectName, auraDamage, auraAttackSpeed);
+            TowerEffect towerEffect = new TowerEffect(effectName, auraDamage, auraAttackSpeed, shaderMaterial);
             _effects.Add(towerEffect.Name, towerEffect);
 
             CalculateDamage();
             CalculateAttackSpeed();
+
+            ApplyShader(shaderMaterial);
+        }
+
+        private void ApplyShader(ShaderMaterial shaderMaterial)
+        {
+            Godot.Collections.Array children = GetNode<Node2D>("Node2D").GetChildren();
+
+            foreach (object child in children)
+            {
+                if (!(child is Sprite sprite)) continue;
+
+                sprite.Material = shaderMaterial;
+            }
         }
 
         private void CalculateDamage()
@@ -158,13 +171,16 @@ namespace TowerDefenseMC.Towers
 
             foreach (TowerTemplate tower in towersOnAuraRange)
             {
-                tower.ApplyEffect(_towerData.AuraEffectName, _towerData.AuraDamage, _towerData.AuraAttackSpeed);
+                ShaderMaterial shaderMaterial =
+                    ResourceLoader.Load<ShaderMaterial>($"res://assets/shaders/{_towerData.AuraShaderMaterialName}.material");
+                
+                tower.ApplyEffect(_towerData.AuraEffectName, _towerData.AuraDamage, _towerData.AuraAttackSpeed, shaderMaterial);
             }
         }
 
         private async Task BuildingProcess()
         {
-            Array children = GetNode<Node2D>("Node2D").GetChildren();
+            Godot.Collections.Array children = GetNode<Node2D>("Node2D").GetChildren();
 
             foreach (object child in children)
             {
@@ -182,7 +198,7 @@ namespace TowerDefenseMC.Towers
             }
         }
 
-        public System.Collections.Generic.Dictionary<string, TowerEffect> GetEffects()
+        public Dictionary<string, TowerEffect> GetEffects()
         {
             return _effects;
         }

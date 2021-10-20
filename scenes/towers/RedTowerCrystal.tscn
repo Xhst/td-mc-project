@@ -11,5 +11,4 @@ texture = ExtResource( 1 )
 [node name="TouchScreenButton" parent="." index="3"]
 position = Vector2( 0, 0 )
 scale = Vector2( 5, 2 )
-
 [connection signal="pressed" from="TouchScreenButton" to="." method="OnTouchScreenButtonReleased" binds= [ "Crystal" ]]

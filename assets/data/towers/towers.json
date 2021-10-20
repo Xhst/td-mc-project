@@ -28,7 +28,8 @@
       "aura_effect_name": "as20_dmg30",
       "aura_range": 5,
       "aura_attack_speed": 200,
-      "aura_damage": 100
+      "aura_damage": 100,
+      "aura_shader_material_name": "rainbow"
     }
   ]  
 }
