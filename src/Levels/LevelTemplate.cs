@@ -95,7 +95,6 @@ namespace TowerDefenseMC.Levels
             _projectileSpawner = new ProjectileSpawner(this);
             
             _enemySpawner.StartNextWaveTimer();
-            _endLevel.SetLevelTemplate(this);
         }
 
         private Vector2 GetViewSize()

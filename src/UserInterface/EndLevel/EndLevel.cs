@@ -1,7 +1,5 @@
 using Godot;
-using System;
 
-using TowerDefenseMC.Levels;
 using TowerDefenseMC.Singletons;
 
 
@@ -9,8 +7,6 @@ namespace TowerDefenseMC.UserInterface.EndLevel
 {
     public class EndLevel : Control
     {
-        private LevelTemplate _levelTemplate;
-
         private Scenes _scenes;
         private CompletedLevel _completedLevel;
         private TextureProgress _stars;
@@ -47,11 +43,6 @@ namespace TowerDefenseMC.UserInterface.EndLevel
             _levelCompletedButtons.Hide();
         }
 
-        public void SetLevelTemplate(LevelTemplate levelTemplate)
-        {
-            _levelTemplate = levelTemplate;
-        }
-
         public void OnNextLevelButtonPressed()
         {
             if (_game.LevelsExists(_completedLevel.Level + 1))
@@ -70,7 +61,19 @@ namespace TowerDefenseMC.UserInterface.EndLevel
 
         public void OnShareButtonPressed()
         {
+            GetViewport().RenderTargetClearMode = Viewport.ClearMode.OnlyNextFrame;
 
+            ToSignal(GetTree(), "idle_frame");
+            ToSignal(GetTree(), "idle_frame");
+
+            Image image = GetViewport().GetTexture().GetData();
+            image.FlipY();
+
+            string savedImage = OS.GetUserDataDir() + "/savedImage.png";
+            image.SavePng(savedImage);
+
+            Node gdScript = _levelCompletedButtons as Node;
+            gdScript.Call("share_image", savedImage);
         }
 
         public void OnBackToMenuButtonPressed()
