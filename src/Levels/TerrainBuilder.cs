@@ -12,6 +12,7 @@ namespace TowerDefenseMC.Levels
 {
     public class TerrainBuilder
     {
+        private const int FirstSnowTileId = 123;
         private const float TimeBetweenTileDraw = 0.01f;
         
         private const int TileLength = 128;
@@ -46,11 +47,12 @@ namespace TowerDefenseMC.Levels
                 for (int y = -1; y <= height + 1; y++)
                 {
                     Vector2 newTilePos = x * dx + y * dy;
-                    _tileMap.SetCellv(newTilePos, _fillTileId);
+                    
+                    SetCell(newTilePos, _fillTileId);
 
                     if (x < length)
                     {
-                        _tileMap.SetCell((int) newTilePos.x + 1, (int) newTilePos.y, _fillTileId);
+                        SetCell((int) newTilePos.x + 1, (int) newTilePos.y, _fillTileId);
                     }
                 }
             }
@@ -79,7 +81,8 @@ namespace TowerDefenseMC.Levels
                     
                     int tileId = FindTileByNameTryingRotation(tileName, tilePosition.Rot);
                     
-                    _tileMap.SetCell(tilePosition.X, tilePosition.Y, tileId);
+                    SetCell(tilePosition.X, tilePosition.Y, tileId);
+                    
                     await _levelTemplate.ToSignal(_levelTemplate.GetTree().CreateTimer(TimeBetweenTileDraw), "timeout");
                 }
             }
@@ -131,6 +134,7 @@ namespace TowerDefenseMC.Levels
                     }
 
                     DrawTile(tile, tileId);
+                    
                     await _levelTemplate.ToSignal(_levelTemplate.GetTree().CreateTimer(TimeBetweenTileDraw), "timeout");
                 }
             }
@@ -163,9 +167,22 @@ namespace TowerDefenseMC.Levels
                 tileId = GetTileIdSnowyVersion(tileId);
             }
             
-            _tileMap.SetCellv(tile, tileId);
+            SetCell(tile, tileId);
+            
+        }
+
+        private void SetCell(Vector2 position, int tileId)
+        {
+            SetCell((int) position.x, (int) position.y, tileId);
         }
         
+        private void SetCell(int x, int y, int tileId)
+        {
+            tileId %= FirstSnowTileId * 2;
+            
+            _tileMap.SetCell(x, y, tileId);
+        }
+
         private int GetStartPathTileId(int incidenceNumber)
         {
             return incidenceNumber switch
@@ -191,7 +208,7 @@ namespace TowerDefenseMC.Levels
 
         private int GetTileIdSnowyVersion(int tileId)
         {
-            return tileId + 123;
+            return tileId + FirstSnowTileId;
         }
 
         private int GetBridgeTileId(int currentTileId, Vector2 tile)
