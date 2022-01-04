@@ -59,12 +59,12 @@ namespace TowerDefenseMC.UserInterface.EndLevel
             
         }
 
-        public void OnShareButtonPressed()
+        public async void OnShareButtonPressed()
         {
             GetViewport().RenderTargetClearMode = Viewport.ClearMode.OnlyNextFrame;
 
-            ToSignal(GetTree(), "idle_frame");
-            ToSignal(GetTree(), "idle_frame");
+            await ToSignal(GetTree(), "idle_frame");
+            await ToSignal(GetTree(), "idle_frame");
 
             Image image = GetViewport().GetTexture().GetData();
             image.FlipY();

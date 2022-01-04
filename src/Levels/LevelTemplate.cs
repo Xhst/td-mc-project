@@ -217,7 +217,12 @@ namespace TowerDefenseMC.Levels
 
             return 0;
         }
-        
+
+        public override void _Input(InputEvent @event)
+        {
+            _buildTool.InputEvent(@event);
+        }
+
         public void SpawnProjectile(PackedScene projectile, Vector2 pos, PhysicsBody2D target, int damage, float projectileSpeed)
         {
             _projectileSpawner.SpawnProjectile(projectile, pos, target, damage, projectileSpeed);

@@ -24,6 +24,7 @@ margin_left = 10.0
 margin_top = 5.0
 margin_right = -10.0
 margin_bottom = -5.0
+keep_pressed_outside = true
 texture_normal = ExtResource( 7 )
 texture_pressed = ExtResource( 4 )
 texture_hover = ExtResource( 2 )
