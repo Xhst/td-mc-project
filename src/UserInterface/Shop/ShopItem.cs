@@ -21,12 +21,6 @@ namespace TowerDefenseMC.UserInterface.Shop
         
         [Signal]
         private delegate void ClickEvent(string bind, int cost);
-        
-        [Signal]
-        private delegate void MouseEntered();
-        
-        [Signal]
-        private delegate void MouseExited();
 
         public override void _Ready()
         {
@@ -35,8 +29,6 @@ namespace TowerDefenseMC.UserInterface.Shop
             _costText = GetNode<RichTextLabel>("Button/Cost/CostText");
 
             Connect(nameof(ClickEvent), Scenes.MainScene.GetActiveScene(), nameof(LevelTemplate.OnSelectTowerButtonDown));
-            Connect(nameof(MouseEntered), Scenes.MainScene.GetActiveScene(), nameof(LevelTemplate.OnTowerButtonMouseEntered)); 
-            Connect(nameof(MouseExited), Scenes.MainScene.GetActiveScene(), nameof(LevelTemplate.OnTowerButtonMouseExited)); 
         }
 
         public void UpdateData(string towerTexturePath, int cost, string onButtonDownBind)
@@ -62,16 +54,6 @@ namespace TowerDefenseMC.UserInterface.Shop
         public void OnButtonDown()
         {
             EmitSignal(nameof(ClickEvent), _onButtonDownBind, Cost);
-        }
-
-        public void OnMouseEntered()
-        {
-            EmitSignal(nameof(MouseEntered));
-        }
-        
-        public void OnMouseExited()
-        {
-            EmitSignal(nameof(MouseExited));
         }
 
     }

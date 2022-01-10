@@ -66,5 +66,3 @@ __meta__ = {
 }
 
 [connection signal="button_down" from="Button" to="." method="OnButtonDown"]
-[connection signal="mouse_entered" from="Button" to="." method="OnMouseEntered"]
-[connection signal="mouse_exited" from="Button" to="." method="OnMouseExited"]

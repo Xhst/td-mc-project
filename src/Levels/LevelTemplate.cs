@@ -233,14 +233,14 @@ namespace TowerDefenseMC.Levels
             _buildTool.OnSelectTowerButtonDown(towerName, towerCost);
         }
 
-        public void OnTowerButtonMouseEntered()
+        public void OnShopMouseEntered()
         {
-            _buildTool.OnTowerButtonMouseEntered();
+            _buildTool.OnShopMouseEntered();
         }
 
-        public void OnTowerButtonMouseExited()
+        public void OnShopMouseExited()
         {
-            _buildTool.OnTowerButtonMouseExited();
+            _buildTool.OnShopMouseExited();
         }
 
         public void OnTouchScreenButtonReleased(string towerName, TowerTemplate tower)

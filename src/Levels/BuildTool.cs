@@ -108,8 +108,8 @@ namespace TowerDefenseMC.Levels
             }
 
             if (_levelTemplate.TileHasTower(_currentTile) || 
-               _levelTemplate.TileMap.GetCellv(_currentTile) != _levelTemplate.TileMap.TileSet.FindTileByName("tile") &&
-               _levelTemplate.TileMap.GetCellv(_currentTile) != _levelTemplate.TileMap.TileSet.FindTileByName("snow_tile") && _currentColor != _buildNotAllowedColor)
+                _levelTemplate.TileMap.GetCellv(_currentTile) != _levelTemplate.TileMap.TileSet.FindTileByName("tile") &&
+                _levelTemplate.TileMap.GetCellv(_currentTile) != _levelTemplate.TileMap.TileSet.FindTileByName("snow_tile") && _currentColor != _buildNotAllowedColor)
             {
                 _currentColor = _buildNotAllowedColor;
                 _canBuild = false;
@@ -121,8 +121,7 @@ namespace TowerDefenseMC.Levels
 
         private void BuildTower()
         {
-            if (!_canBuild) return;
-            //if (!_canBuild || _inMenu) return;
+            if (!_canBuild || _inMenu) return;
             if (!_towersData.TryGetValue(_currentTowerName, out TowerData towerData)) return;
 
             TowerTemplate newTower = (TowerTemplate) _currentTower.Instance();
@@ -188,12 +187,12 @@ namespace TowerDefenseMC.Levels
             _towerCost = towerCost;
         }
 
-        public void OnTowerButtonMouseEntered()
+        public void OnShopMouseEntered()
         {
             _inMenu = true;
         }
 
-        public void OnTowerButtonMouseExited()
+        public void OnShopMouseExited()
         {
             _inMenu = false;
         }
