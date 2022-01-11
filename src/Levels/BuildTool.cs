@@ -17,6 +17,7 @@ namespace TowerDefenseMC.Levels
         private bool _buildMode = false;
         private bool _canBuild = false;
         private bool _inMenu = false;
+        private bool _touchScreen = false;
 
         private Color _currentColor;
 
@@ -69,18 +70,27 @@ namespace TowerDefenseMC.Levels
             if (!_buildMode) return;
             
             UpdateBuildTool();
-            
-            if(Input.IsActionJustPressed("left_mouse_button"))
-            {
-                BuildTower();
-            }
 
-            if (!Input.IsActionJustPressed("right_mouse_button") && CanBuildAnotherTower()) return;
+            if (_touchScreen) return;
 
             _buildMode = false;
             _buildToolInterface.Hide();
         }
-        
+
+        public void InputEvent(InputEvent @event)
+        {
+            if (@event is InputEventScreenTouch touch)
+            {
+                if (!_buildMode) return;
+
+                if (!touch.Pressed)
+                {
+                    BuildTower();
+                    _touchScreen = false;
+                }
+            }
+        }
+
         private void UpdateBuildTool()
         {
             Vector2 mousePos = _levelTemplate.GetGlobalMousePosition();
@@ -98,8 +108,8 @@ namespace TowerDefenseMC.Levels
             }
 
             if (_levelTemplate.TileHasTower(_currentTile) || 
-               _levelTemplate.TileMap.GetCellv(_currentTile) != _levelTemplate.TileMap.TileSet.FindTileByName("tile") &&
-               _levelTemplate.TileMap.GetCellv(_currentTile) != _levelTemplate.TileMap.TileSet.FindTileByName("snow_tile") && _currentColor != _buildNotAllowedColor)
+                _levelTemplate.TileMap.GetCellv(_currentTile) != _levelTemplate.TileMap.TileSet.FindTileByName("tile") &&
+                _levelTemplate.TileMap.GetCellv(_currentTile) != _levelTemplate.TileMap.TileSet.FindTileByName("snow_tile") && _currentColor != _buildNotAllowedColor)
             {
                 _currentColor = _buildNotAllowedColor;
                 _canBuild = false;
@@ -170,24 +180,26 @@ namespace TowerDefenseMC.Levels
                 _auraRange.Polygon = TowerTemplate.GetRangeShapePoints(towerData.AuraRange);
             }
             
+            _touchScreen = true;
             _buildMode = true;
             _buildToolInterface.Show();
 
             _towerCost = towerCost;
         }
 
-        public void OnTowerButtonMouseEntered()
+        public void OnShopMouseEntered()
         {
             _inMenu = true;
         }
 
-        public void OnTowerButtonMouseExited()
+        public void OnShopMouseExited()
         {
             _inMenu = false;
         }
 
         public void TowerStatistics(string towerName, TowerTemplate tower)
         {
+            if (_buildMode) return;
             if (!_towersData.TryGetValue(towerName, out TowerData towerData)) return;
 
             _statisticsInterface.SetTowerTemplate(tower);

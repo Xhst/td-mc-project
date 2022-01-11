@@ -67,12 +67,12 @@ render_target_update_mode = 3
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="StatisticsInterface" parent="UI" instance=ExtResource( 5 )]
-visible = false
-
 [node name="ShopInterface" parent="UI" instance=ExtResource( 4 )]
 margin_left = 0.0
 margin_right = 0.0
+
+[node name="StatisticsInterface" parent="UI" instance=ExtResource( 5 )]
+visible = false
 
 [node name="TopBar" parent="UI" instance=ExtResource( 6 )]
 

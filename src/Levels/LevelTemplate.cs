@@ -217,7 +217,12 @@ namespace TowerDefenseMC.Levels
 
             return 0;
         }
-        
+
+        public override void _Input(InputEvent @event)
+        {
+            _buildTool.InputEvent(@event);
+        }
+
         public void SpawnProjectile(PackedScene projectile, Vector2 pos, PhysicsBody2D target, int damage, float projectileSpeed)
         {
             _projectileSpawner.SpawnProjectile(projectile, pos, target, damage, projectileSpeed);
@@ -228,14 +233,14 @@ namespace TowerDefenseMC.Levels
             _buildTool.OnSelectTowerButtonDown(towerName, towerCost);
         }
 
-        public void OnTowerButtonMouseEntered()
+        public void OnShopMouseEntered()
         {
-            _buildTool.OnTowerButtonMouseEntered();
+            _buildTool.OnShopMouseEntered();
         }
 
-        public void OnTowerButtonMouseExited()
+        public void OnShopMouseExited()
         {
-            _buildTool.OnTowerButtonMouseExited();
+            _buildTool.OnShopMouseExited();
         }
 
         public void OnTouchScreenButtonReleased(string towerName, TowerTemplate tower)
