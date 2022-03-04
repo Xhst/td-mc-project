@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/Utils/TileMapTool.cs" type="Script" id=1]
+[ext_resource path="res://TileSet.tres" type="TileSet" id=2]
+
+[node name="TileMap" type="TileMap"]
+position = Vector2( 0, 2 )
+mode = 1
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 128, 64 )
+format = 1
+script = ExtResource( 1 )
+_offset = Vector2( -192, -288 )

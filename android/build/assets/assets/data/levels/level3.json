@@ -1,0 +1,104 @@
+﻿{
+  "snowy": false,
+  
+  "start_health": 100,
+  "start_crystals": 10,
+  
+  "tiles": [
+    {
+      "tile_treeDouble": [
+        {
+          "x": 15,
+          "y": 2
+        },
+        {
+          "x": 20,
+          "y": -1,
+          "rot": "EW"
+        },
+        {
+          "x": 20,
+          "y": -4,
+          "rot": "E"
+        }
+      ]
+    }
+  ],
+  
+  "rivers": [
+    [
+      {
+        "x": 5,
+        "y": -5
+      },
+      {
+        "x": 20,
+        "y": -7
+      }
+    ]
+  ],
+  
+  "enemy_paths": [
+    [
+      {
+        "x": 2,
+        "y": 0
+      },
+      {
+        "x": 17,
+        "y": 0
+      }
+    ],
+    [
+      {
+        "x": 8,
+        "y": -4
+      },
+      {
+        "x": 10,
+        "y": 5
+      }
+    ]
+  ],
+  
+  "enemies_waves": [
+    {
+      "wait_time": 10,
+      "enemies": [
+        {
+          "name": "Yellow",
+          "amount": 10
+        },
+        {
+          "path": 1,
+          "name": "Green",
+          "amount": 2
+        },
+        {
+          "path": 1,
+          "name": "Purple",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "wait_time": 15,
+      "enemies": [
+        {
+          "name": "Yellow",
+          "amount": 3
+        },
+        {
+          "name": "Green",
+          "amount": 3
+        },
+        {
+          "path": 1,
+          "name": "Purple",
+          "amount": 4
+        }
+      ]
+    }
+  ]
+  
+}

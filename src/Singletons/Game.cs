@@ -38,12 +38,28 @@ namespace TowerDefenseMC.Singletons
         {
             HashSet<int> levels = new HashSet<int>();
             
-            HashSet<string> files = FileHelper.FilesInDirectory("res://assets/data/levels/");
+            /*HashSet<string> files = FileHelper.FilesInDirectory("res://assets/data/levels/");
+
+            int max = 0;
 
             foreach (string file in files)
             {
                 int level = int.Parse(file.Replace(".json", "").Replace("level", ""));
                 levels.Add(level);
+
+                if (max < level)
+                {
+                    max = level;
+                }
+            }
+
+            NextLevel = max+1;*/
+
+            int levelsCount = GetNode<LevelDataReader>("/root/LevelDataReader").LevelsCount();
+
+            for(int i=0; i<levelsCount; i++)
+            {
+                levels.Add(i);
             }
 
             return levels;

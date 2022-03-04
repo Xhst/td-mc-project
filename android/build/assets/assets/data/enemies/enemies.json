@@ -1,0 +1,36 @@
+﻿{
+  "enemies": [
+    {
+      "name": "Green",
+      "image": "enemy_ufoGreen",
+      "health": 3,
+      "speed": 300,
+      "damage": 5,
+      "feed": 5
+    },
+    {
+      "name": "Red",
+      "image": "enemy_ufoRed",
+      "health": 3,
+      "speed": 300,
+      "damage": 5,
+      "feed": 5
+    },
+    {
+      "name": "Purple",
+      "image": "enemy_ufoPurple",
+      "health": 3,
+      "speed": 300,
+      "damage": 5,
+      "feed": 5
+    },
+    {
+      "name": "Yellow",
+      "image": "enemy_ufoYellow",
+      "health": 3,
+      "speed": 300,
+      "damage": 5,
+      "feed": 5
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+﻿{
+  "lang": "English",
+  
+  "main_menu": {
+    "levels" : "Levels",
+    "settings" : "Settings",
+    "share" : "Share",
+    "back" : "Main Menu"
+  },
+
+  "top_bar": {
+    "wave_timer": "Next Wave"
+  },
+
+  "pause_menu": {
+    "continue" : "Continue",
+    "back_to_menu" : "Back To Menu"
+  },
+
+  "end_level": {
+    "level_completed" : "Level Completed",
+    "game_over" : "You Lost",
+    "back_to_menu" : "Back To Menu",
+    "next_level" : "Next Level",
+    "retry" : "Restart Level",
+    "share" : "Share"
+  },
+
+  "statistics": {
+    "damage" : "Damage",
+    "attack_speed" : "Attack Speed",
+    "attack_range" : "Attack Range",
+    "projectile_speed" : "Projectile Speed",
+    "aura_damage" : "AE: Damage",
+    "aura_attack_speed" : "AE: Attack Speed"
+  }
+}

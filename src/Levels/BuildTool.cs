@@ -107,7 +107,8 @@ namespace TowerDefenseMC.Levels
                 _auraRange.Show();
             }
 
-            if (_levelTemplate.TileHasTower(_currentTile) || 
+            if (_inMenu ||
+                _levelTemplate.TileHasTower(_currentTile) || 
                 _levelTemplate.TileMap.GetCellv(_currentTile) != _levelTemplate.TileMap.TileSet.FindTileByName("tile") &&
                 _levelTemplate.TileMap.GetCellv(_currentTile) != _levelTemplate.TileMap.TileSet.FindTileByName("snow_tile") && _currentColor != _buildNotAllowedColor)
             {
@@ -166,7 +167,7 @@ namespace TowerDefenseMC.Levels
             if (!_towersData.TryGetValue(towerName, out TowerData towerData)) return;
 
             _currentTowerName = towerName;
-            _currentTower = ResourceLoader.Load<PackedScene>($"scenes/towers/{ towerData.SceneName }.tscn");
+            _currentTower = ResourceLoader.Load<PackedScene>($"res://scenes/towers/{ towerData.SceneName }.tscn");
             
             UpdateTowerPlaceHolder();
 
