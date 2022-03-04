@@ -1,0 +1,37 @@
+﻿{
+  "lang": "Italiano",
+  
+  "main_menu": {
+    "levels" : "Livelli",
+    "settings" : "Impostazioni",
+    "share" : "Condividi",
+    "back" : "Torna Al Menu"
+  },
+  
+  "top_bar": {
+    "wave_timer": "Prossima Ondata"
+  },
+
+  "pause_menu": {
+    "continue" : "Continua",
+    "back_to_menu" : "Torna Al Menu"
+  },
+
+  "end_level": {
+    "level_completed" : "Livello Completato",
+    "game_over" : "Hai Perso",
+    "back_to_menu" : "Torna Al Menu",
+    "next_level" : "Prossimo Livello",
+    "retry" : "Ricomincia Il Livello",
+    "share" : "Condividi"
+  },
+
+  "statistics": {
+    "damage" : "Danno",
+    "attack_speed" : "Velocità Di Attacco",
+    "attack_range" : "Raggio Di Attacco",
+    "projectile_speed" : "Velocità Proiettili",
+    "aura_damage" : "EA: Danno",
+    "aura_attack_speed" : "EA: Velocità Di Attacco"
+  }
+}

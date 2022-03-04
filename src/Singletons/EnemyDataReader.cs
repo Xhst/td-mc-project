@@ -18,13 +18,14 @@ namespace TowerDefenseMC.Singletons
     
     public class EnemyDataReader : Node
     {
+        private static string enemiesData = "{\"enemies\":[{\"name\":\"Green\",\"image\":\"enemy_ufoGreen\",\"health\":3,\"speed\":300,\"damage\":5,\"feed\":5},{\"name\":\"Red\",\"image\":\"enemy_ufoRed\",\"health\":3,\"speed\":300,\"damage\":5,\"feed\":5},{\"name\":\"Purple\",\"image\":\"enemy_ufoPurple\",\"health\":3,\"speed\":300,\"damage\":5,\"feed\":5},{\"name\":\"Yellow\",\"image\":\"enemy_ufoYellow\",\"health\":3,\"speed\":300,\"damage\":5,\"feed\":5}]}";
 
         public Dictionary<string, EnemyData> GetEnemiesData()
         {
             Dictionary<string, EnemyData> enemies = new Dictionary<string, EnemyData>();
             
-            string path = ProjectSettings.GlobalizePath("res://assets/data/enemies/enemies.json");
-            string jsonFileText = System.IO.File.ReadAllText(path);
+            //string path = ProjectSettings.GlobalizePath("res://assets/data/enemies/enemies.json");
+            string jsonFileText = enemiesData; //System.IO.File.ReadAllText(path);
             
             JObject json = JObject.Parse(jsonFileText);
 

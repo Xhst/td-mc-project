@@ -1,0 +1,4 @@
+#Fri Mar 04 17:30:16 CET 2022
+base.0=F\:\\mobComp\\tower-defense\\android\\build\\build\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

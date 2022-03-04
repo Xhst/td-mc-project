@@ -42,6 +42,21 @@ namespace TowerDefenseMC.Singletons
     
     public class LevelDataReader : Node
     {
+        private Dictionary<int,string> levels = new Dictionary<int, string>();
+
+        public LevelDataReader()
+        {
+            levels.Add(0, "{\"snowy\":false,\"start_health\":100,\"start_crystals\":100,\"tiles\":[{\"tile_treeDouble\":[{\"x\":15,\"y\":2},{\"x\":20,\"y\":-1,\"rot\":\"EW\"},{\"x\":20,\"y\":-4,\"rot\":\"E\"}]}],\"rivers\":[[{\"x\":5,\"y\":-5},{\"x\":20,\"y\":-7}]],\"enemy_paths\":[[{\"x\":2,\"y\":0},{\"x\":17,\"y\":0}],[{\"x\":8,\"y\":-4},{\"x\":10,\"y\":5}]],\"enemies_waves\":[{\"wait_time\":10,\"enemies\":[{\"name\":\"Yellow\",\"amount\":10},{\"path\":1,\"name\":\"Green\",\"amount\":2},{\"path\":1,\"name\":\"Purple\",\"amount\":2}]},{\"wait_time\":15,\"enemies\":[{\"name\":\"Yellow\",\"amount\":3},{\"name\":\"Green\",\"amount\":3},{\"path\":1,\"name\":\"Purple\",\"amount\":4}]}]}");
+            levels.Add(1, "{\"snowy\":false,\"start_health\":100,\"start_crystals\":100,\"tiles\":[{\"tile_treeDouble\":[{\"x\":15,\"y\":2},{\"x\":20,\"y\":-1,\"rot\":\"EW\"},{\"x\":20,\"y\":-4,\"rot\":\"E\"}]}],\"rivers\":[[{\"x\":5,\"y\":-5},{\"x\":20,\"y\":-7}]],\"enemy_paths\":[[{\"x\":2,\"y\":0},{\"x\":17,\"y\":0}],[{\"x\":8,\"y\":-4},{\"x\":10,\"y\":5}]],\"enemies_waves\":[{\"wait_time\":10,\"enemies\":[{\"name\":\"Yellow\",\"amount\":10},{\"path\":1,\"name\":\"Green\",\"amount\":2},{\"path\":1,\"name\":\"Purple\",\"amount\":2}]},{\"wait_time\":15,\"enemies\":[{\"name\":\"Yellow\",\"amount\":3},{\"name\":\"Green\",\"amount\":3},{\"path\":1,\"name\":\"Purple\",\"amount\":4}]}]}");
+            levels.Add(2, "{\"snowy\":false,\"start_health\":100,\"start_crystals\":100,\"tiles\":[{\"tile_treeDouble\":[{\"x\":15,\"y\":2},{\"x\":20,\"y\":-1,\"rot\":\"EW\"},{\"x\":20,\"y\":-4,\"rot\":\"E\"}]}],\"rivers\":[[{\"x\":5,\"y\":-5},{\"x\":20,\"y\":-7}]],\"enemy_paths\":[[{\"x\":2,\"y\":0},{\"x\":17,\"y\":0}],[{\"x\":8,\"y\":-4},{\"x\":10,\"y\":5}]],\"enemies_waves\":[{\"wait_time\":10,\"enemies\":[{\"name\":\"Yellow\",\"amount\":10},{\"path\":1,\"name\":\"Green\",\"amount\":2},{\"path\":1,\"name\":\"Purple\",\"amount\":2}]},{\"wait_time\":15,\"enemies\":[{\"name\":\"Yellow\",\"amount\":3},{\"name\":\"Green\",\"amount\":3},{\"path\":1,\"name\":\"Purple\",\"amount\":4}]}]}");
+            levels.Add(3, "{\"snowy\":false,\"start_health\":100,\"start_crystals\":100,\"tiles\":[{\"tile_treeDouble\":[{\"x\":15,\"y\":2},{\"x\":20,\"y\":-1,\"rot\":\"EW\"},{\"x\":20,\"y\":-4,\"rot\":\"E\"}]}],\"rivers\":[[{\"x\":5,\"y\":-5},{\"x\":20,\"y\":-7}]],\"enemy_paths\":[[{\"x\":2,\"y\":0},{\"x\":17,\"y\":0}],[{\"x\":8,\"y\":-4},{\"x\":10,\"y\":5}]],\"enemies_waves\":[{\"wait_time\":10,\"enemies\":[{\"name\":\"Yellow\",\"amount\":10},{\"path\":1,\"name\":\"Green\",\"amount\":2},{\"path\":1,\"name\":\"Purple\",\"amount\":2}]},{\"wait_time\":15,\"enemies\":[{\"name\":\"Yellow\",\"amount\":3},{\"name\":\"Green\",\"amount\":3},{\"path\":1,\"name\":\"Purple\",\"amount\":4}]}]}");
+        }
+
+        public int LevelsCount()
+        {
+            return levels.Count;
+        }
+
         public LevelData GetLevelData(int level)
         {
             LevelData levelData;
@@ -53,8 +68,8 @@ namespace TowerDefenseMC.Singletons
             levelData.StartHealth = 10;
             levelData.StartCrystals = 10;
             
-            string path = ProjectSettings.GlobalizePath($"res://assets/data/levels/level{ level }.json");
-            string jsonFileText = System.IO.File.ReadAllText(path);
+            //string path = ProjectSettings.GlobalizePath($"res://assets/data/levels/level{ level }.json");
+            levels.TryGetValue(level, out string jsonFileText); //string jsonFileText = System.IO.File.ReadAllText(path);
             
             JObject json = JObject.Parse(jsonFileText);
 

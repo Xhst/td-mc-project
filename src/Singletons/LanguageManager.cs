@@ -20,6 +20,9 @@ namespace TowerDefenseMC.Singletons
         private readonly HashSet<IObserver> _observers;
         private Persist _persist;
 
+        private static string oit = "{\"lang\":\"Italiano\",\"main_menu\":{\"levels\":\"Livelli\",\"settings\":\"Impostazioni\",\"share\":\"Condividi\",\"back\":\"Torna Al Menu\"},\"top_bar\":{\"wave_timer\":\"Prossima Ondata\"},\"pause_menu\":{\"continue\":\"Continua\",\"back_to_menu\":\"Torna Al Menu\"},\"end_level\":{\"level_completed\":\"Livello Completato\",\"game_over\":\"Hai Perso\",\"back_to_menu\":\"Torna Al Menu\",\"next_level\":\"Prossimo Livello\",\"retry\":\"Ricomincia Il Livello\",\"share\":\"Condividi\"},\"statistics\":{\"damage\":\"Danno\",\"attack_speed\":\"Velocità Di Attacco\",\"attack_range\":\"Raggio Di Attacco\",\"projectile_speed\":\"Velocità Proiettili\",\"aura_damage\":\"EA: Danno\",\"aura_attack_speed\":\"EA: Velocità Di Attacco\"}}";
+        private static string oen = "{\"lang\":\"English\",\"main_menu\":{\"levels\":\"Levels\",\"settings\":\"Settings\",\"share\":\"Share\",\"back\":\"Main Menu\"},\"top_bar\":{\"wave_timer\":\"Next Wave\"},\"pause_menu\":{\"continue\":\"Continue\",\"back_to_menu\":\"Back To Menu\"},\"end_level\":{\"level_completed\":\"Level Completed\",\"game_over\":\"You Lost\",\"back_to_menu\":\"Back To Menu\",\"next_level\":\"Next Level\",\"retry\":\"Restart Level\",\"share\":\"Share\"},\"statistics\":{\"damage\":\"Damage\",\"attack_speed\":\"Attack Speed\",\"attack_range\":\"Attack Range\",\"projectile_speed\":\"Projectile Speed\",\"aura_damage\":\"AE: Damage\",\"aura_attack_speed\":\"AE: Attack Speed\"}}";
+
         private string Language
         {
             get
@@ -103,28 +106,68 @@ namespace TowerDefenseMC.Singletons
 
         private static JToken GetJsonTokenFromFile(string fileName)
         {
-            string path = ProjectSettings.GlobalizePath($"res://assets/languages/{ fileName }.json");
+            /*string path = ProjectSettings.GlobalizePath($"res://assets/languages/{ fileName }.json");
+
+            string path;
+
+            if (fileName == "it") {
+                path = ProjectSettings.GlobalizePath($"res://assets/languages/it.json");
+            } else {
+                path = ProjectSettings.GlobalizePath($"res://assets/languages/en.json");
+            }
+
             string jsonFileText = System.IO.File.ReadAllText(path);
+
+            string jsonFileText = "";
+
+            File file = new File();
+
+            Error err = file.Open(path, File.ModeFlags.Read);
+
+            if(err == Error.Ok)
+            {
+                jsonFileText = file.GetAsText();
+            }
             
+            file.Close();*/
+            
+            string jsonFileText;
+
+            if (fileName == "it") {
+                jsonFileText = oit;
+            } else {
+                jsonFileText = oen;
+            }
+
             JObject json = JObject.Parse(jsonFileText);
-            
+
             return json;
         }
 
         private static Dictionary<string, string> LanguagesToFileNameDictionary()
         {
-            HashSet<string> langFiles = FileHelper.FilesInDirectory("res://assets/languages/");
             Dictionary<string, string> availableLanguagesAndFileName = new Dictionary<string, string>();
 
-            foreach (string file in langFiles)
-            {
-                string fileName = file.Replace(".json", "");
-                JToken token = GetJsonTokenFromFile(fileName);
+            availableLanguagesAndFileName.Add("English","en");
+
+            availableLanguagesAndFileName.Add("Italiano","it");
+
+            /*try {
+
+                HashSet<string> langFiles = FileHelper.FilesInDirectory("res://assets/languages/");
+
+                foreach (string file in langFiles)
+                {
+                    string fileName = file.Replace(".json", "");
+                    JToken token = GetJsonTokenFromFile(fileName);
                 
-                if (token["lang"] == null) continue;
+                    if (token["lang"] == null) continue;
                 
-                availableLanguagesAndFileName.Add(token["lang"].ToString(), fileName);
-            }
+                    availableLanguagesAndFileName.Add(token["lang"].ToString(), fileName);
+                }
+            } catch(Exception _) {
+
+            }*/
 
             return availableLanguagesAndFileName;
         }
