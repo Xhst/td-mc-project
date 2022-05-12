@@ -26,8 +26,8 @@ namespace TowerDefenseMC.Singletons
     
     public class TowerDataReader : Node
     {
-        private static string towersData = "{\"towers\":[{\"name\":\"RedA\",\"scene_name\":\"RedTowerA\",\"button_image\":\"tower_red_a\",\"cost\":1,\"attack_range\":1,\"damage\":1,\"attack_speed\":1,\"projectile_speed\":250},{\"name\":\"PurpleA\",\"scene_name\":\"PurpleTowerA\",\"button_image\":\"tower_purple_a\",\"cost\":10,\"attack_range\":5,\"damage\":3,\"attack_speed\":0.5,\"projectile_speed\":200},{\"name\":\"Crystal\",\"scene_name\":\"RedTowerCrystal\",\"button_image\":\"tower_crystal\",\"cost\":50,\"aura_effect_name\":\"as20_dmg30\",\"aura_range\":5,\"aura_attack_speed\":200,\"aura_damage\":100,\"aura_shader_material_name\":\"rainbow\"}]}";
-        
+        private static string towersData =
+            "{\"towers\":[{\"name\":\"RedA\",\"scene_name\":\"RedTowerA\",\"button_image\":\"tower_red_a\",\"cost\":1,\"attack_range\":1,\"damage\":1,\"attack_speed\":1,\"projectile_speed\":250},{\"name\":\"PurpleA\",\"scene_name\":\"PurpleTowerA\",\"button_image\":\"tower_purple_a\",\"cost\":5,\"attack_range\":5,\"damage\":4,\"attack_speed\":0.8,\"projectile_speed\":200},{\"name\":\"Crystal\",\"scene_name\":\"RedTowerCrystal\",\"button_image\":\"tower_crystal\",\"cost\":20,\"aura_effect_name\":\"as20_dmg30\",\"aura_range\":5,\"aura_attack_speed\":100,\"aura_damage\":100,\"aura_shader_material_name\":\"rainbow\"}]}";
         public Dictionary<string, TowerData> GetTowersData()
         {
             Dictionary<string, TowerData> towers = new Dictionary<string, TowerData>();
