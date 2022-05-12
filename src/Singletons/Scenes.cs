@@ -30,7 +30,7 @@ namespace TowerDefenseMC.Singletons
             transition.FadeIn();
             await ToSignal(transition.AnimationPlayer, "animation_finished");
             
-            uint loadingStartTime = OS.GetTicksMsec();
+            ulong loadingStartTime = OS.GetTicksMsec();
             
             PackedScene newScene = GD.Load<PackedScene>(scenePath);
             MainScene.ActiveSceneContainer.RemoveChild(currentScene);
@@ -39,7 +39,7 @@ namespace TowerDefenseMC.Singletons
             
             MainScene.ActiveSceneContainer.AddChild(newSceneInstance);
 
-            uint loadTime = OS.GetTicksMsec() - loadingStartTime;
+            ulong loadTime = OS.GetTicksMsec() - loadingStartTime;
             GD.Print($"Scene { scenePath } loaded in { loadTime } ms.");
 
             if (loadTime < MinLoadTime)
