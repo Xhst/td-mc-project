@@ -1,43 +1,37 @@
-# Tower Defense MC 
-> Towers vs aliens
+# Tower Defense MC
+> Towers vs Aliens
 
-Un gioco tower defense a livelli in cui delle torri medievali dovranno difendersi da astronavi aliene.
+A tower defense game with levels where medieval towers must defend themselves against alien spaceships.
 
 ---
 
 ## About
-Progetto realizzato per il corso di [Mobile Computing](https://fmilicchio.bitbucket.io/pages/mobile2021-2022.html) per l'anno accademico 2021-2022 ([Roma Tre](https://www.uniroma3.it/)). 
+Project developed for the [Mobile Computing](https://fmilicchio.bitbucket.io/pages/mobile2021-2022.html) course for the academic year 2021-2022 at [Roma Tre University](https://www.uniroma3.it/).
 
-Il gioco è realizzato utilizzando [Godot Engine](https://godotengine.org/) v3.4 Mono (c#). Può essere esportato in tutte le principali piattaforme mobile e non.
+The game is created using [Godot Engine](https://godotengine.org/) v3.4 Mono (C#). It can be exported to all major mobile and non-mobile platforms.
 
-## Screenshot & Screencast
-Screen cast: [Clicca qui](https://mega.nz/file/tGVFwDiD#XYFeUxwWv5nSVLPl95HFBf_NN7zs69HT9uvUdkE1COE)
+## Screenshots & Screencast
+Screencast: [Click here](https://mega.nz/file/tGVFwDiD#XYFeUxwWv5nSVLPl95HFBf_NN7zs69HT9uvUdkE1COE)
 
-[![Immagine-2022-06-05-105558.png](https://i.postimg.cc/J7k9tqLs/Immagine-2022-06-05-105558.png)](https://postimg.cc/c6dDbf6W)
+[![Image-2022-06-05-105558.png](https://i.postimg.cc/J7k9tqLs/Immagine-2022-06-05-105558.png)](https://postimg.cc/c6dDbf6W)
 
+[![Image-2022-06-05-105627.png](https://i.postimg.cc/WpgHs1Gr/Immagine-2022-06-05-105627.png)](https://postimg.cc/14RHHPY5)
 
-[![Immagine-2022-06-05-105627.png](https://i.postimg.cc/WpgHs1Gr/Immagine-2022-06-05-105627.png)](https://postimg.cc/14RHHPY5)
+## Project Structure
+The `/src` directory contains the game's code.
 
-## Struttura del progetto
-La directory `/src` contiene il codice del gioco.
+In the `/scenes` directory, you can find all the Godot scene files.
 
-Nella directory `/scenes` si trovano tutti i file di scena di Godot.
+Images, audio, and JSON files can be found in the `/assets` directory.
 
-Immagini, audio e json possono essere trovati in `/assets`
+In the game, it's possible to change the language, and additional languages can be easily added by creating a specific JSON file in the `/assets/languages` directory with the corresponding language code (e.g., `/en.json`).
 
-Nel gioco è possibile cambiare lingua e possono facilmente esserne aggiunte altre creando un apposito file json nella directory `/assets/languages` dando la sigla corrispettiva della lingua (es: `/en.json`).
+To modify and/or add levels, towers, and aliens, you can find the data files in JSON format in the `/assets/data` directory.
 
-Per modificare e/o aggiungere livelli, torri, alieni nella directory `/assets/data` è possibile trovare i file dati in formato json.
+### Software Licenses for Third-Party Components
 
+Godot Engine is free and open-source software released under the [MIT license](https://godotengine.org/license).
 
-## Autori & Licenze
-Mattia Micaloni [@ShuxDev](https://gitlab.com/ShuxDev) Univ.ID: 537018
-
-Tiziano Tinari [@HaroldDev](https://gitlab.com/HaroldDev) Univ.ID: 552429
-
-### Licenze software dei componenti di terze parti
-
-Godot Engine è un software gratuito e open source rilasciato con [licenza MIT](https://godotengine.org/license)
 
 ---
 
